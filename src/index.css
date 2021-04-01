@@ -6,11 +6,12 @@
 }
 
 body {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-size: 16px;
   color: var(--dark-color);
+  background-color: cadetblue;
 }
 
 @media (min-width: 600px) {
