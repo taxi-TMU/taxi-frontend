@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import taxiAppBg from './images/taxi-bg.png';
 import HeroText from './components/HeroText';
 import Footer from './components/Footer';
+import Nav from './components/Nav';
 
 const useStyle = makeStyles((theme) => ({
   headerBg: {
@@ -11,6 +12,19 @@ const useStyle = makeStyles((theme) => ({
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
     border: '3px solid #a3ccc3',
+  },
+  mainSpace: {
+    padding: '6rem 1rem 10rem 1rem',
+  },
+  [theme.breakpoints.up('sm')]: {
+    mainSpace: {
+      padding: '6rem 2rem 10rem 2rem',
+    },
+  },
+  [theme.breakpoints.up('lg')]: {
+    mainSpace: {
+      padding: '12rem 2rem 16rem 2rem',
+    },
   },
 }));
 
@@ -21,8 +35,10 @@ export default function App() {
     <>
       <Container disableGutters maxWidth="xl">
         <Box className={classes.headerBg}>
-          <Box component="header">navbar</Box>
-          <Box component="main" py={15} px={2}>
+          <Box component="header">
+            <Nav />
+          </Box>
+          <Box component="main" className={classes.mainSpace}>
             <HeroText />
           </Box>
         </Box>
