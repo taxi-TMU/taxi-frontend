@@ -1,98 +1,168 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import { ReactComponent as Logo } from "../images/logo.svg";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Box,
+  MenuList,
+  Link,
+  MenuItem,
+  Hidden,
+  IconButton,
+  Menu,
+} from '@material-ui/core';
+import MenuIcon from '@material-ui/icons/Menu';
+import { ReactComponent as Logo } from '../images/logo.svg';
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        flexGrow: 1,
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        background: 'transparent',
-        boxShadow: 'none',
-
+  root: {
+    flexGrow: 1,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    background: 'transparent',
+    boxShadow: 'none',
+    padding: '2rem 0',
+    '& a': {
+      color: '#ffffff',
+      fontWeight: 700,
     },
-    toolbar: {
-        display: "flex",
-        justifyContent: "space-between",
-        width: "100%",
-
-    },
-    left: {
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-between",
-        width: "40%",
-    },
+  },
+  toolbar: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
+  left: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '40%',
+    outline: 'none',
+  },
+  middle: {
+    display: 'flex',
+    justifyContent: 'center',
+    width: '30%',
+  },
+  [theme.breakpoints.down('xs')]: {
     middle: {
-        display: "flex",
-        justifyContent: "center",
-        width: "20%",
+      width: '100%',
     },
-    logo: {
-        height: "10%",
-        width: "25%",
-    },
+  },
+  logo: {
+    height: '10%',
+    width: '25%',
+  },
 
-    right: {
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-between",
-        width: "20%",
-    },
+  right: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '40%',
+    outline: 'none',
+  },
+  languages: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '100%',
+    padding: '0 2rem',
+  },
+  [theme.breakpoints.up('sm')]: {
     languages: {
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "flex-end",
-        width: "20%",
+      justifyContent: 'flex-end',
     },
-    langDivider: {
-        marginRight: 4,
-        marginLeft: 4,
+  },
+  mobileMenu: {
+    '& ul': {
+      backgroundColor: '#232F37',
+      color: '#ffffff',
+      padding: '0',
+      width: '100vh',
     },
-
+    '& a': {
+      fontWeight: 700,
+    },
+  },
 }));
 
 const NewNav = () => {
-    const classes = useStyles();
+  const classes = useStyles();
+  const [isOpen, setIsOpen] = useState(false);
+  const menu = useRef();
 
-    return (
-        <div >
-            <AppBar className={classes.root} position="static">
-                <Toolbar className={classes.toolbar}>
-                    <div className={classes.left}>
-                        <Typography variant="h6" className={classes.title}>
-                            Demo</Typography>
-                        <Typography variant="h6" className={classes.title}>
-                            Quiz</Typography>
-                        <Typography variant="h6" className={classes.title}>
-                            Categories</Typography>
-                    </div>
-                    <div className={classes.middle}>
-                        <Logo className={classes.logo} />
-                    </div>
+  const handleOpenMenu = (e) => {
+    setIsOpen(!isOpen);
+  };
 
-
-                    <div className={classes.right}>
-                        <Typography variant="h6" className={classes.title}>
-                            About</Typography>
-                        <Typography variant="h6" className={classes.title}>
-                            Login</Typography>
-                    </div>
-                    <div className={classes.languages}>
-                        <Typography>EN</Typography>
-                        <Typography className={classes.langDivider}> | </Typography>
-                        <Typography>DE</Typography>
-
-                    </div>
-
-                </Toolbar>
-            </AppBar>
-        </div>
-    );
-}
+  return (
+    <Box ref={menu}>
+      <AppBar className={classes.root} position="static">
+        <Box className={classes.languages}>
+          <Hidden smUp>
+            <IconButton color="inherit" onClick={handleOpenMenu}>
+              <MenuIcon />
+            </IconButton>
+            <Menu
+              open={isOpen}
+              anchorEl={menu.current}
+              onClose={handleOpenMenu}
+              className={classes.mobileMenu}
+            >
+              <MenuItem>
+                <Link className={classes.title}>Quiz</Link>
+              </MenuItem>
+              <MenuItem>
+                <Link className={classes.title}>Categories</Link>
+              </MenuItem>
+              <MenuItem>
+                <Link className={classes.title}>About</Link>
+              </MenuItem>
+              <MenuItem>
+                <Link className={classes.title}>Login</Link>
+              </MenuItem>
+            </Menu>
+          </Hidden>
+          <Typography>EN | DE</Typography>
+        </Box>
+        <Toolbar className={classes.toolbar}>
+          <Box
+            display="flex"
+            justifyContent="center"
+            width="100%"
+            alignItems="center"
+          >
+            <Hidden xsDown>
+              <MenuList className={classes.left} disableListWrap>
+                <MenuItem>
+                  <Link className={classes.title}>Quiz</Link>
+                </MenuItem>
+                <MenuItem>
+                  <Link className={classes.title}>Categories</Link>
+                </MenuItem>
+              </MenuList>
+            </Hidden>
+            <Box className={classes.middle}>
+              <Logo className={classes.logo} />
+            </Box>
+            <Hidden xsDown>
+              <MenuList className={classes.right}>
+                <MenuItem>
+                  <Link className={classes.title}>About</Link>
+                </MenuItem>
+                <MenuItem>
+                  <Link className={classes.title}>Login</Link>
+                </MenuItem>
+              </MenuList>
+            </Hidden>
+          </Box>
+        </Toolbar>
+      </AppBar>
+    </Box>
+  );
+};
 
 export default NewNav;
