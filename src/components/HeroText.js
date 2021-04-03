@@ -19,6 +19,7 @@ const useStyle = makeStyles(theme => ({
   [theme.breakpoints.up('md')]: {
       heroBox: {
         width: '40%',
+        paddingLeft: '10rem'
       },
   }
 }))
