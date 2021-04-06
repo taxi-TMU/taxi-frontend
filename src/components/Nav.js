@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   AppBar,
@@ -102,6 +103,7 @@ const Nav = () => {
     <Box ref={menu}>
       <AppBar className={classes.root} position="static">
         <Box className={classes.languages}>
+          {/* mobile nav */}
           <Hidden smUp>
             <IconButton color="inherit" onClick={handleOpenMenu}>
               <MenuIcon />
@@ -122,12 +124,19 @@ const Nav = () => {
                 <Link className={classes.title}>About</Link>
               </MenuItem>
               <MenuItem>
-                <Link className={classes.title}>Login</Link>
+                <Link
+                  className={classes.title}
+                  component={RouterLink}
+                  to="/login"
+                >
+                  Login
+                </Link>
               </MenuItem>
             </Menu>
           </Hidden>
           <Typography>EN | DE</Typography>
         </Box>
+        {/* desktop / tablet  nav */}
         <Toolbar className={classes.toolbar}>
           <Box
             display="flex"
@@ -145,16 +154,23 @@ const Nav = () => {
                 </MenuItem>
               </MenuList>
             </Hidden>
-            <Box className={classes.middle}>
+            {/* Logo  */}
+            <Link component={RouterLink} to="/" className={classes.middle}>
               <Logo className={classes.logo} />
-            </Box>
+            </Link>
             <Hidden xsDown>
               <MenuList className={classes.right}>
                 <MenuItem>
                   <Link className={classes.title}>About</Link>
                 </MenuItem>
                 <MenuItem>
-                  <Link className={classes.title}>Login</Link>
+                  <Link
+                    className={classes.title}
+                    component={RouterLink}
+                    to="/login"
+                  >
+                    Login
+                  </Link>
                 </MenuItem>
               </MenuList>
             </Hidden>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import {
@@ -19,6 +20,9 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: 'rgba(255, 255, 255, 0.23)',
     color: '#ffffff',
     borderRadius: 16,
+    '& a:hover': {
+      textDecoration: 'none',
+    },
   },
   paper: {
     marginTop: theme.spacing(8),
@@ -56,7 +60,7 @@ const Login = () => {
   const classes = useStyles();
 
   return (
-    <Container className={classes.mainContainer} component="main" maxWidth="xs">
+    <Container className={classes.mainContainer} maxWidth="xs">
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
@@ -101,17 +105,22 @@ const Login = () => {
           <br />
 
           <Grid item xs>
-            <Link href="#" color="textSecondary">
+            <Link
+              component={RouterLink}
+              to="/reset/request"
+              color="textSecondary"
+            >
               Forgot password?
             </Link>
           </Grid>
           <br />
           <Divider className={classes.divider} />
           <br />
-
-          <Button type="submit" fullWidth variant="outlined">
-            SIGN UP
-          </Button>
+          <Link component={RouterLink} to="/signup">
+            <Button type="submit" fullWidth variant="outlined">
+              SIGN UP
+            </Button>
+          </Link>
           <br />
           <br />
           <br />

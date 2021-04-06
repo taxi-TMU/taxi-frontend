@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import {
@@ -8,6 +9,7 @@ import {
   Typography,
   Container,
   Divider,
+  Link,
 } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
@@ -15,6 +17,9 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: 'rgba(255, 255, 255, 0.23)',
     color: '#ffffff',
     borderRadius: 16,
+    '& a': {
+      color: '#fff',
+    },
   },
   paper: {
     marginTop: theme.spacing(8),
@@ -78,16 +83,19 @@ const PasswordRequest = () => {
           </Button>
           <br />
           <br />
+          <Typography component="p" variant="subtitle1">
+            Already have login and password?
+          </Typography>
           <br />
           <Divider className={classes.divider} />
           <br />
-          <Typography component="h1" variant="subtitle1">
-            Alread have login and password?{' '}
-          </Typography>
-          <Typography component="h1" variant="subtitle1">
-            BACK TO LOGIN
-          </Typography>
-
+          <Link component={RouterLink} to="/login">
+            <Button type="submit" fullWidth variant="outlined">
+              BACK TO LOGIN
+            </Button>
+          </Link>
+          <br />
+          <br />
           <br />
         </form>
       </div>

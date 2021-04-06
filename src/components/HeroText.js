@@ -1,8 +1,14 @@
-import { Button, Typography, Box } from '@material-ui/core';
+import { Link as RouterLink } from 'react-router-dom';
+import { Button, Typography, Box, Link } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-
 const useStyle = makeStyles((theme) => ({
+  heroBox: {
+    padding: '6rem 0',
+    '& a:hover': {
+      textDecoration: 'none',
+    },
+  },
   heroButton: {
     width: '9rem',
     height: '3.5rem',
@@ -58,16 +64,20 @@ export default function HeroText() {
         justifyContent="space-between"
         mt={5}
       >
-        <Button
-          className={classes.heroButton}
-          color="primary"
-          variant="contained"
-        >
-          log in
-        </Button>
-        <Button className={classes.heroButton} variant="outlined">
-          Create a profile
-        </Button>
+        <Link component={RouterLink} to="/login">
+          <Button
+            className={classes.heroButton}
+            color="primary"
+            variant="contained"
+          >
+            log in
+          </Button>
+        </Link>
+        <Link component={RouterLink} to="/signup">
+          <Button className={classes.heroButton} variant="outlined">
+            Create a profile
+          </Button>
+        </Link>
       </Box>
     </Box>
   );
