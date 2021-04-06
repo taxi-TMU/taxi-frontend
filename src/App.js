@@ -4,6 +4,10 @@ import taxiAppBg from './images/taxi-bg.png';
 import HeroText from './components/HeroText';
 import Footer from './components/Footer';
 import Nav from './components/Nav';
+import Login from "./components/Login";
+import PasswordRequest from "./components/PasswordRequest";
+import PasswordReset from "./components/PasswordReset";
+import SignUp from "./components/SignUp";
 
 const useStyle = makeStyles((theme) => ({
   headerBg: {
@@ -28,7 +32,7 @@ const useStyle = makeStyles((theme) => ({
   },
 }));
 
-export default function App() {
+const App = () => {
   const classes = useStyle();
 
   return (
@@ -40,6 +44,10 @@ export default function App() {
           </Box>
           <Box component="main" className={classes.mainSpace}>
             <HeroText />
+            <Login />
+            <PasswordRequest />
+            <PasswordReset />
+            <SignUp />
           </Box>
         </Box>
         <Footer />
@@ -47,3 +55,4 @@ export default function App() {
     </>
   );
 }
+export default App;

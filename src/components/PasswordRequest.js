@@ -3,10 +3,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -38,11 +35,14 @@ const useStyles = makeStyles((theme) => ({
         width: '100%',
         marginTop: theme.spacing(1),
     },
+    divider: {
+        backgroundColor: " #ffffff",
+    },
 }));
 
 
 
-const Login = () => {
+const PasswordRequest = () => {
     const classes = useStyles();
 
     return (
@@ -53,7 +53,10 @@ const Login = () => {
                     <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                    LOGIN
+                    Forgot your password
+                </Typography>
+                <Typography component="h1" variant="subtitle1">
+                    Enter your email address and we will send you instructions to reset your password.
                 </Typography>
                 <form className={classes.form} noValidate>
                     <TextField
@@ -67,51 +70,27 @@ const Login = () => {
                         name="email"
                         autoComplete="email"
                         autoFocus
-                    />
-                    <TextField
-                        variant="filled"
-                        margin="normal"
-                        id="password"
-                        label="Password"
-                        name="password"
-                        type="password"
-                        autoComplete="current-password"
-                        required
-                        fullWidth
-                    />
-                    <FormControlLabel
-                        control={<Checkbox value="remember" />}
-                        label="Remember me"
-                    />
+                    />< br />< br />
                     <Button
                         type="submit"
                         fullWidth
                         variant="contained"
                         color="primary"
-                    >
-                        LOGIN
-                    </Button>< br />< br />
-
-                    <Grid item xs>
-                        <Link href="#" color="textSecondary" >
-                            Forgot password?
-                        </Link>
-                    </Grid>
-                    < br />
-                    <Divider />< br />
-
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                    >SIGN UP
+                    >RESET MY PASSWORD
                     </Button>
                     < br />< br />< br />
+                    <Divider className={classes.divider} />
+                    < br />
+                    <Typography component="h1" variant="subtitle1">
+                        Alread have login and password? </Typography>
+                    <Typography component="h1" variant="subtitle1">
+                        BACK TO LOGIN</Typography>
+
+                    < br />
                 </form>
             </div>
         </Container>
     );
 }
 
-export default Login;
+export default PasswordRequest;

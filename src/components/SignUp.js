@@ -12,6 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Divider from '@material-ui/core/Divider';
+import { NoEncryption } from '@material-ui/icons';
 
 
 
@@ -23,12 +24,15 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: "rgba(255, 255, 255, 0.23)",
         color: "#ffffff",
         borderRadius: 16,
+        border: 2,
+        borderColor: "primary",
     },
     paper: {
         marginTop: theme.spacing(8),
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
+
     },
     avatar: {
         margin: theme.spacing(1),
@@ -38,11 +42,24 @@ const useStyles = makeStyles((theme) => ({
         width: '100%',
         marginTop: theme.spacing(1),
     },
+
+    divider: {
+        backgroundColor: " #ffffff",
+
+    },
+    loginBtn: {
+        color: "secondry",
+    },
+    input: {
+        backgroundColor: " #ffffff",
+        borderRadius: 6,
+    },
+
 }));
 
 
 
-const Login = () => {
+const SignUp = () => {
     const classes = useStyles();
 
     return (
@@ -53,7 +70,7 @@ const Login = () => {
                     <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                    LOGIN
+                    SIGN UP
                 </Typography>
                 <form className={classes.form} noValidate>
                     <TextField
@@ -62,50 +79,79 @@ const Login = () => {
                         margin="normal"
                         required
                         fullWidth
-                        id="email"
-                        label="Email"
-                        name="email"
-                        autoComplete="email"
+                        id="first name"
+                        placeholder="First name"
+                        name="first name"
                         autoFocus
                     />
                     <TextField
+                        className={classes.input}
+                        variant="filled"
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="last name"
+                        placeholder="Last name"
+                        name="last name"
+                    />
+                    <TextField
+                        className={classes.input}
+                        variant="filled"
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="email"
+                        placeholder="Email"
+                        name="email"
+                        autoComplete="email"
+                    />
+                    <TextField
+                        className={classes.input}
                         variant="filled"
                         margin="normal"
                         id="password"
-                        label="Password"
+                        placeholder="Password"
                         name="password"
                         type="password"
-                        autoComplete="current-password"
                         required
                         fullWidth
                     />
-                    <FormControlLabel
-                        control={<Checkbox value="remember" />}
-                        label="Remember me"
+                    <TextField
+                        className={classes.input}
+                        variant="filled"
+                        margin="normal"
+                        id="Repeat password"
+                        placeholder="Repeat password"
+                        name="repeat password"
+                        type="password"
+                        required
+                        fullWidth
                     />
+
                     <Button
                         type="submit"
                         fullWidth
                         variant="contained"
                         color="primary"
                     >
-                        LOGIN
+                        SIGN UP
                     </Button>< br />< br />
 
                     <Grid item xs>
                         <Link href="#" color="textSecondary" >
-                            Forgot password?
+                            Already have an account
                         </Link>
-                    </Grid>
+                    </Grid>< br />
+                    <Divider className={classes.divider} />
                     < br />
-                    <Divider />< br />
 
                     <Button
+                        className={classes.loginBtn}
                         type="submit"
                         fullWidth
-                        variant="contained"
-                        color="primary"
-                    >SIGN UP
+                        variant="outlined"
+
+                    >LOGIN
                     </Button>
                     < br />< br />< br />
                 </form>
@@ -114,4 +160,4 @@ const Login = () => {
     );
 }
 
-export default Login;
+export default SignUp;

@@ -89,7 +89,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const NewNav = () => {
+const Nav = () => {
   const classes = useStyles();
   const [isOpen, setIsOpen] = useState(false);
   const menu = useRef();
@@ -165,4 +165,4 @@ const NewNav = () => {
   );
 };
 
-export default NewNav;
+export default Nav;
