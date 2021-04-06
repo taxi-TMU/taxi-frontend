@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import {
@@ -124,22 +125,23 @@ const SignUp = () => {
           <br />
 
           <Grid item xs>
-            <Link href="#" color="textSecondary">
-              Already have an account
-            </Link>
+            <Typography component="p" color="textSecondary">
+              Already have an account?
+            </Typography>
           </Grid>
           <br />
           <Divider className={classes.divider} />
           <br />
-
-          <Button
-            className={classes.loginBtn}
-            type="submit"
-            fullWidth
-            variant="outlined"
-          >
-            LOGIN
-          </Button>
+          <Link component={RouterLink} to="/login">
+            <Button
+              className={classes.loginBtn}
+              type="submit"
+              fullWidth
+              variant="outlined"
+            >
+              LOGIN
+            </Button>
+          </Link>
           <br />
           <br />
           <br />

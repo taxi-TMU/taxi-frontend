@@ -1,3 +1,4 @@
+import { Route, Switch, Redirect, useLocation } from 'react-router-dom';
 import { Container, Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import taxiAppBg from './images/taxi-bg.png';
@@ -10,30 +11,38 @@ import PasswordReset from './components/PasswordReset';
 import SignUp from './components/SignUp';
 
 const useStyle = makeStyles((theme) => ({
-  headerBg: {
-    background: `linear-gradient(rgba(35, 47, 55, 0.61), rgba(35, 47, 55, 0.61)),  url(${taxiAppBg})`,
+  headerBg: (props) => ({
+    background: props.background,
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
     border: '3px solid #a3ccc3',
-  },
+  }),
   mainSpace: {
-    padding: '6rem 1rem 10rem 1rem',
+    padding: '0 1rem 6rem 1rem',
   },
   [theme.breakpoints.up('sm')]: {
     mainSpace: {
-      padding: '6rem 2rem 10rem 2rem',
+      padding: '0 2rem 8rem 2rem',
     },
   },
   [theme.breakpoints.up('lg')]: {
     mainSpace: {
-      padding: '12rem 2rem 16rem 2rem',
+      padding: '0 2rem 10rem 2rem',
     },
   },
 }));
 
 const App = () => {
-  const classes = useStyle();
+  const { pathname } = useLocation();
+
+  const props = {
+    background:
+      pathname === '/'
+        ? `linear-gradient(rgba(35, 47, 55, 0.61), rgba(35, 47, 55, 0.61)),  url(${taxiAppBg})`
+        : '#232f37',
+  };
+  const classes = useStyle(props);
 
   return (
     <>
@@ -43,11 +52,24 @@ const App = () => {
             <Nav />
           </Box>
           <Box component="main" className={classes.mainSpace}>
-            <HeroText />
-            <Login />
-            <PasswordRequest />
-            <PasswordReset />
-            <SignUp />
+            <Switch>
+              <Route path="/" exact>
+                <HeroText />
+              </Route>
+              <Route path="/login">
+                <Login />
+              </Route>
+              <Route path="/signup">
+                <SignUp />
+              </Route>
+              <Route path="/reset/request">
+                <PasswordRequest />
+              </Route>
+              <Route path="/reset/update">
+                <PasswordReset />
+              </Route>
+              <Redirect to="/" exact />
+            </Switch>
           </Box>
         </Box>
         <Footer />
