@@ -4,10 +4,10 @@ import taxiAppBg from './images/taxi-bg.png';
 import HeroText from './components/HeroText';
 import Footer from './components/Footer';
 import Nav from './components/Nav';
-import Login from "./components/Login";
-import PasswordRequest from "./components/PasswordRequest";
-import PasswordReset from "./components/PasswordReset";
-import SignUp from "./components/SignUp";
+import Login from './components/LogIn';
+import PasswordRequest from './components/PasswordRequest';
+import PasswordReset from './components/PasswordReset';
+import SignUp from './components/SignUp';
 
 const useStyle = makeStyles((theme) => ({
   headerBg: {
@@ -54,5 +54,5 @@ const App = () => {
       </Container>
     </>
   );
-}
+};
 export default App;
