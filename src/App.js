@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Route, Switch, Redirect, useLocation } from "react-router-dom";
 import { Container, Box } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
@@ -10,7 +10,105 @@ import Login from "./components/LogIn";
 import PasswordRequest from "./components/PasswordRequest";
 import PasswordReset from "./components/PasswordReset";
 import SignUp from "./components/SignUp";
-import { loginUser } from "./utils/auth";
+import { login, getUser, decodeToken, register, logout } from "./utils/auth";
+import UserContext from "./context/UserContext";
+
+const App = () => {
+  const { pathname } = useLocation();
+  const props = {
+    background:
+      pathname === "/"
+        ? `linear-gradient(rgba(35, 47, 55, 0.61), rgba(35, 47, 55, 0.61)), url(${taxiAppBg})`
+        : "#232f37",
+  };
+  const classes = useStyle(props);
+
+  const [user, setUser] = useState();
+  const [credentials, setCredentials] = useState();
+
+  useEffect(() => {
+    checkIfLoggedIn();
+  }, []);
+
+  const handleSetCredentials = (e) => {
+    setCredentials((prevCredentials) => ({
+      ...prevCredentials,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    const isAuthenticated = await login(credentials);
+    if (isAuthenticated) checkIfLoggedIn();
+  };
+
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    const isAuthenticated = await register(credentials);
+    if (isAuthenticated) checkIfLoggedIn();
+  };
+
+  const checkIfLoggedIn = async () => {
+    const response = await decodeToken();
+    let me;
+    if (!response) return logout()
+    if (response) me = await getUser(response._id);
+    setUser(me);
+
+  };
+
+  return (
+    <>
+      <Container disableGutters maxWidth="xl">
+        <UserContext.Provider value={{ user, setUser }}>
+          <Box className={classes.headerBg}>
+            <Box component="header">
+              <Nav />
+            </Box>
+            <Box component="main" className={classes.mainSpace}>
+              <Switch>
+                <Route exact path="/">
+                  <HeroText />
+                </Route>
+                <Route path="/login">
+                  {user ? (
+                    <Redirect to="/" /> // TODO change to dashboard
+                  ) : (
+                    <Login
+                      onLogin={handleLogin}
+                      onSetCredentials={handleSetCredentials}
+                    />
+                  )}
+                </Route>
+                <Route path="/signup">
+                  {user ? (
+                    <Redirect to="/" /> // TODO change to dashboard
+                  ) : (
+                    <SignUp 
+                      onRegister={handleRegister}
+                      onSetCredentials={handleSetCredentials}
+                    />
+                  )}
+                </Route>
+                <Route path="/reset/request">
+                  <PasswordRequest />
+                </Route>
+                <Route path="/reset/update">
+                  <PasswordReset />
+                </Route>
+                <Redirect to="/" exact />
+              </Switch>
+            </Box>
+          </Box>
+        </UserContext.Provider>
+        <Footer />
+      </Container>
+    </>
+  );
+};
+
+export default App;
 
 const useStyle = makeStyles((theme) => ({
   headerBg: (props) => ({
@@ -34,77 +132,3 @@ const useStyle = makeStyles((theme) => ({
     },
   },
 }));
-
-const App = () => {
-  const { pathname } = useLocation();
-  const [credentials, setCredentials] = useState();
-
-  const handleSetCredentials = (e) => {
-    setCredentials((prevCredentials) => ({
-      ...prevCredentials,
-      [e.target.name]: e.target.value,
-    }));
-  };
-
-  const handleAuthentication = async (e) => {
-    e.preventDefault();
-    loginUser(credentials);
-    // try {
-    //   const result = await axios.post(
-    //     `${process.env.REACT_APP_SERVER_URL}/login`,
-    //     {
-    //       email: credentials.email,
-    //       password: credentials.password,
-    //     }
-    //   );
-    //   console.log(result);
-    // } catch (error) {
-    //   console.log(error.message);
-    // }
-  };
-
-  const props = {
-    background:
-      pathname === "/"
-        ? `linear-gradient(rgba(35, 47, 55, 0.61), rgba(35, 47, 55, 0.61)),  url(${taxiAppBg})`
-        : "#232f37",
-  };
-  const classes = useStyle(props);
-
-  return (
-    <>
-      <Container disableGutters maxWidth="xl">
-        <Box className={classes.headerBg}>
-          <Box component="header">
-            <Nav />
-          </Box>
-          <Box component="main" className={classes.mainSpace}>
-            <Switch>
-              <Route path="/" exact>
-                <HeroText />
-              </Route>
-              <Route path="/login">
-                <Login
-                  onLogin={handleAuthentication}
-                  onSetCredentials={handleSetCredentials}
-                />
-              </Route>
-              <Route path="/signup">
-                <SignUp />
-              </Route>
-              <Route path="/reset/request">
-                <PasswordRequest />
-              </Route>
-              <Route path="/reset/update">
-                <PasswordReset />
-              </Route>
-              <Redirect to="/" exact />
-            </Switch>
-          </Box>
-        </Box>
-        <Footer />
-      </Container>
-    </>
-  );
-};
-export default App;
