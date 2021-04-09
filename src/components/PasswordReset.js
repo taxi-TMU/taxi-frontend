@@ -1,47 +1,18 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import {
   Avatar,
   Button,
   TextField,
   Typography,
   Container,
-} from '@material-ui/core';
+} from "@material-ui/core";
+import { useParams } from "react-router-dom";
 
-const useStyles = makeStyles((theme) => ({
-  mainContainer: {
-    backgroundColor: 'rgba(255, 255, 255, 0.23)',
-    color: '#ffffff',
-    borderRadius: 16,
-  },
-  paper: {
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: '#d75f5f',
-  },
-  form: {
-    width: '100%',
-    marginTop: theme.spacing(1),
-    '& label': {
-      color: '#333',
-    },
-  },
-  divider: {
-    backgroundColor: ' #ffffff',
-  },
-  input: {
-    backgroundColor: '#ffffff',
-    borderRadius: 6,
-  },
-}));
+const PasswordReset = ({ onSetUserInput, onResetPassword }) => {
+  let { userId, token } = useParams();
 
-const PasswordReset = () => {
   const classes = useStyles();
 
   return (
@@ -66,8 +37,9 @@ const PasswordReset = () => {
             fullWidth
             id="password"
             label="New password (8 charaters min.)"
-            name="newpassword"
+            name="password"
             autoFocus
+            onChange={(e) => onSetUserInput(e)}
           />
           <TextField
             className={classes.input}
@@ -75,13 +47,22 @@ const PasswordReset = () => {
             margin="normal"
             required
             fullWidth
-            id="password"
+            id="password_repeat"
             label="Confirm new password"
-            name="newpassword"
+            name="password_repeat"
+            onChange={(e) => onSetUserInput(e)}
           />
           <br />
           <br />
-          <Button type="submit" fullWidth variant="contained" color="primary">
+          <Button
+            onClick={(e) => {
+              onResetPassword(e, userId, token);
+            }}
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+          >
             RESET PASSWORD
           </Button>
           <br />
@@ -94,3 +75,35 @@ const PasswordReset = () => {
 };
 
 export default PasswordReset;
+
+const useStyles = makeStyles((theme) => ({
+  mainContainer: {
+    backgroundColor: "rgba(255, 255, 255, 0.23)",
+    color: "#ffffff",
+    borderRadius: 16,
+  },
+  paper: {
+    marginTop: theme.spacing(8),
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: "#d75f5f",
+  },
+  form: {
+    width: "100%",
+    marginTop: theme.spacing(1),
+    "& label": {
+      color: "#333",
+    },
+  },
+  divider: {
+    backgroundColor: " #ffffff",
+  },
+  input: {
+    backgroundColor: "#ffffff",
+    borderRadius: 6,
+  },
+}));
