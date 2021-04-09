@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useContext } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import {
@@ -15,6 +15,144 @@ import {
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import { ReactComponent as Logo } from '../images/logo.svg';
+import UserContext from "../context/UserContext"
+import { logout  } from "../utils/auth";
+
+
+const Nav = () => {
+  const classes = useStyles();
+  const [isOpen, setIsOpen] = useState(false);
+  const menu = useRef();
+
+  const { user, setUser } = useContext(UserContext)
+
+  const handleOpenMenu = (e) => {
+    setIsOpen(!isOpen);
+  };
+
+  return (
+    <Box ref={menu}>
+      <AppBar className={classes.root} position="static">
+        <Box className={classes.languages}>
+          {/* mobile nav */}
+          <Hidden smUp>
+            <IconButton color="inherit" onClick={handleOpenMenu}>
+              <MenuIcon />
+            </IconButton>
+            <Menu
+              open={isOpen}
+              anchorEl={menu.current}
+              onClose={handleOpenMenu}
+              className={classes.mobileMenu}
+            >
+              <MenuItem>
+                <Link className={classes.title}>Quiz</Link>
+              </MenuItem>
+              <MenuItem>
+                <Link className={classes.title}>Categories</Link>
+              </MenuItem>
+              <MenuItem>
+                {user 
+                ? 
+                  <Link className={classes.title}>Dashboard</Link>
+                : 
+                  <Link className={classes.title}>About</Link>
+                }
+              </MenuItem>
+              <MenuItem>
+                {user 
+                  ? 
+                    <Link
+                      className={classes.title}
+                      component={RouterLink}
+                      to="/"
+                      onClick={() => {
+                        logout();
+                        setUser();
+                      }}
+                      >
+                      Logout
+                    </Link>
+                  : <Link
+                      className={classes.title}
+                      component={RouterLink}
+                      to="/login"
+                    > 
+                      Login
+                    </Link>
+
+                }
+              </MenuItem>
+            </Menu>
+          </Hidden>
+          <Typography>EN | DE</Typography>
+        </Box>
+        {/* desktop / tablet  nav */}
+        <Toolbar className={classes.toolbar}>
+          <Box
+            display="flex"
+            justifyContent="center"
+            width="100%"
+            alignItems="center"
+          >
+            <Hidden xsDown>
+              <MenuList className={classes.left} disableListWrap>
+                <MenuItem>
+                  <Link className={classes.title}>Quiz</Link>
+                </MenuItem>
+                <MenuItem>
+                  <Link className={classes.title}>Categories</Link>
+                </MenuItem>
+              </MenuList>
+            </Hidden>
+            {/* Logo  */}
+            <Link component={RouterLink} to="/" className={classes.middle}>
+              <Logo className={classes.logo} />
+            </Link>
+            <Hidden xsDown>
+              <MenuList className={classes.right}>
+       
+                <MenuItem>
+                  {user 
+                  ? 
+                    <Link className={classes.title}>Dashboard</Link>
+                  : 
+                    <Link className={classes.title}>About</Link>
+                  }
+                </MenuItem>
+                <MenuItem>
+                  {user 
+                    ? 
+                      <Link
+                        className={classes.title}
+                        component={RouterLink}
+                        to="/"
+                        onClick={() => {
+                          logout();
+                          setUser();
+                        }}
+                        >
+                        Logout
+                      </Link>
+                    : <Link
+                        className={classes.title}
+                        component={RouterLink}
+                        to="/login"
+                      > 
+                        Login
+                      </Link>
+                  }
+                </MenuItem>
+              </MenuList>
+            </Hidden>
+          </Box>
+        </Toolbar>
+      </AppBar>
+    </Box>
+  );
+};
+
+export default Nav;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -89,96 +227,3 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-
-const Nav = () => {
-  const classes = useStyles();
-  const [isOpen, setIsOpen] = useState(false);
-  const menu = useRef();
-
-  const handleOpenMenu = (e) => {
-    setIsOpen(!isOpen);
-  };
-
-  return (
-    <Box ref={menu}>
-      <AppBar className={classes.root} position="static">
-        <Box className={classes.languages}>
-          {/* mobile nav */}
-          <Hidden smUp>
-            <IconButton color="inherit" onClick={handleOpenMenu}>
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              open={isOpen}
-              anchorEl={menu.current}
-              onClose={handleOpenMenu}
-              className={classes.mobileMenu}
-            >
-              <MenuItem>
-                <Link className={classes.title}>Quiz</Link>
-              </MenuItem>
-              <MenuItem>
-                <Link className={classes.title}>Categories</Link>
-              </MenuItem>
-              <MenuItem>
-                <Link className={classes.title}>About</Link>
-              </MenuItem>
-              <MenuItem>
-                <Link
-                  className={classes.title}
-                  component={RouterLink}
-                  to="/login"
-                >
-                  Login
-                </Link>
-              </MenuItem>
-            </Menu>
-          </Hidden>
-          <Typography>EN | DE</Typography>
-        </Box>
-        {/* desktop / tablet  nav */}
-        <Toolbar className={classes.toolbar}>
-          <Box
-            display="flex"
-            justifyContent="center"
-            width="100%"
-            alignItems="center"
-          >
-            <Hidden xsDown>
-              <MenuList className={classes.left} disableListWrap>
-                <MenuItem>
-                  <Link className={classes.title}>Quiz</Link>
-                </MenuItem>
-                <MenuItem>
-                  <Link className={classes.title}>Categories</Link>
-                </MenuItem>
-              </MenuList>
-            </Hidden>
-            {/* Logo  */}
-            <Link component={RouterLink} to="/" className={classes.middle}>
-              <Logo className={classes.logo} />
-            </Link>
-            <Hidden xsDown>
-              <MenuList className={classes.right}>
-                <MenuItem>
-                  <Link className={classes.title}>About</Link>
-                </MenuItem>
-                <MenuItem>
-                  <Link
-                    className={classes.title}
-                    component={RouterLink}
-                    to="/login"
-                  >
-                    Login
-                  </Link>
-                </MenuItem>
-              </MenuList>
-            </Hidden>
-          </Box>
-        </Toolbar>
-      </AppBar>
-    </Box>
-  );
-};
-
-export default Nav;
