@@ -18,6 +18,7 @@ const useStyle = makeStyles((theme) => ({
     },
   },
   footerCopyright: {
+    textAlign: 'center',
     '&::before': {
       content: '" "',
       width: '90%',
@@ -39,11 +40,9 @@ const useStyle = makeStyles((theme) => ({
   },
   [theme.breakpoints.up('md')]: {
     footerCopyright: {
+      textAlign: 'right',
       '&::before': {
         width: '100%',
-      },
-      '& p': {
-        textAlign: 'right',
       },
     },
   },
@@ -85,7 +84,7 @@ export default function Footer() {
           </MenuList>
         </Box>
         <Box className={classes.footerCopyright}>
-          <Typography align="center" gutterBottom>
+          <Typography component="span" gutterBottom>
             Copyright &copy; Taxi App {new Date().getFullYear()}
           </Typography>
         </Box>

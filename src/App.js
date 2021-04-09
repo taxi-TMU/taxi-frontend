@@ -21,6 +21,29 @@ import {
 } from "./utils/auth";
 import UserContext from "./context/UserContext";
 
+const useStyle = makeStyles((theme) => ({
+  headerBg: (props) => ({
+    background: props.background,
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'cover',
+    border: '3px solid #a3ccc3',
+  }),
+  mainSpace: {
+    padding: '0 1rem 6rem 1rem',
+  },
+  [theme.breakpoints.up('sm')]: {
+    mainSpace: {
+      padding: '0 2rem 8rem 2rem',
+    },
+  },
+  [theme.breakpoints.up('lg')]: {
+    mainSpace: {
+      padding: '0 2rem 10rem 2rem',
+    },
+  },
+}));
+
 const App = () => {
   const { pathname } = useLocation();
   const props = {
@@ -133,26 +156,3 @@ const App = () => {
 };
 
 export default App;
-
-const useStyle = makeStyles((theme) => ({
-  headerBg: (props) => ({
-    background: props.background,
-    backgroundPosition: "center",
-    backgroundRepeat: "no-repeat",
-    backgroundSize: "cover",
-    border: "3px solid #a3ccc3",
-  }),
-  mainSpace: {
-    padding: "0 1rem 6rem 1rem",
-  },
-  [theme.breakpoints.up("sm")]: {
-    mainSpace: {
-      padding: "0 2rem 8rem 2rem",
-    },
-  },
-  [theme.breakpoints.up("lg")]: {
-    mainSpace: {
-      padding: "0 2rem 10rem 2rem",
-    },
-  },
-}));

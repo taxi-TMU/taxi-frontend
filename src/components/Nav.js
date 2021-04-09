@@ -85,7 +85,7 @@ const Nav = () => {
               </MenuItem>
             </Menu>
           </Hidden>
-          <Typography>EN | DE</Typography>
+          <Typography variant="subtitle1">EN | DE</Typography>
         </Box>
         {/* desktop / tablet  nav */}
         <Toolbar className={classes.toolbar}>
