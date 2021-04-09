@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const SignUp = ({ onRegister, onSetCredentials }) => {
+const SignUp = ({ onRegister, onSetUserInput }) => {
   const classes = useStyles();
 
   return (
@@ -75,7 +75,7 @@ const SignUp = ({ onRegister, onSetCredentials }) => {
             label="First name"
             name="first_name"
             autoFocus
-            onChange={onSetCredentials}
+            onChange={onSetUserInput}
           />
           <TextField
             className={classes.input}
@@ -86,7 +86,7 @@ const SignUp = ({ onRegister, onSetCredentials }) => {
             id="last_name"
             label="Last name"
             name="last_name"
-            onChange={onSetCredentials}
+            onChange={onSetUserInput}
           />
           <TextField
             className={classes.input}
@@ -98,7 +98,7 @@ const SignUp = ({ onRegister, onSetCredentials }) => {
             label="Email"
             name="email"
             autoComplete="email"
-            onChange={onSetCredentials}
+            onChange={onSetUserInput}
           />
           <TextField
             className={classes.input}
@@ -110,7 +110,7 @@ const SignUp = ({ onRegister, onSetCredentials }) => {
             type="password"
             required
             fullWidth
-            onChange={onSetCredentials}
+            onChange={onSetUserInput}
           />
           <TextField
             className={classes.input}
@@ -122,7 +122,7 @@ const SignUp = ({ onRegister, onSetCredentials }) => {
             type="password"
             required
             fullWidth
-            onChange={onSetCredentials}
+            onChange={onSetUserInput}
           />
 
           <Button

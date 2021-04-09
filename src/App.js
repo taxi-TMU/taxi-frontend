@@ -24,38 +24,37 @@ const App = () => {
   const classes = useStyle(props);
 
   const [user, setUser] = useState();
-  const [credentials, setCredentials] = useState();
+  const [userInput, seUserInput] = useState();
 
   useEffect(() => {
     checkIfLoggedIn();
   }, []);
 
-  const handleSetCredentials = (e) => {
-    setCredentials((prevCredentials) => ({
-      ...prevCredentials,
+  const handleSetUserInput = (e) => {
+    seUserInput((prevInput) => ({
+      ...prevInput,
       [e.target.name]: e.target.value,
     }));
   };
-
+  // TODO hmmmmmmmm
   const handleLogin = async (e) => {
     e.preventDefault();
-    const isAuthenticated = await login(credentials);
+    const isAuthenticated = await login(userInput);
     if (isAuthenticated) checkIfLoggedIn();
   };
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    const isAuthenticated = await register(credentials);
+    const isAuthenticated = await register(userInput);
     if (isAuthenticated) checkIfLoggedIn();
   };
 
   const checkIfLoggedIn = async () => {
     const response = await decodeToken();
     let me;
-    if (!response) return logout()
+    if (!response) return logout();
     if (response) me = await getUser(response._id);
     setUser(me);
-
   };
 
   return (
@@ -77,7 +76,7 @@ const App = () => {
                   ) : (
                     <Login
                       onLogin={handleLogin}
-                      onSetCredentials={handleSetCredentials}
+                      onSetUserInput={handleSetUserInput}
                     />
                   )}
                 </Route>
@@ -85,14 +84,14 @@ const App = () => {
                   {user ? (
                     <Redirect to="/" /> // TODO change to dashboard
                   ) : (
-                    <SignUp 
+                    <SignUp
                       onRegister={handleRegister}
-                      onSetCredentials={handleSetCredentials}
+                      onSetUserInput={handleSetUserInput}
                     />
                   )}
                 </Route>
                 <Route path="/reset/request">
-                  <PasswordRequest />
+                  <PasswordRequest onSetUserInput={handleSetUserInput} />
                 </Route>
                 <Route path="/reset/update">
                   <PasswordReset />

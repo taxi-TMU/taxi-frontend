@@ -5,17 +5,22 @@ import jwt from "jsonwebtoken";
 const { REACT_APP_SERVER_URL, REACT_APP_NAME } = process.env;
 
 const register = async (credentials) => {
-  const data = await axios.post(
-    `${REACT_APP_SERVER_URL}/signup`,
-    {
-      ...credentials,
-    },
-    { headers: { "Content-Type": "application/json" } }
-  );
-  const token = data.data.token; // TODO fix this shit
-  if (token) {
-    Cookies.set(`${REACT_APP_NAME}-auth-token`, token);
-    return data.data;
+  try {
+    const data = await axios.post(
+      `${REACT_APP_SERVER_URL}/signup`,
+      {
+        ...credentials,
+      },
+      { headers: { "Content-Type": "application/json" } }
+    );
+    const token = data.data.token; // TODO fix this shit
+    if (token) {
+      Cookies.set(`${REACT_APP_NAME}-auth-token`, token);
+      return data.data;
+    }
+  } catch (e) {
+    console.log(e.message);
+    return false;
   }
 };
 
@@ -42,16 +47,21 @@ const logout = () => {
 };
 
 const getUser = async (userId) => {
-  const user = await axios.get(`${REACT_APP_SERVER_URL}/api/v1/user/${userId}`);
-  const userInfos = {
-    id: user.data._id,
-    first_name: user.data.first_name,
-    last_name: user.data.last_name,
-    email: user.data.email,
-    createdAt: user.data.createdAt,
-  };
-
-  return userInfos;
+  try {
+    const user = await axios.get(
+      `${REACT_APP_SERVER_URL}/api/v1/user/${userId}`
+    );
+    const userInfos = {
+      id: user.data._id,
+      first_name: user.data.first_name,
+      last_name: user.data.last_name,
+      email: user.data.email,
+      createdAt: user.data.createdAt,
+    };
+    return userInfos;
+  } catch (e) {
+    console.log(e.message);
+  }
 };
 
 const decodeToken = () => {
