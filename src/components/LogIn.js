@@ -1,7 +1,7 @@
-import React from 'react';
-import { Link as RouterLink } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import React from "react";
+import { Link as RouterLink } from "react-router-dom";
+import { makeStyles } from "@material-ui/core/styles";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import {
   Avatar,
   Button,
@@ -13,50 +13,50 @@ import {
   Typography,
   Container,
   Divider,
-} from '@material-ui/core';
+} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   mainContainer: {
-    backgroundColor: 'rgba(255, 255, 255, 0.23)',
-    color: '#ffffff',
+    backgroundColor: "rgba(255, 255, 255, 0.23)",
+    color: "#ffffff",
     borderRadius: 16,
-    '& a:hover': {
-      textDecoration: 'none',
+    "& a:hover": {
+      textDecoration: "none",
     },
   },
   paper: {
     marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: '#d75f5f',
+    backgroundColor: "#d75f5f",
   },
   form: {
-    width: '100%',
+    width: "100%",
     marginTop: theme.spacing(1),
-    '& label': {
-      color: '#333',
+    "& label": {
+      color: "#333",
     },
   },
   input: {
-    backgroundColor: '#ffffff',
+    backgroundColor: "#ffffff",
     borderRadius: 6,
   },
   divider: {
-    backgroundColor: ' #ffffff',
+    backgroundColor: " #ffffff",
   },
   checkbox: {
-    color: '#fff',
-    '& span': {
-      color: '#fff',
+    color: "#fff",
+    "& span": {
+      color: "#fff",
     },
   },
 }));
 
-const Login = () => {
+const Login = ({ onLogin, onSetUserInput }) => {
   const classes = useStyles();
 
   return (
@@ -80,6 +80,7 @@ const Login = () => {
             name="email"
             autoComplete="email"
             autoFocus
+            onChange={(e) => onSetUserInput(e)}
           />
           <TextField
             className={classes.input}
@@ -92,13 +93,20 @@ const Login = () => {
             autoComplete="current-password"
             required
             fullWidth
+            onChange={(e) => onSetUserInput(e)}
           />
           <FormControlLabel
             control={<Checkbox value="remember" />}
             label="Remember me"
             className={classes.checkbox}
           />
-          <Button type="submit" fullWidth variant="contained" color="primary">
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            onClick={onLogin}
+          >
             LOGIN
           </Button>
           <br />

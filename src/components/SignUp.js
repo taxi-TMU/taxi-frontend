@@ -1,7 +1,7 @@
-import React from 'react';
-import { Link as RouterLink } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import React from "react";
+import { Link as RouterLink } from "react-router-dom";
+import { makeStyles } from "@material-ui/core/styles";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import {
   Avatar,
   Button,
@@ -11,46 +11,47 @@ import {
   Typography,
   Container,
   Divider,
-} from '@material-ui/core';
+} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   mainContainer: {
-    backgroundColor: 'rgba(255, 255, 255, 0.23)',
-    color: '#ffffff',
+    backgroundColor: "rgba(255, 255, 255, 0.23)",
+    color: "#ffffff",
     borderRadius: 16,
     border: 2,
-    borderColor: 'primary',
+    borderColor: "primary",
   },
   paper: {
     marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: '#d75f5f',
+    backgroundColor: "#d75f5f",
   },
   form: {
-    width: '100%',
+    width: "100%",
     marginTop: theme.spacing(1),
-    '& label': {
-      color: '#333',
+    "& label": {
+      color: "#333",
     },
   },
   divider: {
-    backgroundColor: ' #ffffff',
+    backgroundColor: " #ffffff",
   },
   loginBtn: {
-    color: 'secondry',
+    color: "secondry",
   },
   input: {
-    backgroundColor: '#ffffff',
+    backgroundColor: "#ffffff",
     borderRadius: 6,
   },
 }));
 
-const SignUp = () => {
+
+const SignUp = ({ onRegister, onSetUserInput }) => {
   const classes = useStyles();
 
   return (
@@ -63,16 +64,18 @@ const SignUp = () => {
           SIGN UP
         </Typography>
         <form className={classes.form} noValidate>
+        {/* TODO TEXTFIELD VALIDATIONS */}
           <TextField
             className={classes.input}
             variant="filled"
             margin="normal"
             required
             fullWidth
-            id="first name"
+            id="first_name"
             label="First name"
-            name="first name"
+            name="first_name"
             autoFocus
+            onChange={onSetUserInput}
           />
           <TextField
             className={classes.input}
@@ -80,9 +83,10 @@ const SignUp = () => {
             margin="normal"
             required
             fullWidth
-            id="last name"
+            id="last_name"
             label="Last name"
-            name="last name"
+            name="last_name"
+            onChange={onSetUserInput}
           />
           <TextField
             className={classes.input}
@@ -94,6 +98,7 @@ const SignUp = () => {
             label="Email"
             name="email"
             autoComplete="email"
+            onChange={onSetUserInput}
           />
           <TextField
             className={classes.input}
@@ -105,6 +110,7 @@ const SignUp = () => {
             type="password"
             required
             fullWidth
+            onChange={onSetUserInput}
           />
           <TextField
             className={classes.input}
@@ -116,9 +122,16 @@ const SignUp = () => {
             type="password"
             required
             fullWidth
+            onChange={onSetUserInput}
           />
 
-          <Button type="submit" fullWidth variant="contained" color="primary">
+          <Button
+            onClick={onRegister}
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+          >
             SIGN UP
           </Button>
           <br />
