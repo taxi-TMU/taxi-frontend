@@ -1,7 +1,7 @@
-import React from 'react';
-import { Link as RouterLink } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import React from "react";
+import { Link as RouterLink } from "react-router-dom";
+import { makeStyles } from "@material-ui/core/styles";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import {
   Avatar,
   Button,
@@ -10,44 +10,9 @@ import {
   Container,
   Divider,
   Link,
-} from '@material-ui/core';
+} from "@material-ui/core";
 
-const useStyles = makeStyles((theme) => ({
-  mainContainer: {
-    backgroundColor: 'rgba(255, 255, 255, 0.23)',
-    color: '#ffffff',
-    borderRadius: 16,
-    '& a': {
-      color: '#fff',
-    },
-  },
-  paper: {
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: '#d75f5f',
-  },
-  form: {
-    width: '100%',
-    marginTop: theme.spacing(1),
-    '& label': {
-      color: '#333',
-    },
-  },
-  divider: {
-    backgroundColor: ' #ffffff',
-  },
-  input: {
-    backgroundColor: '#ffffff',
-    borderRadius: 6,
-  },
-}));
-
-const PasswordRequest = ({ onSetUserInput }) => {
+const PasswordRequest = ({ onSetUserInput, onRequestPassword }) => {
   const classes = useStyles();
 
   return (
@@ -79,7 +44,13 @@ const PasswordRequest = ({ onSetUserInput }) => {
           />
           <br />
           <br />
-          <Button type="submit" fullWidth variant="contained" color="primary">
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            onClick={onRequestPassword}
+          >
             RESET MY PASSWORD
           </Button>
           <br />
@@ -105,3 +76,38 @@ const PasswordRequest = ({ onSetUserInput }) => {
 };
 
 export default PasswordRequest;
+
+const useStyles = makeStyles((theme) => ({
+  mainContainer: {
+    backgroundColor: "rgba(255, 255, 255, 0.23)",
+    color: "#ffffff",
+    borderRadius: 16,
+    "& a": {
+      color: "#fff",
+    },
+  },
+  paper: {
+    marginTop: theme.spacing(8),
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: "#d75f5f",
+  },
+  form: {
+    width: "100%",
+    marginTop: theme.spacing(1),
+    "& label": {
+      color: "#333",
+    },
+  },
+  divider: {
+    backgroundColor: " #ffffff",
+  },
+  input: {
+    backgroundColor: "#ffffff",
+    borderRadius: 6,
+  },
+}));

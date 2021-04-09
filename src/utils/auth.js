@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 
 const { REACT_APP_SERVER_URL, REACT_APP_NAME } = process.env;
 
+// ---------------------------------------------------------------- >> REGISTER
 const register = async (credentials) => {
   try {
     const data = await axios.post(
@@ -13,7 +14,7 @@ const register = async (credentials) => {
       },
       { headers: { "Content-Type": "application/json" } }
     );
-    const token = data.data.token; // TODO fix this shit
+    const token = data.headers["x-authorization-token"];
     if (token) {
       Cookies.set(`${REACT_APP_NAME}-auth-token`, token);
       return data.data;
@@ -24,13 +25,14 @@ const register = async (credentials) => {
   }
 };
 
+// ------------------------------------------------------------------- >> LOGIN
 const login = async (credentials) => {
   try {
     const data = await axios.post(`${REACT_APP_SERVER_URL}/login`, {
       ...credentials,
     });
 
-    const token = data.data.token; // TODO fix this shit
+    const token = data.headers["x-authorization-token"];
     if (token) {
       Cookies.set(`${REACT_APP_NAME}-auth-token`, token);
       return data.data;
@@ -41,11 +43,39 @@ const login = async (credentials) => {
   }
 };
 
+// ------------------------------------------------------------------ >> LOGOUT
 const logout = () => {
-  console.log("user loggin outs");
   Cookies.remove(`${REACT_APP_NAME}-auth-token`, { path: "/" });
 };
 
+// -------------------------------------------------------- >> REQUEST PASSWORD
+const requestPasswordReset = async (email) => {
+  try {
+    await axios.post(`${REACT_APP_SERVER_URL}/resetPasswordRequest`, {
+      ...email,
+    });
+    return true;
+  } catch (e) {
+    console.log(e.message);
+    return false;
+  }
+};
+
+// ---------------------------------------------------------- >> RESET PASSWORD
+const resetPassword = async (password, userId, token) => {
+
+  try {
+    await axios.post(`${REACT_APP_SERVER_URL}/resetPassword`, {
+      password: password.password, userId, token
+    });
+    return true;
+  } catch (e) {
+    console.log(e.message);
+    return false;
+  }
+};
+
+// ---------------------------------------------------------------- >> GET USER
 const getUser = async (userId) => {
   try {
     const user = await axios.get(
@@ -64,6 +94,7 @@ const getUser = async (userId) => {
   }
 };
 
+// ------------------------------------------------------------ >> DECODE TOKEN
 const decodeToken = () => {
   const token = Cookies.get(`${REACT_APP_NAME}-auth-token`);
   let decodedToken;
@@ -77,4 +108,12 @@ const decodeToken = () => {
   return decodedToken;
 };
 
-export { login, logout, getUser, decodeToken, register };
+export {
+  login,
+  logout,
+  getUser,
+  decodeToken,
+  register,
+  requestPasswordReset,
+  resetPassword,
+};

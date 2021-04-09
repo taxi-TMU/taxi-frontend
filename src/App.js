@@ -10,7 +10,15 @@ import Login from "./components/LogIn";
 import PasswordRequest from "./components/PasswordRequest";
 import PasswordReset from "./components/PasswordReset";
 import SignUp from "./components/SignUp";
-import { login, getUser, decodeToken, register, logout } from "./utils/auth";
+import {
+  login,
+  getUser,
+  decodeToken,
+  register,
+  logout,
+  requestPasswordReset,
+  resetPassword,
+} from "./utils/auth";
 import UserContext from "./context/UserContext";
 
 const App = () => {
@@ -36,7 +44,18 @@ const App = () => {
       [e.target.name]: e.target.value,
     }));
   };
-  // TODO hmmmmmmmm
+
+  const handlePasswordRequest = async (e) => {
+    e.preventDefault();
+    await requestPasswordReset(userInput);
+  };
+
+  const handlePasswordReset = async (e, userId, token) => {
+    e.preventDefault();
+    const reset = await resetPassword(userInput, userId, token);
+    console.log(reset);
+  };
+
   const handleLogin = async (e) => {
     e.preventDefault();
     const isAuthenticated = await login(userInput);
@@ -91,10 +110,16 @@ const App = () => {
                   )}
                 </Route>
                 <Route path="/reset/request">
-                  <PasswordRequest onSetUserInput={handleSetUserInput} />
+                  <PasswordRequest
+                    onRequestPassword={handlePasswordRequest}
+                    onSetUserInput={handleSetUserInput}
+                  />
                 </Route>
-                <Route path="/reset/update">
-                  <PasswordReset />
+                <Route exact path="/reset/password/:userId/:token">
+                  <PasswordReset
+                    onResetPassword={handlePasswordReset}
+                    onSetUserInput={handleSetUserInput}
+                  />
                 </Route>
                 <Redirect to="/" exact />
               </Switch>
