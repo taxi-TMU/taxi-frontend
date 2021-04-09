@@ -9,6 +9,7 @@ import Login from './components/LogIn';
 import PasswordRequest from './components/PasswordRequest';
 import PasswordReset from './components/PasswordReset';
 import SignUp from './components/SignUp';
+import Dashboard from './components/Dashboard';
 
 const useStyle = makeStyles((theme) => ({
   headerBg: (props) => ({
@@ -67,6 +68,9 @@ const App = () => {
               </Route>
               <Route path="/reset/update">
                 <PasswordReset />
+              </Route>
+              <Route path="/dashboard/:id">
+                <Dashboard />
               </Route>
               <Redirect to="/" exact />
             </Switch>
