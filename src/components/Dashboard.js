@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import { useState, useRef, useContext } from 'react';
+import UserContext from '../context/UserContext';
 import api from '../services/api';
 import validator from 'validator';
 import {
@@ -100,14 +100,10 @@ const props = {
 // dashboard component
 //--------------------------------------------
 export default function Dashboard() {
-  const [user, setUser] = useState();
+  const { user, setUser } = useContext(UserContext);
   const [userUpdateProfile, setUserUpdateProfile] = useState();
-  const [userUpdatePass, setUserUpdatePass] = useState({
-    userId: '',
-    old_password: '',
-    password: '',
-  });
-  const [isLoading, setIsLoading] = useState();
+  const [userUpdatePass, setUserUpdatePass] = useState();
+  // const [isLoading, setIsLoading] = useState();
   const [isUpdating, setIsUpdating] = useState(false);
   const [isError, setIsError] = useState({
     isProfileError: false,
@@ -121,37 +117,18 @@ export default function Dashboard() {
     successProfileMsg: null,
     successPassMsg: null,
   });
-  const params = useParams();
   const gearIcon = useRef();
   const classes = useStyles(props);
-
-  //--------------------------------------------
-  // get user data
-  //--------------------------------------------
-  useEffect(() => {
-    getUser(params.id);
-  }, [params.id]);
-
-  const getUser = async (userId) => {
-    setIsLoading(true);
-    try {
-      const res = await api.get(`/user/${userId}`);
-      setUser(res.data);
-      setUserUpdatePass((prevState) => ({
-        ...prevState,
-        userId: res.data._id,
-      }));
-      setIsLoading(false);
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   //--------------------------------------------
   // activate user update
   //--------------------------------------------
   const handleClickUpdateUser = (e) => {
     setUserUpdateProfile(user);
+    setUserUpdatePass((prevState) => ({
+      ...prevState,
+      userId: user.id,
+    }));
     userUpdateStatus(!isUpdating);
     setIsUpdating((prevState) => !prevState);
   };
@@ -187,7 +164,7 @@ export default function Dashboard() {
 
   const updateUserProfile = async (data) => {
     try {
-      const res = await api.put(`/user/${user._id}`, data);
+      const res = await api.put(`/user/${user.id}`, data);
       setIsSuccess((prevState) => ({
         ...prevState,
         isProfileSuccess: true,
@@ -195,6 +172,7 @@ export default function Dashboard() {
       }));
       setUser(res.data.obj);
     } catch (err) {
+      console.log(err.response);
       if (err.response) {
         setIsError((prevState) => ({
           ...prevState,
@@ -248,6 +226,7 @@ export default function Dashboard() {
         successPassMsg: res.data,
       }));
     } catch (err) {
+      console.log(err.response);
       const checkTypeOfError = err.response.data.hasOwnProperty('msg')
         ? [err.response.data]
         : err.response.data.errors.errors;
@@ -258,6 +237,7 @@ export default function Dashboard() {
           errorPassMsg: checkTypeOfError,
         }));
       } else if (err.request) {
+        console.log(err.request);
         setIsError((prevState) => ({
           ...prevState,
           isPassError: true,
@@ -304,11 +284,11 @@ export default function Dashboard() {
         >
           Dashboard
         </Typography>
-        {isLoading && (
+        {/* {isLoading && (
           <Box textAlign="center" pb={6}>
             <CircularProgress color="primary" />
           </Box>
-        )}
+        )} */}
         {user && (
           <Grid container className={classes.userBox}>
             <Grid container item xs={12} md={6} justify="center">

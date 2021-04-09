@@ -20,6 +20,7 @@ import {
   resetPassword,
 } from "./utils/auth";
 import UserContext from "./context/UserContext";
+import Dashboard from './components/Dashboard';
 
 const useStyle = makeStyles((theme) => ({
   headerBg: (props) => ({
@@ -114,7 +115,7 @@ const App = () => {
                 </Route>
                 <Route path="/login">
                   {user ? (
-                    <Redirect to="/" /> // TODO change to dashboard
+                    <Redirect to="/dashboard" /> // TODO change to dashboard
                   ) : (
                     <Login
                       onLogin={handleLogin}
@@ -143,6 +144,9 @@ const App = () => {
                     onResetPassword={handlePasswordReset}
                     onSetUserInput={handleSetUserInput}
                   />
+                </Route>
+                <Route path="/dashboard">
+                    <Dashboard />
                 </Route>
                 <Redirect to="/" exact />
               </Switch>

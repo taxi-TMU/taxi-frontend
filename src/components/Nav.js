@@ -115,7 +115,7 @@ const Nav = () => {
                 <MenuItem>
                   {user 
                   ? 
-                    <Link className={classes.title}>Dashboard</Link>
+                    <Link component={RouterLink} to="/dashboard" className={classes.title}>Dashboard</Link>
                   : 
                     <Link className={classes.title}>About</Link>
                   }
