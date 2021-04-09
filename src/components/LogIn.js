@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Login = ({ onLogin, onSetCredentials }) => {
+const Login = ({ onLogin, onSetUserInput }) => {
   const classes = useStyles();
 
   return (
@@ -80,7 +80,7 @@ const Login = ({ onLogin, onSetCredentials }) => {
             name="email"
             autoComplete="email"
             autoFocus
-            onChange={(e) => onSetCredentials(e)}
+            onChange={(e) => onSetUserInput(e)}
           />
           <TextField
             className={classes.input}
@@ -93,7 +93,7 @@ const Login = ({ onLogin, onSetCredentials }) => {
             autoComplete="current-password"
             required
             fullWidth
-            onChange={(e) => onSetCredentials(e)}
+            onChange={(e) => onSetUserInput(e)}
           />
           <FormControlLabel
             control={<Checkbox value="remember" />}

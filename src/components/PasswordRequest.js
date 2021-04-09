@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const PasswordRequest = () => {
+const PasswordRequest = ({ onSetUserInput }) => {
   const classes = useStyles();
 
   return (
@@ -75,6 +75,7 @@ const PasswordRequest = () => {
             name="email"
             autoComplete="email"
             autoFocus
+            onChange={(e) => onSetUserInput(e)}
           />
           <br />
           <br />
