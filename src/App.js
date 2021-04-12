@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Route, Switch, Redirect, useLocation } from "react-router-dom";
+import {
+  Route,
+  Switch,
+  Redirect,
+  useLocation,
+  useHistory,
+} from "react-router-dom";
 import { Container, Box } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import taxiAppBg from "./images/taxi-bg.png";
@@ -20,32 +26,35 @@ import {
   resetPassword,
 } from "./utils/auth";
 import UserContext from "./context/UserContext";
-import Dashboard from './components/Dashboard';
+import Dashboard from "./components/Dashboard";
+import ProtectedRoute from "./components/ProtectedRoute";
+import QuizTest from "./components/QuizTest";
 
 const useStyle = makeStyles((theme) => ({
   headerBg: (props) => ({
     background: props.background,
-    backgroundPosition: 'center',
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: 'cover',
-    border: '3px solid #a3ccc3',
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
+    border: "3px solid #a3ccc3",
   }),
   mainSpace: {
-    padding: '0 1rem 6rem 1rem',
+    padding: "0 1rem 6rem 1rem",
   },
-  [theme.breakpoints.up('sm')]: {
+  [theme.breakpoints.up("sm")]: {
     mainSpace: {
-      padding: '0 2rem 8rem 2rem',
+      padding: "0 2rem 8rem 2rem",
     },
   },
-  [theme.breakpoints.up('lg')]: {
+  [theme.breakpoints.up("lg")]: {
     mainSpace: {
-      padding: '0 2rem 10rem 2rem',
+      padding: "0 2rem 10rem 2rem",
     },
   },
 }));
 
 const App = () => {
+  const history = useHistory();
   const { pathname } = useLocation();
   const props = {
     background:
@@ -113,7 +122,7 @@ const App = () => {
                 <Route exact path="/">
                   <HeroText />
                 </Route>
-                <Route path="/login">
+                <Route exact path="/login">
                   {user ? (
                     <Redirect to="/dashboard" /> // TODO change to dashboard
                   ) : (
@@ -145,9 +154,12 @@ const App = () => {
                     onSetUserInput={handleSetUserInput}
                   />
                 </Route>
-                <Route path="/dashboard">
-                    <Dashboard />
-                </Route>
+                <ProtectedRoute path="/dashboard" component={Dashboard} />
+                <ProtectedRoute path="/quiztest" component={QuizTest} />
+
+                {/* <Route path="/dashboard">
+                  <Dashboard />
+                </Route> */}
                 <Redirect to="/" exact />
               </Switch>
             </Box>

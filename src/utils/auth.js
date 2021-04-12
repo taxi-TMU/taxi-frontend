@@ -63,10 +63,11 @@ const requestPasswordReset = async (email) => {
 
 // ---------------------------------------------------------- >> RESET PASSWORD
 const resetPassword = async (password, userId, token) => {
-
   try {
     await axios.post(`${REACT_APP_SERVER_URL}/resetPassword`, {
-      password: password.password, userId, token
+      password: password.password,
+      userId,
+      token,
     });
     return true;
   } catch (e) {
@@ -78,9 +79,7 @@ const resetPassword = async (password, userId, token) => {
 // ---------------------------------------------------------------- >> GET USER
 const getUser = async (userId) => {
   try {
-    const user = await axios.get(
-      `${REACT_APP_SERVER_URL}/user/${userId}`
-    );
+    const user = await axios.get(`${REACT_APP_SERVER_URL}/user/${userId}`);
     const userInfos = {
       id: user.data._id,
       first_name: user.data.first_name,
@@ -97,15 +96,27 @@ const getUser = async (userId) => {
 // ------------------------------------------------------------ >> DECODE TOKEN
 const decodeToken = () => {
   const token = Cookies.get(`${REACT_APP_NAME}-auth-token`);
-  let decodedToken;
+  let decodedToken; // undefined ===> falsy
   try {
     if (token) {
-      decodedToken = jwt.decode(token);
+      decodedToken = jwt.decode(token); // decode !== verify
+      // decodedToken ===> truthy
     }
   } catch (e) {
     console.log(e.message);
   }
-  return decodedToken;
+  return decodedToken; // undefined
+};
+
+//--------------------------------------------
+// VERIFY TOKEN FOR PROTECTED ROUTE
+//--------------------------------------------
+axios.defaults.baseURL = REACT_APP_SERVER_URL;
+const setAuthHeaders = () => {
+  const token = Cookies.get(`${REACT_APP_NAME}-auth-token`);
+  if (token) {
+    axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+  }
 };
 
 export {
@@ -116,4 +127,5 @@ export {
   register,
   requestPasswordReset,
   resetPassword,
+  setAuthHeaders,
 };

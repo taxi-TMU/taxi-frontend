@@ -1,7 +1,7 @@
-import { useState, useRef, useContext } from 'react';
-import UserContext from '../context/UserContext';
-import api from '../services/api';
-import validator from 'validator';
+import { useState, useRef, useContext } from "react";
+import UserContext from "../context/UserContext";
+import api from "../services/api";
+import validator from "validator";
 import {
   Box,
   Typography,
@@ -11,71 +11,71 @@ import {
   CircularProgress,
   Button,
   TextField,
-} from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
-import { makeStyles } from '@material-ui/core/styles';
-import { SettingsOutlined, Person, Lock } from '@material-ui/icons';
-import theme from '../theme';
+} from "@material-ui/core";
+import { Alert } from "@material-ui/lab";
+import { makeStyles } from "@material-ui/core/styles";
+import { SettingsOutlined, Person, Lock } from "@material-ui/icons";
+import theme from "../theme";
 
 const useStyles = makeStyles((theme) => ({
   dashboardBox: {
-    margin: '2rem auto',
-    backgroundColor: 'rgba(255, 255, 255, 0.23)',
-    border: '2px solid #fff',
-    color: '#fff',
+    margin: "2rem auto",
+    backgroundColor: "rgba(255, 255, 255, 0.23)",
+    border: "2px solid #fff",
+    color: "#fff",
     borderRadius: 10,
-    padding: '0.5rem',
-    [theme.breakpoints.up('sm')]: {
-      width: '80%',
-      padding: '1.5rem',
+    padding: "0.5rem",
+    [theme.breakpoints.up("sm")]: {
+      width: "80%",
+      padding: "1.5rem",
     },
   },
   dashboardTitle: {
-    fontWeight: '300',
-    fontStyle: 'italic',
-    padding: '2rem 0',
+    fontWeight: "300",
+    fontStyle: "italic",
+    padding: "2rem 0",
   },
   userBox: {
-    paddingBottom: '2rem',
-    [theme.breakpoints.up('sm')]: {
-      alignItems: 'center',
+    paddingBottom: "2rem",
+    [theme.breakpoints.up("sm")]: {
+      alignItems: "center",
     },
   },
   userAvatar: (props) => ({
-    width: '10rem',
-    height: '10rem',
-    fontSize: '4rem',
+    width: "10rem",
+    height: "10rem",
+    fontSize: "4rem",
     backgroundColor: props.avatarFallbackBg,
   }),
   userProfileBox: {
-    padding: '2rem 0',
+    padding: "2rem 0",
   },
   userProfileBoxTitle: {
-    padding: '2rem 0',
+    padding: "2rem 0",
   },
   userIcon: {
-    width: '100%',
-    textAlign: 'center',
+    width: "100%",
+    textAlign: "center",
   },
   divider: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
   },
   darkRow: {
-    backgroundColor: 'rgba(35, 47, 55, 0.6)',
-    padding: '0.5rem',
+    backgroundColor: "rgba(35, 47, 55, 0.6)",
+    padding: "0.5rem",
   },
   lightRow: {
-    backgroundColor: 'rgba(35, 47, 55, 0.2)',
-    padding: '0.5rem',
+    backgroundColor: "rgba(35, 47, 55, 0.2)",
+    padding: "0.5rem",
   },
   settingsIcon: {
-    cursor: 'pointer',
+    cursor: "pointer",
   },
   updateForm: {
-    padding: '2rem 0',
-    width: '100%',
-    '& input': {
-      color: '#fff',
+    padding: "2rem 0",
+    width: "100%",
+    "& input": {
+      color: "#fff",
     },
   },
 }));
@@ -157,7 +157,7 @@ export default function Dashboard() {
       setIsError((prevState) => ({
         ...prevState,
         isProfileError: true,
-        errorProfileMsg: [{ msg: 'Please fill all fields', param: 'required' }],
+        errorProfileMsg: [{ msg: "Please fill all fields", param: "required" }],
       }));
     }
   };
@@ -212,7 +212,7 @@ export default function Dashboard() {
       setIsError((prevState) => ({
         ...prevState,
         isPassError: true,
-        errorPassMsg: [{ msg: 'Please fill all fields', param: 'required' }],
+        errorPassMsg: [{ msg: "Please fill all fields", param: "required" }],
       }));
     }
   };
@@ -227,7 +227,7 @@ export default function Dashboard() {
       }));
     } catch (err) {
       console.log(err.response);
-      const checkTypeOfError = err.response.data.hasOwnProperty('msg')
+      const checkTypeOfError = err.response.data.hasOwnProperty("msg")
         ? [err.response.data]
         : err.response.data.errors.errors;
       if (err.response) {
@@ -255,7 +255,7 @@ export default function Dashboard() {
       gearIcon.current.style.color = theme.palette.primary.main;
     } else {
       resetAlertMessages();
-      gearIcon.current.style.color = '#fff';
+      gearIcon.current.style.color = "#fff";
     }
   };
 
@@ -284,6 +284,18 @@ export default function Dashboard() {
         >
           Dashboard
         </Typography>
+        <Typography
+          component="h1"
+          variant="h5"
+          align="center"
+          color="textPrimary"
+          gutterBottom
+        >
+          Welcome{" "}
+          {`${
+            user.first_name.charAt(0).toUpperCase() + user.first_name.slice(1)
+          }`}
+        </Typography>
         {/* {isLoading && (
           <Box textAlign="center" pb={6}>
             <CircularProgress color="primary" />
@@ -293,7 +305,7 @@ export default function Dashboard() {
           <Grid container className={classes.userBox}>
             <Grid container item xs={12} md={6} justify="center">
               <Avatar alt="user avatar" src="" className={classes.userAvatar}>
-                {user.first_name.split('')[0].toUpperCase()}
+                {user.first_name.split("")[0].toUpperCase()}
               </Avatar>
             </Grid>
             <Grid
