@@ -8,7 +8,7 @@ import {
   Grid,
   Avatar,
   Divider,
-  CircularProgress,
+  // CircularProgress,
   Button,
   TextField,
 } from '@material-ui/core';

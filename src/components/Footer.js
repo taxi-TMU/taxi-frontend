@@ -68,10 +68,10 @@ export default function Footer() {
         >
           <MenuList>
             <MenuItem>
-              <Link>Quiz</Link>
+              <Link to="!#">Simulation</Link>
             </MenuItem>
             <MenuItem>
-              <Link>Test</Link>
+              <Link to="!#">Training</Link>
             </MenuItem>
           </MenuList>
           <MenuList>

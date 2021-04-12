@@ -9,7 +9,11 @@ import Nav from "./components/Nav";
 import Login from "./components/LogIn";
 import PasswordRequest from "./components/PasswordRequest";
 import PasswordReset from "./components/PasswordReset";
+import SelectCategory from "./components/SelectCategory";
 import SignUp from "./components/SignUp";
+import Training from "./components/Training";
+import StartSimulation from "./components/StartSimulation";
+
 import {
   login,
   getUser,
@@ -20,27 +24,27 @@ import {
   resetPassword,
 } from "./utils/auth";
 import UserContext from "./context/UserContext";
-import Dashboard from './components/Dashboard';
+import Dashboard from "./components/Dashboard";
 
 const useStyle = makeStyles((theme) => ({
   headerBg: (props) => ({
     background: props.background,
-    backgroundPosition: 'center',
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: 'cover',
-    border: '3px solid #a3ccc3',
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
+    border: "3px solid #a3ccc3",
   }),
   mainSpace: {
-    padding: '0 1rem 6rem 1rem',
+    padding: "0 1rem 6rem 1rem",
   },
-  [theme.breakpoints.up('sm')]: {
+  [theme.breakpoints.up("sm")]: {
     mainSpace: {
-      padding: '0 2rem 8rem 2rem',
+      padding: "0 2rem 8rem 2rem",
     },
   },
-  [theme.breakpoints.up('lg')]: {
+  [theme.breakpoints.up("lg")]: {
     mainSpace: {
-      padding: '0 2rem 10rem 2rem',
+      padding: "0 2rem 10rem 2rem",
     },
   },
 }));
@@ -76,8 +80,7 @@ const App = () => {
 
   const handlePasswordReset = async (e, userId, token) => {
     e.preventDefault();
-    const reset = await resetPassword(userInput, userId, token);
-    console.log(reset);
+    await resetPassword(userInput, userId, token);
   };
 
   const handleLogin = async (e) => {
@@ -146,8 +149,19 @@ const App = () => {
                   />
                 </Route>
                 <Route path="/dashboard">
-                    <Dashboard />
+                  <Dashboard />
                 </Route>
+
+                <Route exact path="/categories">
+                  <SelectCategory />
+                </Route>
+                <Route exact path="/training/:id">
+                  <Training />
+                </Route>
+                <Route exact path="/simulation">
+                  <StartSimulation />
+                </Route>
+
                 <Redirect to="/" exact />
               </Switch>
             </Box>
