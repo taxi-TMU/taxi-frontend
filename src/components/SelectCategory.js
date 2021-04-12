@@ -72,12 +72,12 @@ const SelectCategory = () => {
                 {category.sub_categories &&
                   category.sub_categories.map((sub, index) => {
                     return (
-                      // <Link
-                      //   to={`/training/${sub._id}`} // set id to training id
-                      //   component={RouterLink}
-                      //   key={sub._id}
-                      //   className={classes.links}
-                      // >
+                      <Link
+                        to={`/training/${sub._id}`} // TODO set to training id
+                        component={RouterLink}
+                        key={sub._id}
+                        className={classes.links}
+                      >
                       <AccordionDetails
                         key={sub._id}
                         className={classes.details}
@@ -90,7 +90,7 @@ const SelectCategory = () => {
                       >
                         <Typography>{sub.name}</Typography>
                       </AccordionDetails>
-                      // </Link>
+                      </Link>
                     );
                   })}
               </Accordion>
