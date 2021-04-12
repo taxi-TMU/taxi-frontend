@@ -119,7 +119,7 @@ const App = () => {
                 </Route>
                 <Route path="/login">
                   {user ? (
-                    <Redirect to="/dashboard" /> // TODO change to dashboard
+                    <Redirect to="/dashboard" /> 
                   ) : (
                     <Login
                       onLogin={handleLogin}
@@ -129,7 +129,7 @@ const App = () => {
                 </Route>
                 <Route path="/signup">
                   {user ? (
-                    <Redirect to="/" /> // TODO change to dashboard
+                    <Redirect to="/dashboard" />
                   ) : (
                     <SignUp
                       onRegister={handleRegister}

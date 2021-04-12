@@ -20,7 +20,7 @@ const SelectCategory = () => {
       const data = await getRequest(`training/${id}`);
       setTraining(data);
 
-      data && data.question_set.map((question) => getQuestions(question));
+      data && data.questions.map((question) => getQuestions(question));
 
       setLoading(false);
     };

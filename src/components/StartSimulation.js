@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
-import { getRequest } from "../utils/api";
-import { createTraining } from "../utils/training";
+// import { getRequest } from "../utils/api";
+// import { createTraining } from "../utils/training";
 import { Link as RouterLink } from "react-router-dom";
 import { Link, Typography, Container, Button } from "@material-ui/core";
 

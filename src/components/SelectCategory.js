@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Link as RouterLink } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import {
-  Link,
   Accordion,
   AccordionSummary,
   AccordionDetails,
@@ -16,6 +15,8 @@ import { createTraining } from "../utils/training";
 const SelectCategory = () => {
   const classes = useStyles();
 
+  let history = useHistory();
+
   const [categories, setCategories] = useState();
   // const [selectedIndex, setSelectedIndex] = useState(null);
 
@@ -28,14 +29,12 @@ const SelectCategory = () => {
   }, []);
 
   const onClickTraining = async (sub_category_id) => {
-    const data = await createTraining(
-      "606db3200d2141d1da8c0728",
-      "6073ea07793b0e3c93a69609",
+    const trainingId = await createTraining(
+      "606db3200d2141d1da8c0728", // user
+      sub_category_id,  // sub
       true
     );
-    // TODO console.log(data);
-
-    // redirect to training with fresh training id
+    history.push(`/training/${trainingId}`)
   };
 
   return (
@@ -72,14 +71,9 @@ const SelectCategory = () => {
                 {category.sub_categories &&
                   category.sub_categories.map((sub, index) => {
                     return (
-                      <Link
-                        to={`/training/${sub._id}`} // TODO set to training id
-                        component={RouterLink}
-                        key={sub._id}
-                        className={classes.links}
-                      >
+    
                       <AccordionDetails
-                        key={sub._id}
+                      key={sub._id}
                         className={classes.details}
                         // {index === selectedIndex && }
                         onClick={() => onClickTraining(sub._id)}
@@ -90,7 +84,6 @@ const SelectCategory = () => {
                       >
                         <Typography>{sub.name}</Typography>
                       </AccordionDetails>
-                      </Link>
                     );
                   })}
               </Accordion>
