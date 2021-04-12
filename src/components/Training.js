@@ -3,12 +3,7 @@ import { Link as RouterLink, useParams } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import Question from "./Question";
 
-import {
-  //   Link,
-  Typography,
-  Container,
-  //   Button,
-} from "@material-ui/core";
+import { Link, Typography, Container, Button } from "@material-ui/core";
 import Countdown from "react-countdown";
 import { getRequest } from "../utils/api";
 
@@ -71,6 +66,12 @@ const SelectCategory = () => {
               })}
           </>
         )}
+
+        <Link component={RouterLink} to="/result">
+          <Button variant="contained" color="primary">
+            FINISH/SHOW RESULTS
+          </Button>
+        </Link>
 
         <br />
         <br />

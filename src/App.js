@@ -13,6 +13,7 @@ import SelectCategory from "./components/SelectCategory";
 import SignUp from "./components/SignUp";
 import Training from "./components/Training";
 import StartSimulation from "./components/StartSimulation";
+import Result from "./components/Result";
 
 import {
   login,
@@ -160,6 +161,9 @@ const App = () => {
                 </Route>
                 <Route exact path="/simulation">
                   <StartSimulation />
+                </Route>
+                <Route exact path="/result">
+                  <Result />
                 </Route>
 
                 <Redirect to="/" exact />
