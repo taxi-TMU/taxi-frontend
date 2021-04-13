@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { Link as RouterLink } from "react-router-dom";
+import React, { useEffect, useState, useContext } from "react";
+import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import {
-  Link,
   Accordion,
   AccordionSummary,
   AccordionDetails,
@@ -12,12 +11,14 @@ import {
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { getRequest } from "../utils/api";
 import { createTraining } from "../utils/training";
+import UserContext from "../context/UserContext";
 
 const SelectCategory = () => {
   const classes = useStyles();
+  const { user } = useContext(UserContext);
+  let history = useHistory();
 
   const [categories, setCategories] = useState();
-  // const [selectedIndex, setSelectedIndex] = useState(null);
 
   useEffect(() => {
     const getData = async () => {
@@ -28,14 +29,14 @@ const SelectCategory = () => {
   }, []);
 
   const onClickTraining = async (sub_category_id) => {
-    const data = await createTraining(
-      "606db3200d2141d1da8c0728",
-      "6073ea07793b0e3c93a69609",
+
+    console.log(user.id)
+    const trainingId = await createTraining(
+      user.id, 
+      sub_category_id, 
       true
     );
-    // TODO console.log(data);
-
-    // redirect to training with fresh training id
+    history.push(`/training/${trainingId}`)
   };
 
   return (
@@ -72,25 +73,14 @@ const SelectCategory = () => {
                 {category.sub_categories &&
                   category.sub_categories.map((sub, index) => {
                     return (
-                      // <Link
-                      //   to={`/training/${sub._id}`} // set id to training id
-                      //   component={RouterLink}
-                      //   key={sub._id}
-                      //   className={classes.links}
-                      // >
+    
                       <AccordionDetails
-                        key={sub._id}
+                      key={sub._id}
                         className={classes.details}
-                        // {index === selectedIndex && }
                         onClick={() => onClickTraining(sub._id)}
-                        // classes={{
-                        //   root: classes.details,
-                        //   checked: classes.active,
-                        // }}
                       >
                         <Typography>{sub.name}</Typography>
                       </AccordionDetails>
-                      // </Link>
                     );
                   })}
               </Accordion>

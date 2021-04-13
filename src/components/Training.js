@@ -1,14 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link as RouterLink, useParams } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import Question from './Question';
+import Question from "./Question";
 
-import {
-  //   Link,
-  Typography,
-  Container,
-  //   Button,
-} from "@material-ui/core";
+import { Link, Typography, Container, Button } from "@material-ui/core";
 import Countdown from "react-countdown";
 import { getRequest } from "../utils/api";
 
@@ -17,36 +12,34 @@ const SelectCategory = () => {
 
   const { id } = useParams();
   const [training, setTraining] = useState();
-  const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const getData = async () => {
-      const data = await getRequest(`training/${id}`);
-      setTraining(data);
-      data.question_set.map((question) => getQuestions(question));
-
+      const training = await getRequest(`training/${id}`);
+      setTraining(training);
       setLoading(false);
+      console.log(training)
     };
     getData();
   }, [id]);
 
-  const getQuestions = async (question_id) => {
-    const q = await getRequest(`question/${question_id}`);
-    console.log(q);
-    setQuestions((prevData) => [...prevData, q]);
-  };
-
   return (
     <Container className={classes.mainContainer} component="main" maxWidth="lg">
       <div className={classes.paper}>
-        <Typography component="h1" variant="h5">
+        <Typography component="h1" variant="h4">
           Training
         </Typography>
 
         {loading && (
           <Typography component="h1" variant="h5">
             Loading ...
+          </Typography>
+        )}
+
+        {!training && (
+          <Typography component="h1" variant="h5">
+            Could not load data, try again ...
           </Typography>
         )}
 
@@ -58,12 +51,25 @@ const SelectCategory = () => {
             <Typography component="h1" variant="h5">
               Test is there
             </Typography>
-            {questions &&
-              questions.map((question) => {
-                return <Question {...question} />;
+            {training.questions &&
+              training.questions.map((question) => {
+                return (
+                  <>
+                <Question {...question} />
+                <p>.</p>
+
+                </>
+                  )
+                ;
               })}
           </>
         )}
+
+        <Link component={RouterLink} to="/result">
+          <Button variant="contained" color="primary">
+            FINISH/SHOW RESULTS
+          </Button>
+        </Link>
 
         <br />
         <br />
