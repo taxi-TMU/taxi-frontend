@@ -89,6 +89,7 @@ const resetPassword = async (password, userId, token) => {
 // GET USER
 //--------------------------------------------
 const getUser = async (userId) => {
+  // TODO refactor to get user by if from token
   try {
     const user = await axios.get(
       `${REACT_APP_SERVER_URL}/user/${userId}`
