@@ -1,6 +1,5 @@
-import questionSet from '../data/testdoc.json';
-import React, { useEffect, useState, useContext } from 'react';
-import UserContext from '../context/UserContext';
+import React, { useEffect, useState } from 'react';
+import { Link as RouterLink, useParams } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   Typography,
@@ -12,10 +11,10 @@ import {
   Button,
   FormControlLabel,
   Checkbox,
+  Link,
 } from '@material-ui/core';
-// import Countdown from 'react-countdown';
-// import { Link as RouterLink, useParams } from 'react-router-dom';
-// import { getRequest } from '../utils/api';
+import Countdown from 'react-countdown';
+import { getRequest } from '../utils/api';
 
 const useStyles = makeStyles((theme) => ({
   mainContainer: {
@@ -33,30 +32,29 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Training() {
-  const { user } = useContext(UserContext);
   const [training, setTraining] = useState();
   const [activeStep, setActiveStep] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const { id } = useParams();
   const classes = useStyles();
-  // const [loading, setLoading] = useState();
-  // const { id } = useParams();
 
   useEffect(() => {
-    setTraining({
-      userId: user.id,
-      simulation: false,
-      time_start: Date.now(),
-      time_end: null,
-      question_set: questionSet
-        .map((question) => ({
+    const getData = async () => {
+      const training = await getRequest(`training/${id}`);
+      setTraining({
+        ...training,
+        question_set: training.question_set.map((question) => ({
           ...question,
           answers: question.answers.map((answer) => ({
             ...answer,
             userAnswer: false,
           })),
-        }))
-        .slice(0, 20),
-    });
-  }, []);
+        })),
+      });
+      setLoading(false);
+    };
+    getData();
+  }, [id]);
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -99,6 +97,7 @@ export default function Training() {
           ))}
       </Stepper>
       <Container className={classes.mainContainer} maxWidth="lg">
+        {training.simulation && <Countdown date={training.time_end} />}
         {training && (
           <Box
             display="flex"
@@ -139,7 +138,7 @@ export default function Training() {
         py={4}
         width="100%"
       >
-        {activeStep === questionSet.length ? (
+        {activeStep === training.question_set.length ? (
           <Button onClick={handleReset}>Reset</Button>
         ) : (
           <>
@@ -151,16 +150,27 @@ export default function Training() {
             >
               Previous question
             </Button>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleNext}
-              className={classes.trainingButton}
-            >
-              {activeStep === questionSet.length - 1
-                ? 'Finish'
-                : 'Next question'}
-            </Button>
+            {activeStep === training.question_set.length - 1 ? (
+              <Link component={RouterLink} to="/result">
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleNext}
+                  className={classes.trainingButton}
+                >
+                  Finish
+                </Button>
+              </Link>
+            ) : (
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleNext}
+                className={classes.trainingButton}
+              >
+                Next question
+              </Button>
+            )}
           </>
         )}
       </Box>

@@ -4,7 +4,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import {
   AppBar,
   Toolbar,
-  Typography,
   Box,
   MenuList,
   Link,
@@ -94,7 +93,7 @@ const Nav = () => {
               </MenuItem>
             </Menu>
           </Hidden>
-          <Typography variant="subtitle1">EN | DE</Typography>
+          {/* TODO <Typography variant="subtitle1">EN | DE</Typography> */}
         </Box>
         {/* desktop / tablet  nav */}
         <Toolbar className={classes.toolbar}>
