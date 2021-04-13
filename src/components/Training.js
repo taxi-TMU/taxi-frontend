@@ -1,14 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link as RouterLink, useParams } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import Question from './Question';
+import Question from "./Question";
 
-import {
-  //   Link,
-  Typography,
-  Container,
-  //   Button,
-} from "@material-ui/core";
+import { Link, Typography, Container, Button } from "@material-ui/core";
 import Countdown from "react-countdown";
 import { getRequest } from "../utils/api";
 
@@ -24,7 +19,8 @@ const SelectCategory = () => {
     const getData = async () => {
       const data = await getRequest(`training/${id}`);
       setTraining(data);
-      data.question_set.map((question) => getQuestions(question));
+
+      data && data.questions.map((question) => getQuestions(question));
 
       setLoading(false);
     };
@@ -40,13 +36,19 @@ const SelectCategory = () => {
   return (
     <Container className={classes.mainContainer} component="main" maxWidth="lg">
       <div className={classes.paper}>
-        <Typography component="h1" variant="h5">
+        <Typography component="h1" variant="h4">
           Training
         </Typography>
 
         {loading && (
           <Typography component="h1" variant="h5">
             Loading ...
+          </Typography>
+        )}
+
+        {!training && (
+          <Typography component="h1" variant="h5">
+            Could not load data, try again ...
           </Typography>
         )}
 
@@ -64,6 +66,12 @@ const SelectCategory = () => {
               })}
           </>
         )}
+
+        <Link component={RouterLink} to="/result">
+          <Button variant="contained" color="primary">
+            FINISH/SHOW RESULTS
+          </Button>
+        </Link>
 
         <br />
         <br />

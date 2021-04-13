@@ -13,6 +13,7 @@ import SelectCategory from "./components/SelectCategory";
 import SignUp from "./components/SignUp";
 import Training from "./components/Training";
 import StartSimulation from "./components/StartSimulation";
+import Result from "./components/Result";
 
 import {
   login,
@@ -118,7 +119,7 @@ const App = () => {
                 </Route>
                 <Route path="/login">
                   {user ? (
-                    <Redirect to="/dashboard" /> // TODO change to dashboard
+                    <Redirect to="/dashboard" /> 
                   ) : (
                     <Login
                       onLogin={handleLogin}
@@ -128,7 +129,7 @@ const App = () => {
                 </Route>
                 <Route path="/signup">
                   {user ? (
-                    <Redirect to="/" /> // TODO change to dashboard
+                    <Redirect to="/dashboard" />
                   ) : (
                     <SignUp
                       onRegister={handleRegister}
@@ -160,6 +161,9 @@ const App = () => {
                 </Route>
                 <Route exact path="/simulation">
                   <StartSimulation />
+                </Route>
+                <Route exact path="/result">
+                  <Result />
                 </Route>
 
                 <Redirect to="/" exact />
