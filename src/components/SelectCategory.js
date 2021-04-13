@@ -45,6 +45,10 @@ const SelectCategory = () => {
           SELECT A CATEGORY
         </Typography>
 
+        {/* test */}
+        <RouterLink to="/training">Training test</RouterLink>
+        {/* test */}
+
         <Typography className={classes.padding}>
           In this section you can train your knowledge by category. There are
           five main categories with multiple subcategories.{" "}
