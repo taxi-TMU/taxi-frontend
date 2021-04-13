@@ -16,6 +16,9 @@ import {
 } from '@material-ui/core';
 import Countdown from 'react-countdown';
 import { getRequest } from '../utils/api';
+import { updateTraining } from '../utils/training';
+import { useHistory } from 'react-router-dom';
+
 
 const useStyles = makeStyles((theme) => ({
   mainContainer: {
@@ -38,30 +41,35 @@ export default function Training() {
   const [loading, setLoading] = useState();
   const { id } = useParams();
   const classes = useStyles();
+  let history = useHistory();
 
   useEffect(() => {
+    const getData = async () => {
+      setLoading(true);
+      try {
+        const training = await getRequest(`training/${id}`);
+        // setTraining({
+        //   ...training,
+        //   questions: training.questions.map((question) => ({
+        //     ...question,
+        //     answers: question.answers.map((answer) => ({
+        //       ...answer,
+        //       userAnswer: false,
+        //     })),
+        //   })),
+        // });
+        setTraining(training)
+        setLoading(false);
+      } catch (err) {
+        console.log(err.message);
+      }
+    };
     getData();
-  }, []);
+  }, [id]);
 
-  const getData = async () => {
-    setLoading(true);
-    try {
-      const training = await getRequest(`training/${id}`);
-      setTraining({
-        ...training,
-        questions: training.questions.map((question) => ({
-          ...question,
-          answers: question.answers.map((answer) => ({
-            ...answer,
-            userAnswer: false,
-          })),
-        })),
-      });
-      setLoading(false);
-    } catch (err) {
-      console.log(err.message);
-    }
-  };
+  // useEffect(() => {
+  //   console.log(training)
+  // }, [training])
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -92,6 +100,11 @@ export default function Training() {
       ),
     }));
   };
+
+  const saveTrainingAndGetResult = async () => {
+    await updateTraining(training);
+    history.push(`/result/${training._id}`);
+  }
 
   return (
     <>
@@ -162,19 +175,19 @@ export default function Training() {
                   Previous question
                 </Button>
                 {activeStep === training.questions.length - 1 ? (
-                  <Link
-                    component={RouterLink}
-                    to={{ pathname: '/result', state: training }}
-                  >
+                  // <Link
+                  //   component={RouterLink}
+                  //   to={{ pathname: '/result', state: training }}
+                  // >
                     <Button
                       variant="contained"
                       color="primary"
-                      onClick={handleNext}
+                      onClick={saveTrainingAndGetResult}
                       className={classes.trainingButton}
                     >
                       Finish
                     </Button>
-                  </Link>
+                  // {/* </Link> */}
                 ) : (
                   <Button
                     variant="contained"

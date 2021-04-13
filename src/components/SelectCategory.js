@@ -29,7 +29,6 @@ const SelectCategory = () => {
   }, []);
 
   const onClickTraining = async (sub_category_id) => {
-    console.log(user.id);
     const trainingId = await createTraining(user.id, sub_category_id, true);
     history.push(`/training/${trainingId}`);
   };

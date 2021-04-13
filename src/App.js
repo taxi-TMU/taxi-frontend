@@ -167,7 +167,7 @@ const App = () => {
                 <Route exact path="/simulation">
                   <StartSimulation />
                 </Route>
-                <Route exact path="/result">
+                <Route exact path="/result/:id">
                   <Result />
                 </Route>
                 <Redirect to="/" exact />
