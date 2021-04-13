@@ -12,6 +12,7 @@ import {
   FormControlLabel,
   Checkbox,
   Link,
+  CircularProgress,
 } from '@material-ui/core';
 import Countdown from 'react-countdown';
 import { getRequest } from '../utils/api';
@@ -34,16 +35,21 @@ const useStyles = makeStyles((theme) => ({
 export default function Training() {
   const [training, setTraining] = useState();
   const [activeStep, setActiveStep] = useState(0);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState();
   const { id } = useParams();
   const classes = useStyles();
 
   useEffect(() => {
-    const getData = async () => {
+    getData();
+  }, []);
+
+  const getData = async () => {
+    setLoading(true);
+    try {
       const training = await getRequest(`training/${id}`);
       setTraining({
         ...training,
-        question_set: training.question_set.map((question) => ({
+        questions: training.questions.map((question) => ({
           ...question,
           answers: question.answers.map((answer) => ({
             ...answer,
@@ -52,9 +58,10 @@ export default function Training() {
         })),
       });
       setLoading(false);
-    };
-    getData();
-  }, [id]);
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -71,7 +78,7 @@ export default function Training() {
   const handleCheckAnswer = (e, i) => {
     setTraining((prevState) => ({
       ...prevState,
-      question_set: prevState.question_set.map((question, index) =>
+      questions: prevState.questions.map((question, index) =>
         index === i
           ? {
               ...question,
@@ -88,92 +95,101 @@ export default function Training() {
 
   return (
     <>
-      <Stepper activeStep={activeStep} alternativeLabel>
-        {training &&
-          training.question_set.map((label, index) => (
-            <Step key={index}>
-              <StepLabel />
-            </Step>
-          ))}
-      </Stepper>
-      <Container className={classes.mainContainer} maxWidth="lg">
-        {training.simulation && <Countdown date={training.time_end} />}
-        {training && (
+      {loading && (
+        <Box textAlign="center" pb={6}>
+          <CircularProgress color="primary" />
+        </Box>
+      )}
+      {training && (
+        <>
+          <Stepper activeStep={activeStep} alternativeLabel>
+            {training.questions.map((label, index) => (
+              <Step key={index}>
+                <StepLabel />
+              </Step>
+            ))}
+          </Stepper>
+          <Container className={classes.mainContainer} maxWidth="lg">
+            <Box
+              display="flex"
+              alignItems="center"
+              flexDirection="column"
+              justifyContent="center"
+              py={4}
+            >
+              {training.simulation && <Countdown date={training.time_end} />}
+              <Box py={4} px={2}>
+                <Typography component="h4" variant="h4">
+                  {training.questions[activeStep].question_text}
+                </Typography>
+              </Box>
+              <Box py={4} px={12} alignSelf="flex-start">
+                {training.questions[activeStep].answers.map((answer) => (
+                  <Box py={2} key={answer._id}>
+                    <FormControlLabel
+                      key={answer._id}
+                      control={
+                        <Checkbox
+                          onChange={(e) => handleCheckAnswer(e, activeStep)}
+                          name={answer._id}
+                          checked={answer.userAnswer}
+                        />
+                      }
+                      label={answer.text}
+                    />
+                  </Box>
+                ))}
+              </Box>
+            </Box>
+          </Container>
           <Box
             display="flex"
-            alignItems="center"
-            flexDirection="column"
             justifyContent="center"
+            alignItems="center"
             py={4}
+            width="100%"
           >
-            <Box py={4} px={2}>
-              <Typography component="h4" variant="h4">
-                {training.question_set[activeStep].question}
-              </Typography>
-            </Box>
-            <Box py={4} px={12}>
-              {training.question_set[activeStep].answers.map((answer) => (
-                <Box py={2} key={answer._id}>
-                  <FormControlLabel
-                    key={answer._id}
-                    control={
-                      <Checkbox
-                        onChange={(e) => handleCheckAnswer(e, activeStep)}
-                        name={answer._id}
-                        checked={answer.userAnswer}
-                      />
-                    }
-                    label={answer.text}
-                  />
-                </Box>
-              ))}
-            </Box>
-          </Box>
-        )}
-      </Container>
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        py={4}
-        width="100%"
-      >
-        {activeStep === training.question_set.length ? (
-          <Button onClick={handleReset}>Reset</Button>
-        ) : (
-          <>
-            <Button
-              variant="outlined"
-              disabled={activeStep === 0}
-              onClick={handleBack}
-              className={classes.trainingButton}
-            >
-              Previous question
-            </Button>
-            {activeStep === training.question_set.length - 1 ? (
-              <Link component={RouterLink} to="/result">
+            {activeStep === training.questions.length ? (
+              <Button onClick={handleReset}>Reset</Button>
+            ) : (
+              <>
                 <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={handleNext}
+                  variant="outlined"
+                  disabled={activeStep === 0}
+                  onClick={handleBack}
                   className={classes.trainingButton}
                 >
-                  Finish
+                  Previous question
                 </Button>
-              </Link>
-            ) : (
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleNext}
-                className={classes.trainingButton}
-              >
-                Next question
-              </Button>
+                {activeStep === training.questions.length - 1 ? (
+                  <Link
+                    component={RouterLink}
+                    to={{ pathname: '/result', state: training }}
+                  >
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={handleNext}
+                      className={classes.trainingButton}
+                    >
+                      Finish
+                    </Button>
+                  </Link>
+                ) : (
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleNext}
+                    className={classes.trainingButton}
+                  >
+                    Next question
+                  </Button>
+                )}
+              </>
             )}
-          </>
-        )}
-      </Box>
+          </Box>
+        </>
+      )}
     </>
   );
 }

@@ -1,17 +1,17 @@
-import React, { useEffect, useState, useContext } from "react";
-import { useHistory } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
+import React, { useEffect, useState, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
 import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
   Typography,
   Container,
-} from "@material-ui/core";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import { getRequest } from "../utils/api";
-import { createTraining } from "../utils/training";
-import UserContext from "../context/UserContext";
+} from '@material-ui/core';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { getRequest } from '../utils/api';
+import { createTraining } from '../utils/training';
+import UserContext from '../context/UserContext';
 
 const SelectCategory = () => {
   const classes = useStyles();
@@ -22,21 +22,16 @@ const SelectCategory = () => {
 
   useEffect(() => {
     const getData = async () => {
-      const data = await getRequest("category");
+      const data = await getRequest('category');
       setCategories(data);
     };
     getData();
   }, []);
 
   const onClickTraining = async (sub_category_id) => {
-
-    console.log(user.id)
-    const trainingId = await createTraining(
-      user.id, 
-      sub_category_id, 
-      true
-    );
-    history.push(`/training/${trainingId}`)
+    console.log(user.id);
+    const trainingId = await createTraining(user.id, sub_category_id, true);
+    history.push(`/training/${trainingId}`);
   };
 
   return (
@@ -46,13 +41,9 @@ const SelectCategory = () => {
           SELECT A CATEGORY
         </Typography>
 
-        {/* test */}
-        <RouterLink to="/training">Training test</RouterLink>
-        {/* test */}
-
         <Typography className={classes.padding}>
           In this section you can train your knowledge by category. There are
-          five main categories with multiple subcategories.{" "}
+          five main categories with multiple subcategories.{' '}
         </Typography>
 
         {!categories && (
@@ -77,9 +68,8 @@ const SelectCategory = () => {
                 {category.sub_categories &&
                   category.sub_categories.map((sub, index) => {
                     return (
-    
                       <AccordionDetails
-                      key={sub._id}
+                        key={sub._id}
                         className={classes.details}
                         onClick={() => onClickTraining(sub._id)}
                       >
@@ -103,46 +93,46 @@ export default SelectCategory;
 
 const useStyles = makeStyles((theme) => ({
   mainContainer: {
-    backgroundColor: "rgba(255, 255, 255, 0.23)",
-    color: "#ffffff",
+    backgroundColor: 'rgba(255, 255, 255, 0.23)',
+    color: '#ffffff',
     borderRadius: 16,
-    border: "1px solid white",
-    borderColor: "primary",
+    border: '1px solid white',
+    borderColor: 'primary',
   },
   paper: {
     marginTop: theme.spacing(8),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
     padding: 10,
   },
   loginBtn: {
-    color: "secondry",
+    color: 'secondry',
   },
   accordion: {
-    textAlign: "left",
-    width: "100%",
+    textAlign: 'left',
+    width: '100%',
   },
   summary: {
-    background: "#fafafa",
-    textTransform: "uppercase",
+    background: '#fafafa',
+    textTransform: 'uppercase',
   },
   details: {
-    borderBottom: "1px solid #e6e6e6",
-    "&:hover": {
-      background: "#A3CCC3",
-      cursor: "pointer",
+    borderBottom: '1px solid #e6e6e6',
+    '&:hover': {
+      background: '#A3CCC3',
+      cursor: 'pointer',
     },
   },
   padding: {
     padding: 50,
   },
   active: {
-    background: "#A3CCC3",
+    background: '#A3CCC3',
   },
   links: {
-    color: "black",
-    textDecoration: "none",
+    color: 'black',
+    textDecoration: 'none',
   },
 }));
 
