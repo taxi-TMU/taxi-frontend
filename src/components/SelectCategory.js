@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -11,14 +11,14 @@ import {
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { getRequest } from "../utils/api";
 import { createTraining } from "../utils/training";
+import UserContext from "../context/UserContext";
 
 const SelectCategory = () => {
   const classes = useStyles();
-
+  const { user } = useContext(UserContext);
   let history = useHistory();
 
   const [categories, setCategories] = useState();
-  // const [selectedIndex, setSelectedIndex] = useState(null);
 
   useEffect(() => {
     const getData = async () => {
@@ -29,9 +29,11 @@ const SelectCategory = () => {
   }, []);
 
   const onClickTraining = async (sub_category_id) => {
+
+    console.log(user.id)
     const trainingId = await createTraining(
-      "606db3200d2141d1da8c0728", // user
-      sub_category_id,  // sub
+      user.id, 
+      sub_category_id, 
       true
     );
     history.push(`/training/${trainingId}`)
@@ -75,12 +77,7 @@ const SelectCategory = () => {
                       <AccordionDetails
                       key={sub._id}
                         className={classes.details}
-                        // {index === selectedIndex && }
                         onClick={() => onClickTraining(sub._id)}
-                        // classes={{
-                        //   root: classes.details,
-                        //   checked: classes.active,
-                        // }}
                       >
                         <Typography>{sub.name}</Typography>
                       </AccordionDetails>

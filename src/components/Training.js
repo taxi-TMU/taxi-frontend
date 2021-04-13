@@ -12,26 +12,17 @@ const SelectCategory = () => {
 
   const { id } = useParams();
   const [training, setTraining] = useState();
-  const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const getData = async () => {
-      const data = await getRequest(`training/${id}`);
-      setTraining(data);
-
-      data && data.questions.map((question) => getQuestions(question));
-
+      const training = await getRequest(`training/${id}`);
+      setTraining(training);
       setLoading(false);
+      console.log(training)
     };
     getData();
   }, [id]);
-
-  const getQuestions = async (question_id) => {
-    const q = await getRequest(`question/${question_id}`);
-    console.log(q);
-    setQuestions((prevData) => [...prevData, q]);
-  };
 
   return (
     <Container className={classes.mainContainer} component="main" maxWidth="lg">
@@ -60,9 +51,16 @@ const SelectCategory = () => {
             <Typography component="h1" variant="h5">
               Test is there
             </Typography>
-            {questions &&
-              questions.map((question) => {
-                return <Question {...question} />;
+            {training.questions &&
+              training.questions.map((question) => {
+                return (
+                  <>
+                <Question {...question} />
+                <p>.</p>
+
+                </>
+                  )
+                ;
               })}
           </>
         )}
