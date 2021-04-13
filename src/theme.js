@@ -34,6 +34,19 @@ let theme = createMuiTheme({
         border: '2px solid #ffffff',
       },
     },
+    MuiStepper: {
+      root: {
+        backgroundColor: 'transparent',
+      },
+    },
+    MuiStepIcon: {
+      active: {
+        color: '#d75f5f',
+      },
+      completed: {
+        color: '#a3ccc3 !important',
+      },
+    },
   },
 });
 

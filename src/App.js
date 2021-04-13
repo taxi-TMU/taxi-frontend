@@ -161,7 +161,7 @@ const App = () => {
                 <Route exact path="/categories">
                   <SelectCategory />
                 </Route>
-                <Route exact path="/training/:id">
+                <Route exact path="/training">
                   <Training />
                 </Route>
                 <Route exact path="/simulation">
