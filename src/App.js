@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Route, Switch, Redirect, useLocation } from "react-router-dom";
+import {
+  Route,
+  Switch,
+  Redirect,
+  useLocation,
+  useHistory,
+} from "react-router-dom";
 import { Container, Box } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import taxiAppBg from "./images/taxi-bg.png";
@@ -26,6 +32,7 @@ import {
 } from "./utils/auth";
 import UserContext from "./context/UserContext";
 import Dashboard from "./components/Dashboard";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const useStyle = makeStyles((theme) => ({
   headerBg: (props) => ({
@@ -51,6 +58,7 @@ const useStyle = makeStyles((theme) => ({
 }));
 
 const App = () => {
+  const history = useHistory();
   const { pathname } = useLocation();
   const props = {
     background:
@@ -117,7 +125,7 @@ const App = () => {
                 <Route exact path="/">
                   <HeroText />
                 </Route>
-                <Route path="/login">
+                <Route exact path="/login">
                   {user ? (
                     <Redirect to="/dashboard" /> 
                   ) : (
@@ -149,10 +157,7 @@ const App = () => {
                     onSetUserInput={handleSetUserInput}
                   />
                 </Route>
-                <Route path="/dashboard">
-                  <Dashboard />
-                </Route>
-
+                <ProtectedRoute path="/dashboard" component={Dashboard} />
                 <Route exact path="/categories">
                   <SelectCategory />
                 </Route>
@@ -165,7 +170,6 @@ const App = () => {
                 <Route exact path="/result">
                   <Result />
                 </Route>
-
                 <Redirect to="/" exact />
               </Switch>
             </Box>
