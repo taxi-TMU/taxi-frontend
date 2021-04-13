@@ -4,7 +4,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import {
   AppBar,
   Toolbar,
-  Typography,
   Box,
   MenuList,
   Link,
@@ -45,10 +44,22 @@ const Nav = () => {
               className={classes.mobileMenu}
             >
               <MenuItem>
-                <Link className={classes.title}>Quiz</Link>
+                <Link
+                  to="/simulation"
+                  component={RouterLink}
+                  className={classes.title}
+                >
+                  Simulation
+                </Link>
               </MenuItem>
               <MenuItem>
-                <Link className={classes.title}>Categories</Link>
+                <Link
+                  to="/categories"
+                  component={RouterLink}
+                  className={classes.title}
+                >
+                  Train by category
+                </Link>
               </MenuItem>
               <MenuItem>
                 {user ? (
@@ -82,7 +93,7 @@ const Nav = () => {
               </MenuItem>
             </Menu>
           </Hidden>
-          <Typography variant="subtitle1">EN | DE</Typography>
+          {/* TODO <Typography variant="subtitle1">EN | DE</Typography> */}
         </Box>
         {/* desktop / tablet  nav */}
         <Toolbar className={classes.toolbar}>
@@ -96,15 +107,21 @@ const Nav = () => {
               <MenuList className={classes.left} disableListWrap>
                 <MenuItem>
                   <Link
+                    to="/simulation"
                     component={RouterLink}
-                    to="/quiztest"
                     className={classes.title}
                   >
-                    Quiz
+                    Simulation
                   </Link>
                 </MenuItem>
                 <MenuItem>
-                  <Link className={classes.title}>Categories</Link>
+                  <Link
+                    to="/categories"
+                    component={RouterLink}
+                    className={classes.title}
+                  >
+                    Train by category
+                  </Link>
                 </MenuItem>
               </MenuList>
             </Hidden>

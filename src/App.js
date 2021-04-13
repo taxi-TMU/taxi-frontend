@@ -15,7 +15,12 @@ import Nav from "./components/Nav";
 import Login from "./components/LogIn";
 import PasswordRequest from "./components/PasswordRequest";
 import PasswordReset from "./components/PasswordReset";
+import SelectCategory from "./components/SelectCategory";
 import SignUp from "./components/SignUp";
+import Training from "./components/Training";
+import StartSimulation from "./components/StartSimulation";
+import Result from "./components/Result";
+
 import {
   login,
   getUser,
@@ -28,7 +33,6 @@ import {
 import UserContext from "./context/UserContext";
 import Dashboard from "./components/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
-import QuizTest from "./components/QuizTest";
 
 const useStyle = makeStyles((theme) => ({
   headerBg: (props) => ({
@@ -85,8 +89,7 @@ const App = () => {
 
   const handlePasswordReset = async (e, userId, token) => {
     e.preventDefault();
-    const reset = await resetPassword(userInput, userId, token);
-    console.log(reset);
+    await resetPassword(userInput, userId, token);
   };
 
   const handleLogin = async (e) => {
@@ -124,7 +127,7 @@ const App = () => {
                 </Route>
                 <Route exact path="/login">
                   {user ? (
-                    <Redirect to="/dashboard" /> // TODO change to dashboard
+                    <Redirect to="/dashboard" /> 
                   ) : (
                     <Login
                       onLogin={handleLogin}
@@ -134,7 +137,7 @@ const App = () => {
                 </Route>
                 <Route path="/signup">
                   {user ? (
-                    <Redirect to="/" /> // TODO change to dashboard
+                    <Redirect to="/dashboard" />
                   ) : (
                     <SignUp
                       onRegister={handleRegister}
@@ -155,11 +158,18 @@ const App = () => {
                   />
                 </Route>
                 <ProtectedRoute path="/dashboard" component={Dashboard} />
-                <ProtectedRoute path="/quiztest" component={QuizTest} />
-
-                {/* <Route path="/dashboard">
-                  <Dashboard />
-                </Route> */}
+                <Route exact path="/categories">
+                  <SelectCategory />
+                </Route>
+                <Route exact path="/training/:id">
+                  <Training />
+                </Route>
+                <Route exact path="/simulation">
+                  <StartSimulation />
+                </Route>
+                <Route exact path="/result">
+                  <Result />
+                </Route>
                 <Redirect to="/" exact />
               </Switch>
             </Box>
