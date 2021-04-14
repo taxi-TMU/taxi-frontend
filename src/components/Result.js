@@ -41,13 +41,14 @@ const SelectCategory = () => {
   }, [id]);
 
 
-  useEffect(() => {
-    result && setNrQuestions(result.questions.length)
-    result && result.questions.forEach(question => {
-      if (!question.answeresRight) setWrongAnswers(wrongAnswers+1)
-    })
-
-  }, [result])
+  // TODO useEffect(() => {
+  //     result && setNrQuestions(result.questions.length)
+  //     result && result.questions.map(question => {
+  //       if (!question.answeresRight) {
+  //         return setWrongAnswers(wrongAnswers+1)
+  //       }
+  //     })
+  // }, [result])
 
 
   return (
@@ -64,19 +65,19 @@ const SelectCategory = () => {
           alignItems="center"
           className={classes.padding}
         >
-          <Grid item xs={4} alignItems="center">
+          <Grid item xs={4}>
             <ErrorOutline fontSize="large" />
             <Typography>Errors</Typography>
             <Typography>{wrongAnswers && wrongAnswers}/{nrQuestions && nrQuestions}</Typography>
           </Grid>
 
-          <Grid item xs={4} alignItems="center">
+          <Grid item xs={4}>
             <AccessTime fontSize="large" />
             <Typography>Current time</Typography>
             <Typography>18.5min</Typography>
           </Grid>
 
-          <Grid item xs={4} alignItems="center">
+          <Grid item xs={4}>
             <StarOutline fontSize="large" />
             <Typography>Best time</Typography>
             <Typography>15.5min</Typography>

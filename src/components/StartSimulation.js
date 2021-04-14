@@ -1,11 +1,21 @@
 import { makeStyles } from "@material-ui/core/styles";
-// import { getRequest } from "../utils/api";
-// import { createTraining } from "../utils/training";
-import { Link as RouterLink } from "react-router-dom";
-import { Link, Typography, Container, Button } from "@material-ui/core";
+import React, { useContext } from 'react';
+import { useHistory } from 'react-router-dom';
+import { Typography, Container, Button } from "@material-ui/core";
+import { createSimulation } from '../utils/training';
+import UserContext from '../context/UserContext';
+
 
 const SelectCategory = () => {
   const classes = useStyles();
+  const { user } = useContext(UserContext);
+  let history = useHistory();
+
+
+  const onClickCreateSimulation = async () => {
+    const trainingId = await createSimulation(user.id);
+    history.push(`/training/${trainingId}`);
+  };
 
   return (
     <Container className={classes.mainContainer} component="main" maxWidth="md">
@@ -20,11 +30,13 @@ const SelectCategory = () => {
           complete the simulation. Unanswered questions, will be then marked as
           wrong.{" "}
         </Typography>
-        <Link component={RouterLink} to="/training/123">
-          <Button variant="contained" color="primary">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={onClickCreateSimulation}
+          >
             START SIMULATION
           </Button>
-        </Link>
 
         <br />
         <br />
