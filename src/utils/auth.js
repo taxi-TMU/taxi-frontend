@@ -19,11 +19,15 @@ const register = async (credentials) => {
     const token = data.headers['x-authorization-token'];
     if (token) {
       Cookies.set(`${REACT_APP_NAME}-auth-token`, token);
-      return data.data;
+      return { login: true, data: data.data };
     }
   } catch (e) {
-    console.log(e.message);
-    return false;
+    return {
+      login: false,
+      error: e.response.data.hasOwnProperty('errors')
+        ? e.response.data.errors.errors
+        : [e.response.data],
+    };
   }
 };
 
@@ -42,7 +46,6 @@ const login = async (credentials) => {
       return { login: true, data: data.data };
     }
   } catch (e) {
-    console.log(e.message);
     return { login: false, error: e.response.data };
   }
 };
