@@ -1,6 +1,6 @@
-import axios from "axios";
-import Cookies from "js-cookie";
-import jwt from "jsonwebtoken";
+import axios from 'axios';
+import Cookies from 'js-cookie';
+import jwt from 'jsonwebtoken';
 
 const { REACT_APP_SERVER_URL, REACT_APP_NAME } = process.env;
 
@@ -14,9 +14,9 @@ const register = async (credentials) => {
       {
         ...credentials,
       },
-      { headers: { "Content-Type": "application/json" } }
+      { headers: { 'Content-Type': 'application/json' } }
     );
-    const token = data.headers["x-authorization-token"];
+    const token = data.headers['x-authorization-token'];
     if (token) {
       Cookies.set(`${REACT_APP_NAME}-auth-token`, token);
       return data.data;
@@ -36,14 +36,14 @@ const login = async (credentials) => {
       ...credentials,
     });
 
-    const token = data.headers["x-authorization-token"];
+    const token = data.headers['x-authorization-token'];
     if (token) {
       Cookies.set(`${REACT_APP_NAME}-auth-token`, token);
-      return data.data;
+      return { login: true, data: data.data };
     }
   } catch (e) {
     console.log(e.message);
-    return false;
+    return { login: false, error: e.response.data };
   }
 };
 
@@ -51,7 +51,7 @@ const login = async (credentials) => {
 // LOGOUT
 //--------------------------------------------
 const logout = () => {
-  Cookies.remove(`${REACT_APP_NAME}-auth-token`, { path: "/" });
+  Cookies.remove(`${REACT_APP_NAME}-auth-token`, { path: '/' });
 };
 
 //--------------------------------------------
@@ -130,7 +130,7 @@ axios.defaults.baseURL = REACT_APP_SERVER_URL;
 const setAuthHeaders = () => {
   const token = Cookies.get(`${REACT_APP_NAME}-auth-token`);
   if (token) {
-    axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
   }
 };
 
