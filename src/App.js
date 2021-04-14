@@ -77,6 +77,7 @@ const App = () => {
   }, []);
 
   const handleSetUserInput = (e) => {
+    resetAlerts();
     seUserInput((prevInput) => ({
       ...prevInput,
       [e.target.name]: e.target.value,
@@ -94,14 +95,14 @@ const App = () => {
   };
 
   const handleLogin = async (e) => {
-    resetAlerts();
     e.preventDefault();
+    resetAlerts();
     const isAuthenticated = await login(userInput);
     if (isAuthenticated.login) {
       setIsSuccess({ success: true, successMsg: 'Logged in successfully' });
       checkIfLoggedIn();
       seUserInput(null);
-      setTimeout(() => resetAlerts(), 5000);
+      setTimeout(() => resetAlerts(), 2000);
     } else {
       setIsError({ error: true, errorMsg: [isAuthenticated.error] });
     }
@@ -109,8 +110,19 @@ const App = () => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    resetAlerts();
     const isAuthenticated = await register(userInput);
-    if (isAuthenticated) checkIfLoggedIn();
+    if (isAuthenticated.login) {
+      setIsSuccess({ success: true, successMsg: 'Registration successfully' });
+      checkIfLoggedIn();
+      seUserInput(null);
+      setTimeout(() => resetAlerts(), 2000);
+    } else {
+      setIsError({
+        error: true,
+        errorMsg: isAuthenticated.error,
+      });
+    }
   };
 
   const checkIfLoggedIn = async () => {
@@ -158,6 +170,8 @@ const App = () => {
                     <SignUp
                       onRegister={handleRegister}
                       onSetUserInput={handleSetUserInput}
+                      isError={isError}
+                      isSuccess={isSuccess}
                     />
                   )}
                 </Route>
