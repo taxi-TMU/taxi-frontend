@@ -1,7 +1,6 @@
-import React from "react";
-import { Link as RouterLink } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import { Link as RouterLink } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import {
   Avatar,
   Button,
@@ -13,50 +12,52 @@ import {
   Typography,
   Container,
   Divider,
-} from "@material-ui/core";
+  Box,
+} from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
 
 const useStyles = makeStyles((theme) => ({
   mainContainer: {
-    backgroundColor: "rgba(255, 255, 255, 0.23)",
-    color: "#ffffff",
+    backgroundColor: 'rgba(255, 255, 255, 0.23)',
+    color: '#ffffff',
     borderRadius: 16,
-    "& a:hover": {
-      textDecoration: "none",
+    '& a:hover': {
+      textDecoration: 'none',
     },
   },
   paper: {
     marginTop: theme.spacing(8),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: "#d75f5f",
+    backgroundColor: '#d75f5f',
   },
   form: {
-    width: "100%",
+    width: '100%',
     marginTop: theme.spacing(1),
-    "& label": {
-      color: "#333",
+    '& label': {
+      color: '#333',
     },
   },
   input: {
-    backgroundColor: "#ffffff",
+    backgroundColor: '#ffffff',
     borderRadius: 6,
   },
   divider: {
-    backgroundColor: " #ffffff",
+    backgroundColor: ' #ffffff',
   },
   checkbox: {
-    color: "#fff",
-    "& span": {
-      color: "#fff",
+    color: '#fff',
+    '& span': {
+      color: '#fff',
     },
   },
 }));
 
-const Login = ({ onLogin, onSetUserInput }) => {
+const Login = ({ onLogin, onSetUserInput, isError, isSuccess }) => {
   const classes = useStyles();
 
   return (
@@ -68,6 +69,21 @@ const Login = ({ onLogin, onSetUserInput }) => {
         <Typography component="h1" variant="h5">
           LOGIN
         </Typography>
+        {isError.error &&
+          isError.errorMsg.map((err, index) => (
+            <Box width="100%" py={2} key={index}>
+              <Alert variant="filled" severity="error">
+                {err.param}: {err.msg}
+              </Alert>
+            </Box>
+          ))}
+        {isSuccess.success && (
+          <Box width="100%" py={2}>
+            <Alert variant="filled" severity="success">
+              {isSuccess.successMsg}
+            </Alert>
+          </Box>
+        )}
         <form className={classes.form} noValidate>
           <TextField
             className={classes.input}

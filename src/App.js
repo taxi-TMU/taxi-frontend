@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Route,
-  Switch,
-  Redirect,
-  useLocation,
-  useHistory,
-} from 'react-router-dom';
+import { Route, Switch, Redirect, useLocation } from 'react-router-dom';
 import { Container, Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import taxiAppBg from './images/taxi-bg.png';
@@ -58,7 +52,17 @@ const useStyle = makeStyles((theme) => ({
 }));
 
 const App = () => {
-  const history = useHistory();
+  const [user, setUser] = useState();
+  const [userInput, seUserInput] = useState();
+  const [isError, setIsError] = useState({
+    error: false,
+    errorMsg: null,
+  });
+  const [isSuccess, setIsSuccess] = useState({
+    success: false,
+    successMsg: null,
+  });
+
   const { pathname } = useLocation();
   const props = {
     background:
@@ -67,9 +71,6 @@ const App = () => {
         : '#232f37',
   };
   const classes = useStyle(props);
-
-  const [user, setUser] = useState();
-  const [userInput, seUserInput] = useState();
 
   useEffect(() => {
     checkIfLoggedIn();
@@ -93,9 +94,17 @@ const App = () => {
   };
 
   const handleLogin = async (e) => {
+    resetAlerts();
     e.preventDefault();
     const isAuthenticated = await login(userInput);
-    if (isAuthenticated) checkIfLoggedIn();
+    if (isAuthenticated.login) {
+      setIsSuccess({ success: true, successMsg: 'Logged in successfully' });
+      checkIfLoggedIn();
+      seUserInput(null);
+      setTimeout(() => resetAlerts(), 5000);
+    } else {
+      setIsError({ error: true, errorMsg: [isAuthenticated.error] });
+    }
   };
 
   const handleRegister = async (e) => {
@@ -110,6 +119,11 @@ const App = () => {
     if (!response) return logout();
     if (response) me = await getUser(response._id);
     setUser(me);
+  };
+
+  const resetAlerts = () => {
+    setIsError({ error: false, errorMsg: null });
+    setIsSuccess({ success: false, successMsg: null });
   };
 
   return (
@@ -132,6 +146,8 @@ const App = () => {
                     <Login
                       onLogin={handleLogin}
                       onSetUserInput={handleSetUserInput}
+                      isError={isError}
+                      isSuccess={isSuccess}
                     />
                   )}
                 </Route>

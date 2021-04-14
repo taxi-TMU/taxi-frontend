@@ -225,7 +225,6 @@ export default function Dashboard() {
         successPassMsg: res.data,
       }));
     } catch (err) {
-      console.log(err.response);
       const checkTypeOfError = err.response.data.hasOwnProperty('msg')
         ? [err.response.data]
         : err.response.data.errors.errors;
@@ -236,7 +235,6 @@ export default function Dashboard() {
           errorPassMsg: checkTypeOfError,
         }));
       } else if (err.request) {
-        console.log(err.request);
         setIsError((prevState) => ({
           ...prevState,
           isPassError: true,
