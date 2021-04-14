@@ -58,14 +58,14 @@ const Nav = () => {
                   component={RouterLink}
                   className={classes.title}
                 >
-                  Train by category
+                  Trainieren
                 </Link>
               </MenuItem>
               <MenuItem>
                 {user ? (
                   <Link className={classes.title}>Dashboard</Link>
                 ) : (
-                  <Link className={classes.title}>About</Link>
+                  <Link className={classes.title}>Über uns</Link>
                 )}
               </MenuItem>
               <MenuItem>
@@ -79,7 +79,7 @@ const Nav = () => {
                       setUser();
                     }}
                   >
-                    Logout
+                    Ausloggen
                   </Link>
                 ) : (
                   <Link
@@ -87,7 +87,7 @@ const Nav = () => {
                     component={RouterLink}
                     to="/login"
                   >
-                    Login
+                    Einloggen
                   </Link>
                 )}
               </MenuItem>
@@ -120,7 +120,7 @@ const Nav = () => {
                     component={RouterLink}
                     className={classes.title}
                   >
-                    Train by category
+                    Trainieren
                   </Link>
                 </MenuItem>
               </MenuList>
@@ -141,7 +141,7 @@ const Nav = () => {
                       Dashboard
                     </Link>
                   ) : (
-                    <Link className={classes.title}>About</Link>
+                    <Link className={classes.title}>Über uns</Link>
                   )}
                 </MenuItem>
                 <MenuItem>
@@ -155,7 +155,7 @@ const Nav = () => {
                         setUser();
                       }}
                     >
-                      Logout
+                      Ausloggen
                     </Link>
                   ) : (
                     <Link
@@ -163,7 +163,7 @@ const Nav = () => {
                       component={RouterLink}
                       to="/login"
                     >
-                      Login
+                      Einloggen
                     </Link>
                   )}
                 </MenuItem>

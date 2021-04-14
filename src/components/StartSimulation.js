@@ -21,21 +21,21 @@ const SelectCategory = () => {
     <Container className={classes.mainContainer} component="main" maxWidth="md">
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
-          START A SIMULATION
+          Simulation starten
         </Typography>
 
         <Typography className={classes.padding}>
-          In this section you can start a simulation. Please be aware that you
-          cannot pause and come back later. You will have 20Minutes of time to
-          complete the simulation. Unanswered questions, will be then marked as
-          wrong.{" "}
+          In diesem Abschnitt können Sie eine Prüfung simulieren.
+          Bitte beachten Sie, dass Sie die Simulation nicht pausieren oder später dazu zurück kommen können.
+          Sie haben 20 Minuten Zeit, alle Fragen zu beantworten und die Simulation zu beenden.
+          Unbeantwortete Fragen werden als falsch markiert.{" "}
         </Typography>
           <Button
             variant="contained"
             color="primary"
             onClick={onClickCreateSimulation}
           >
-            START SIMULATION
+            Starte Simulation
           </Button>
 
         <br />

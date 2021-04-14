@@ -37,17 +37,18 @@ const SelectCategory = () => {
     <Container className={classes.mainContainer} component="main" maxWidth="lg">
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
-          SELECT A CATEGORY
+          Auswahl Kategorie
         </Typography>
 
         <Typography className={classes.padding}>
-          In this section you can train your knowledge by category. There are
-          five main categories with multiple subcategories.{' '}
+          In diesem Abschnitt können Sie Ihr Wissen nach Kategory trainieren.
+          Jede Kategory hat Unterkategorien. Wählen Sie eine aus und trainieren Sie die Fragen.
+          Die Fragen werden nach Zufallsprinzip zusammengesetzt.{' '}
         </Typography>
 
         {!categories && (
           <Typography component="h1" variant="h5">
-            Loading ...
+            Lädt ...
           </Typography>
         )}
 
@@ -68,7 +69,7 @@ const SelectCategory = () => {
                   category.sub_categories.map((sub, index) => {
                     return (
                       <AccordionDetails
-                        key={sub._id}
+                        key={index}
                         className={classes.details}
                         onClick={() => onClickTraining(sub._id)}
                       >

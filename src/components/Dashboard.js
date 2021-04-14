@@ -211,7 +211,7 @@ export default function Dashboard() {
       setIsError((prevState) => ({
         ...prevState,
         isPassError: true,
-        errorPassMsg: [{ msg: 'Please fill all fields', param: 'required' }],
+        errorPassMsg: [{ msg: 'Bitte alle Felder ausfüllen', param: 'required' }],
       }));
     }
   };
@@ -314,7 +314,7 @@ export default function Dashboard() {
                   variant="h3"
                   className={classes.userProfileBoxTitle}
                 >
-                  Profile
+                  Profil
                 </Typography>
                 <SettingsOutlined
                   fontSize="large"
@@ -346,7 +346,7 @@ export default function Dashboard() {
                     direction="column"
                     className={classes.darkRow}
                   >
-                    <Typography variant="subtitle1">First Name</Typography>
+                    <Typography variant="subtitle1">Vorname</Typography>
                     <Typography variant="body1">{user.first_name}</Typography>
                   </Grid>
                   <Grid
@@ -356,7 +356,7 @@ export default function Dashboard() {
                     direction="column"
                     className={classes.lightRow}
                   >
-                    <Typography variant="subtitle1">Last Name</Typography>
+                    <Typography variant="subtitle1">Nachname</Typography>
                     <Typography variant="body1">{user.last_name}</Typography>
                   </Grid>
                   <Grid
@@ -400,7 +400,7 @@ export default function Dashboard() {
                       direction="column"
                       className={classes.darkRow}
                     >
-                      <Typography variant="subtitle1">First Name</Typography>
+                      <Typography variant="subtitle1">Vorname</Typography>
                       <TextField
                         name="first_name"
                         value={userUpdateProfile.first_name}
@@ -414,7 +414,7 @@ export default function Dashboard() {
                       direction="column"
                       className={classes.lightRow}
                     >
-                      <Typography variant="subtitle1">Last Name</Typography>
+                      <Typography variant="subtitle1">Nachname</Typography>
                       <TextField
                         name="last_name"
                         value={userUpdateProfile.last_name}
@@ -436,7 +436,7 @@ export default function Dashboard() {
                       ></TextField>
                     </Grid>
                     <Button color="primary" variant="contained" type="submit">
-                      Update Profile
+                      Profil aktualisieren
                     </Button>
                   </Box>
                   <Box
@@ -465,7 +465,7 @@ export default function Dashboard() {
                       direction="column"
                       className={classes.darkRow}
                     >
-                      <Typography variant="subtitle1">Old Password</Typography>
+                      <Typography variant="subtitle1">Alter Passwort</Typography>
                       <TextField
                         type="password"
                         name="old_password"
@@ -479,7 +479,7 @@ export default function Dashboard() {
                       direction="column"
                       className={classes.lightRow}
                     >
-                      <Typography variant="subtitle1">New Password</Typography>
+                      <Typography variant="subtitle1">Neues Passwort</Typography>
                       <TextField
                         type="password"
                         name="password"
@@ -487,7 +487,7 @@ export default function Dashboard() {
                       />
                     </Grid>
                     <Button type="submit" color="primary" variant="contained">
-                      Update Password
+                      Password aktualisieren
                     </Button>
                   </Box>
                 </>

@@ -76,10 +76,10 @@ export default function Footer() {
           </MenuList>
           <MenuList>
             <MenuItem>
-              <Link>Company</Link>
+              <Link>Über uns</Link>
             </MenuItem>
             <MenuItem>
-              <Link>Privacy</Link>
+              <Link>Datenschutz</Link>
             </MenuItem>
           </MenuList>
         </Box>
