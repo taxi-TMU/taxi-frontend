@@ -113,7 +113,7 @@ const Login = ({ onLogin, onSetUserInput, isError, isSuccess }) => {
           />
           <FormControlLabel
             control={<Checkbox value="remember" />}
-            label="Remember me"
+            label="Angemeldet belieben"
             className={classes.checkbox}
           />
           <Button
@@ -123,7 +123,7 @@ const Login = ({ onLogin, onSetUserInput, isError, isSuccess }) => {
             color="primary"
             onClick={onLogin}
           >
-            LOGIN
+            Einloggen
           </Button>
           <br />
           <br />
@@ -134,7 +134,7 @@ const Login = ({ onLogin, onSetUserInput, isError, isSuccess }) => {
               to="/reset/request"
               color="textSecondary"
             >
-              Forgot password?
+              Passwort vergessen?
             </Link>
           </Grid>
           <br />
@@ -142,7 +142,7 @@ const Login = ({ onLogin, onSetUserInput, isError, isSuccess }) => {
           <br />
           <Link component={RouterLink} to="/signup">
             <Button type="submit" fullWidth variant="outlined">
-              SIGN UP
+              Registrieren
             </Button>
           </Link>
           <br />

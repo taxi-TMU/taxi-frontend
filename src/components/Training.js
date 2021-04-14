@@ -163,7 +163,7 @@ export default function Training() {
             width="100%"
           >
             {activeStep === training.questions.length ? (
-              <Button onClick={handleReset}>Reset</Button>
+              <Button onClick={handleReset}>Zurücksetzen</Button>
             ) : (
               <>
                 <Button
@@ -172,22 +172,19 @@ export default function Training() {
                   onClick={handleBack}
                   className={classes.trainingButton}
                 >
-                  Previous question
+                  Zurück
                 </Button>
                 {activeStep === training.questions.length - 1 ? (
-                  // <Link
-                  //   component={RouterLink}
-                  //   to={{ pathname: '/result', state: training }}
-                  // >
+   
                     <Button
                       variant="contained"
                       color="primary"
                       onClick={saveTrainingAndGetResult}
                       className={classes.trainingButton}
                     >
-                      Finish
+                      Beenden
                     </Button>
-                  // {/* </Link> */}
+
                 ) : (
                   <Button
                     variant="contained"
@@ -195,7 +192,7 @@ export default function Training() {
                     onClick={handleNext}
                     className={classes.trainingButton}
                   >
-                    Next question
+                    Weiter
                   </Button>
                 )}
               </>

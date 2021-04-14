@@ -61,7 +61,7 @@ const SignUp = ({ onRegister, onSetUserInput }) => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          SIGN UP
+          Registrieren
         </Typography>
         <form className={classes.form} noValidate>
         {/* TODO TEXTFIELD VALIDATIONS */}
@@ -72,7 +72,7 @@ const SignUp = ({ onRegister, onSetUserInput }) => {
             required
             fullWidth
             id="first_name"
-            label="First name"
+            label="Vorname"
             name="first_name"
             autoFocus
             onChange={onSetUserInput}
@@ -84,7 +84,7 @@ const SignUp = ({ onRegister, onSetUserInput }) => {
             required
             fullWidth
             id="last_name"
-            label="Last name"
+            label="Nachname"
             name="last_name"
             onChange={onSetUserInput}
           />
@@ -105,7 +105,7 @@ const SignUp = ({ onRegister, onSetUserInput }) => {
             variant="filled"
             margin="normal"
             id="password"
-            label="Password"
+            label="Passwort"
             name="password"
             type="password"
             required
@@ -117,7 +117,7 @@ const SignUp = ({ onRegister, onSetUserInput }) => {
             variant="filled"
             margin="normal"
             id="Repeat password"
-            label="Repeat password"
+            label="Passwort wiederholen"
             name="repeat password"
             type="password"
             required
@@ -132,14 +132,14 @@ const SignUp = ({ onRegister, onSetUserInput }) => {
             variant="contained"
             color="primary"
           >
-            SIGN UP
+            Registrieren
           </Button>
           <br />
           <br />
 
           <Grid item xs>
             <Typography component="p" color="textSecondary">
-              Already have an account?
+            Sie haben bereits ein Konto?
             </Typography>
           </Grid>
           <br />
@@ -152,7 +152,7 @@ const SignUp = ({ onRegister, onSetUserInput }) => {
               fullWidth
               variant="outlined"
             >
-              LOGIN
+              Zum Login
             </Button>
           </Link>
           <br />

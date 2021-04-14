@@ -49,7 +49,7 @@ export default function HeroText() {
         color="textSecondary"
         fontWeight={700}
       >
-        The Hero Title
+        Taxi App
       </Typography>
       <Typography component="p" color="textSecondary">
         Lorem Ipsum is simply dummy text of the printing and typesetting
@@ -70,12 +70,12 @@ export default function HeroText() {
             color="primary"
             variant="contained"
           >
-            log in
+            Testlauf
           </Button>
         </Link>
         <Link component={RouterLink} to="/signup">
           <Button className={classes.heroButton} variant="outlined">
-            Create a profile
+            Registrieren
           </Button>
         </Link>
       </Box>

@@ -55,7 +55,7 @@ const SelectCategory = () => {
     <Container className={classes.mainContainer} component="main" maxWidth="lg">
       <div className={classes.paper}>
         <Typography component="h1" variant="h3">
-          TEST RESULTS
+          Testergebnisse
         </Typography>
 
         <Divider className={classes.divider} />
@@ -67,19 +67,19 @@ const SelectCategory = () => {
         >
           <Grid item xs={4}>
             <ErrorOutline fontSize="large" />
-            <Typography>Errors</Typography>
+            <Typography>Fehler</Typography>
             <Typography>{wrongAnswers && wrongAnswers}/{nrQuestions && nrQuestions}</Typography>
           </Grid>
 
           <Grid item xs={4}>
             <AccessTime fontSize="large" />
-            <Typography>Current time</Typography>
+            <Typography>Benötigte Zeit</Typography>
             <Typography>18.5min</Typography>
           </Grid>
 
           <Grid item xs={4}>
             <StarOutline fontSize="large" />
-            <Typography>Best time</Typography>
+            <Typography>Bestzeit</Typography>
             <Typography>15.5min</Typography>
           </Grid>
         </Grid>
@@ -120,10 +120,11 @@ const SelectCategory = () => {
               </Accordion>
             );
           })}
-
+  <br />
+        <br />
         <Link component={RouterLink} to="/dashboard">
           <Button variant="contained" color="primary">
-            Back to Dashboard
+            Zurück zum Dashboard
           </Button>
         </Link>
 
