@@ -16,7 +16,7 @@ import {
 } from '@material-ui/core';
 import Countdown from 'react-countdown';
 import { getRequest } from '../utils/api';
-import { updateTraining } from '../utils/training';
+import { updateTrainingOrSimulation } from '../utils/training';
 import { useHistory } from 'react-router-dom';
 
 
@@ -102,7 +102,7 @@ export default function Training() {
   };
 
   const saveTrainingAndGetResult = async () => {
-    await updateTraining(training);
+    await updateTrainingOrSimulation(training);
     history.push(`/result/${training._id}`);
   }
 
