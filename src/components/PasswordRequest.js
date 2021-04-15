@@ -83,6 +83,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "rgba(255, 255, 255, 0.23)",
     color: "#ffffff",
     borderRadius: 16,
+    border: '2px solid white',
     "& a": {
       color: "#fff",
     },

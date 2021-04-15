@@ -14,6 +14,7 @@ import SignUp from './components/SignUp';
 import Training from './components/Training';
 import StartSimulation from './components/StartSimulation';
 import Result from './components/Result';
+import About from './components/About';
 
 import {
   login,
@@ -167,6 +168,8 @@ const App = () => {
                     onSetUserInput={handleSetUserInput}
                   />
                 </Route>
+                <Route path="/about" component={About}/>
+
                 <Route exact path="/reset/password/:userId/:token">
                   <PasswordReset
                     onResetPassword={handlePasswordReset}
@@ -174,18 +177,26 @@ const App = () => {
                   />
                 </Route>
                 <ProtectedRoute path="/dashboard" component={Dashboard} />
-                <Route exact path="/categories">
-                  <SelectCategory />
-                </Route>
-                <Route exact path="/training/:id">
-                  <Training />
-                </Route>
-                <Route exact path="/simulation">
-                  <StartSimulation />
-                </Route>
-                <Route exact path="/result/:id">
-                  <Result />
-                </Route>
+                <ProtectedRoute
+                  exact
+                  path="/categories"
+                  component={SelectCategory}
+                />
+
+                <ProtectedRoute
+                  exact
+                  path="/training/:id"
+                  component={Training}
+                />
+
+                <ProtectedRoute
+                  exact
+                  path="/simulation"
+                  component={StartSimulation}
+                />
+
+                <ProtectedRoute exact path="/result/:id" component={Result} />
+
                 <Redirect to="/" exact />
               </Switch>
             </Box>

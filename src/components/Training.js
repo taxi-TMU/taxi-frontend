@@ -25,8 +25,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: 'rgba(255, 255, 255, 0.23)',
     color: '#ffffff',
     borderRadius: 16,
-    border: '1px solid white',
-    borderColor: 'primary',
+    border: '2px solid white',
   },
   trainingButton: {
     width: '14rem',
@@ -48,16 +47,7 @@ export default function Training() {
       setLoading(true);
       try {
         const training = await getRequest(`training/${id}`);
-        // setTraining({
-        //   ...training,
-        //   questions: training.questions.map((question) => ({
-        //     ...question,
-        //     answers: question.answers.map((answer) => ({
-        //       ...answer,
-        //       userAnswer: false,
-        //     })),
-        //   })),
-        // });
+  
         setTraining(training)
         setLoading(false);
       } catch (err) {
@@ -67,9 +57,6 @@ export default function Training() {
     getData();
   }, [id]);
 
-  // useEffect(() => {
-  //   console.log(training)
-  // }, [training])
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
