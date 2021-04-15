@@ -1,6 +1,6 @@
-import React, { useState, useRef, useContext } from "react";
-import { Link as RouterLink } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
+import React, { useState, useRef, useContext } from 'react';
+import { NavLink as RouterLink } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
 import {
   AppBar,
   Toolbar,
@@ -11,11 +11,11 @@ import {
   Hidden,
   IconButton,
   Menu,
-} from "@material-ui/core";
-import MenuIcon from "@material-ui/icons/Menu";
-import { ReactComponent as Logo } from "../images/logo.svg";
-import UserContext from "../context/UserContext";
-import { logout } from "../utils/auth";
+} from '@material-ui/core';
+import MenuIcon from '@material-ui/icons/Menu';
+import { ReactComponent as Logo } from '../images/logo.svg';
+import UserContext from '../context/UserContext';
+import { logout } from '../utils/auth';
 
 const Nav = () => {
   const classes = useStyles();
@@ -44,57 +44,62 @@ const Nav = () => {
               className={classes.mobileMenu}
             >
               <MenuItem>
-                <Link
+                <RouterLink
                   to="/simulation"
-                  component={RouterLink}
+                  activeClassName={classes.navLink}
                   className={classes.title}
                 >
                   Simulation
-                </Link>
+                </RouterLink>
               </MenuItem>
               <MenuItem>
-                <Link
+                <RouterLink
                   to="/categories"
-                  component={RouterLink}
+                  activeClassName={classes.navLink}
                   className={classes.title}
                 >
                   Trainieren
-                </Link>
+                </RouterLink>
               </MenuItem>
               <MenuItem>
                 {user ? (
-                  <Link className={classes.title}>Dashboard</Link>
-                ) : (
-                  <Link
-                    to="/about"
-                    component={RouterLink}
+                  <RouterLink
+                    to="/dashboard"
+                    activeClassName={classes.navLink}
                     className={classes.title}
                   >
-                    Über uns
-                  </Link>
+                    Dashboard
+                  </RouterLink>
+                ) : (
+                  <RouterLink
+                    to="/aboout"
+                    activeClassName={classes.navLink}
+                    className={classes.title}
+                  >
+                    Dashboard
+                  </RouterLink>
                 )}
               </MenuItem>
               <MenuItem>
                 {user ? (
-                  <Link
-                    className={classes.title}
-                    component={RouterLink}
+                  <RouterLink
                     to="/"
+                    className={classes.title}
                     onClick={() => {
                       logout();
                       setUser();
                     }}
                   >
                     Ausloggen
-                  </Link>
+                  </RouterLink>
                 ) : (
-                  <Link
-                    className={classes.title}
-                    component={RouterLink}
+                  <RouterLink
                     to="/login"
+                    activeClassName={classes.navLink}
+                    className={classes.title}
                   >
                     Einloggen
-                  </Link>
+                  </RouterLink>
                 )}
               </MenuItem>
             </Menu>
@@ -112,22 +117,22 @@ const Nav = () => {
             <Hidden xsDown>
               <MenuList className={classes.left} disableListWrap>
                 <MenuItem>
-                  <Link
+                  <RouterLink
                     to="/simulation"
-                    component={RouterLink}
+                    activeClassName={classes.navLink}
                     className={classes.title}
                   >
                     Simulation
-                  </Link>
+                  </RouterLink>
                 </MenuItem>
                 <MenuItem>
-                  <Link
+                  <RouterLink
                     to="/categories"
-                    component={RouterLink}
+                    activeClassName={classes.navLink}
                     className={classes.title}
                   >
                     Trainieren
-                  </Link>
+                  </RouterLink>
                 </MenuItem>
               </MenuList>
             </Hidden>
@@ -139,44 +144,43 @@ const Nav = () => {
               <MenuList className={classes.right}>
                 <MenuItem>
                   {user ? (
-                    <Link
-                      component={RouterLink}
+                    <RouterLink
                       to="/dashboard"
+                      activeClassName={classes.navLink}
                       className={classes.title}
                     >
                       Dashboard
-                    </Link>
+                    </RouterLink>
                   ) : (
-                    <Link
+                    <RouterLink
                       to="/about"
-                      component={RouterLink}
+                      activeClassName={classes.navLink}
                       className={classes.title}
                     >
                       Über uns
-                    </Link>
+                    </RouterLink>
                   )}
                 </MenuItem>
                 <MenuItem>
                   {user ? (
-                    <Link
-                      className={classes.title}
-                      component={RouterLink}
+                    <RouterLink
                       to="/"
+                      className={classes.title}
                       onClick={() => {
                         logout();
                         setUser();
                       }}
                     >
                       Ausloggen
-                    </Link>
+                    </RouterLink>
                   ) : (
-                    <Link
-                      className={classes.title}
-                      component={RouterLink}
+                    <RouterLink
                       to="/login"
+                      activeClassName={classes.navLink}
+                      className={classes.title}
                     >
                       Einloggen
-                    </Link>
+                    </RouterLink>
                   )}
                 </MenuItem>
               </MenuList>
@@ -193,73 +197,77 @@ export default Nav;
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    background: "transparent",
-    boxShadow: "none",
-    padding: "2rem 0",
-    "& a": {
-      color: "#ffffff",
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    background: 'transparent',
+    boxShadow: 'none',
+    padding: '2rem 0',
+    '& a': {
+      color: '#ffffff',
       fontWeight: 700,
+      textDecoration: 'none',
     },
   },
   toolbar: {
-    display: "flex",
-    justifyContent: "space-between",
-    width: "100%",
+    display: 'flex',
+    justifyContent: 'space-between',
+    width: '100%',
   },
   left: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-around",
-    width: "40%",
-    outline: "none",
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '40%',
+    outline: 'none',
   },
   middle: {
-    display: "flex",
-    justifyContent: "center",
-    width: "30%",
+    display: 'flex',
+    justifyContent: 'center',
+    width: '30%',
   },
-  [theme.breakpoints.down("xs")]: {
+  [theme.breakpoints.down('xs')]: {
     middle: {
-      width: "100%",
+      width: '100%',
     },
   },
   logo: {
-    height: "10%",
-    width: "25%",
+    height: '10%',
+    width: '25%',
   },
 
   right: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-around",
-    width: "40%",
-    outline: "none",
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '40%',
+    outline: 'none',
   },
   languages: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    width: "100%",
-    padding: "0 2rem",
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '100%',
+    padding: '0 2rem',
   },
-  [theme.breakpoints.up("sm")]: {
+  [theme.breakpoints.up('sm')]: {
     languages: {
-      justifyContent: "flex-end",
+      justifyContent: 'flex-end',
     },
   },
   mobileMenu: {
-    "& ul": {
-      backgroundColor: "#232F37",
-      color: "#ffffff",
-      padding: "0",
-      width: "100vh",
+    '& ul': {
+      backgroundColor: '#232F37',
+      color: '#ffffff',
+      padding: '0',
+      width: '100vh',
     },
-    "& a": {
+    '& a': {
       fontWeight: 700,
     },
+  },
+  navLink: {
+    color: '#d75f5f !important',
   },
 }));
