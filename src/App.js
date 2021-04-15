@@ -76,6 +76,10 @@ const App = () => {
     checkIfLoggedIn();
   }, []);
 
+  useEffect(() => {
+    resetAlerts();
+  }, [pathname]);
+
   const handleSetUserInput = (e) => {
     resetAlerts();
     seUserInput((prevInput) => ({
@@ -102,7 +106,6 @@ const App = () => {
       setIsSuccess({ success: true, successMsg: 'Logged in successfully' });
       checkIfLoggedIn();
       seUserInput(null);
-      setTimeout(() => resetAlerts(), 2000);
     } else {
       setIsError({ error: true, errorMsg: [isAuthenticated.error] });
     }
@@ -116,7 +119,6 @@ const App = () => {
       setIsSuccess({ success: true, successMsg: 'Registration successfully' });
       checkIfLoggedIn();
       seUserInput(null);
-      setTimeout(() => resetAlerts(), 2000);
     } else {
       setIsError({
         error: true,

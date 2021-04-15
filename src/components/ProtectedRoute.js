@@ -1,7 +1,6 @@
-import React, { useContext, useEffect } from "react";
-import { Route, Redirect } from "react-router-dom";
-import { decodeToken } from "../utils/auth";
-import UserContext from "../context/UserContext";
+import React, { useContext } from 'react';
+import { Route, Redirect } from 'react-router-dom';
+import UserContext from '../context/UserContext';
 
 const ProtectedRoute = ({ component: Component, ...rest }) => {
   const { user } = useContext(UserContext);
@@ -19,7 +18,7 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
         ) : (
           <Redirect
             to={{
-              pathname: "/login",
+              pathname: '/login',
               state: { from: props.location },
             }}
           />
