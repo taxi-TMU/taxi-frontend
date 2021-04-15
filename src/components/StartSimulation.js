@@ -53,8 +53,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "rgba(255, 255, 255, 0.23)",
     color: "#ffffff",
     borderRadius: 16,
-    border: "1px solid white",
-    borderColor: "primary",
+    border: '2px solid white',
   },
   paper: {
     marginTop: theme.spacing(8),

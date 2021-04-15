@@ -65,7 +65,13 @@ const Nav = () => {
                 {user ? (
                   <Link className={classes.title}>Dashboard</Link>
                 ) : (
-                  <Link className={classes.title}>Über uns</Link>
+                  <Link
+                    to="/about"
+                    component={RouterLink}
+                    className={classes.title}
+                  >
+                    Über uns
+                  </Link>
                 )}
               </MenuItem>
               <MenuItem>
@@ -141,7 +147,13 @@ const Nav = () => {
                       Dashboard
                     </Link>
                   ) : (
-                    <Link className={classes.title}>Über uns</Link>
+                    <Link
+                      to="/about"
+                      component={RouterLink}
+                      className={classes.title}
+                    >
+                      Über uns
+                    </Link>
                   )}
                 </MenuItem>
                 <MenuItem>

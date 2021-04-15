@@ -7,6 +7,7 @@ import {
   Typography,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { Link as RouterLink } from 'react-router-dom';
 
 const useStyle = makeStyles((theme) => ({
   root: {
@@ -76,7 +77,13 @@ export default function Footer() {
           </MenuList>
           <MenuList>
             <MenuItem>
-              <Link>Über uns</Link>
+              <Link
+                to="/about"
+                component={RouterLink}
+                className={classes.title}
+              >
+                Über uns
+              </Link>
             </MenuItem>
             <MenuItem>
               <Link>Datenschutz</Link>
