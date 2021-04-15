@@ -42,9 +42,9 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: props.avatarFallbackBg,
   }),
   userProfileBox: {
-    padding: '0',
+    padding: '1rem 0',
     [theme.breakpoints.up('sm')]: {
-      padding: '0 1rem',
+      padding: '2rem 1rem',
     },
   },
   userProfileBoxTitle: {
@@ -53,6 +53,7 @@ const useStyles = makeStyles((theme) => ({
   userIcon: {
     width: '100%',
     textAlign: 'center',
+    color: theme.palette.secondary.main,
   },
   divider: {
     backgroundColor: '#fff',
@@ -67,12 +68,14 @@ const useStyles = makeStyles((theme) => ({
   },
   settingsIcon: {
     cursor: 'pointer',
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette.primary.main,
     color: '#fff',
     margin: '0 2rem',
+    boxShadow: '2px 2px 8px 0 rgba(0, 0, 0, 0.3)',
   },
   updateForm: {
-    padding: '2rem 0',
+    backgroundColor: '#232F37',
+    padding: '1rem',
     width: '100%',
     '& input': {
       color: '#fff',
@@ -258,10 +261,10 @@ export default function Dashboard() {
   //--------------------------------------------
   const userUpdateStatus = (status) => {
     if (status) {
-      gearIcon.current.style.backgroundColor = theme.palette.primary.main;
+      gearIcon.current.style.backgroundColor = theme.palette.secondary.main;
     } else {
       resetAlerts();
-      gearIcon.current.style.backgroundColor = theme.palette.secondary.main;
+      gearIcon.current.style.backgroundColor = theme.palette.primary.main;
     }
   };
 
@@ -319,176 +322,196 @@ export default function Dashboard() {
                 {user.first_name.split('')[0].toUpperCase()}
               </Avatar>
             </Grid>
-            <Grid item xs={12} md={4} className={classes.userProfileBox}>
-              {user && !isUpdating && (
-                <>
-                  <Person className={classes.userIcon} fontSize="large" />
-                  <Box width="100%" py={2}>
-                    {isError.isProfileError &&
-                      isError.errorProfileMsg.map((err, index) => (
-                        <Alert key={index} variant="filled" severity="error">
-                          {err.param}: {err.msg}
-                        </Alert>
-                      ))}
-                    {isSuccess.isProfileSuccess && (
-                      <Alert variant="filled" severity="success">
-                        {isSuccess.successProfileMsg}
+            {user && !isUpdating && (
+              <Grid item xs={12} md={8}>
+                <Box width="100%" py={2}>
+                  {isError.isProfileError &&
+                    isError.errorProfileMsg.map((err, index) => (
+                      <Alert key={index} variant="filled" severity="error">
+                        {err.param}: {err.msg}
                       </Alert>
-                    )}
-                  </Box>
-                  <Grid
-                    container
-                    item
-                    justify="center"
-                    direction="column"
-                    className={classes.darkRow}
-                  >
-                    <Typography variant="subtitle1">Vorname</Typography>
-                    <Typography variant="body1">{user.first_name}</Typography>
-                  </Grid>
-                  <Grid
-                    container
-                    item
-                    justify="center"
-                    direction="column"
-                    className={classes.lightRow}
-                  >
-                    <Typography variant="subtitle1">Nachname</Typography>
-                    <Typography variant="body1">{user.last_name}</Typography>
-                  </Grid>
-                  <Grid
-                    container
-                    item
-                    justify="center"
-                    direction="column"
-                    className={classes.darkRow}
-                  >
-                    <Typography variant="subtitle1">Email</Typography>
-                    <Typography variant="body1">{user.email}</Typography>
-                  </Grid>
-                </>
-              )}
-              {isUpdating && (
-                <Box
-                  width="100%"
-                  component="form"
-                  className={classes.updateForm}
-                  onSubmit={handleSubmitNewProfile}
-                >
-                  <Person className={classes.userIcon} fontSize="large" />
-                  <Box width="100%" py={2}>
-                    {isError.isProfileError &&
-                      isError.errorProfileMsg.map((err, index) => (
-                        <Alert key={index} variant="filled" severity="error">
-                          {err.param}: {err.msg}
-                        </Alert>
-                      ))}
-                    {isSuccess.isProfileSuccess && (
-                      <Alert variant="filled" severity="success">
-                        {isSuccess.successProfileMsg}
-                      </Alert>
-                    )}
-                  </Box>
-                  <Grid
-                    container
-                    item
-                    justify="center"
-                    direction="column"
-                    className={classes.darkRow}
-                  >
-                    <Typography variant="subtitle1">Vorname</Typography>
-                    <TextField
-                      name="first_name"
-                      value={userUpdateProfile.first_name}
-                      onChange={handleChangeProfileInput}
-                    ></TextField>
-                  </Grid>
-                  <Grid
-                    container
-                    item
-                    justify="center"
-                    direction="column"
-                    className={classes.lightRow}
-                  >
-                    <Typography variant="subtitle1">Nachname</Typography>
-                    <TextField
-                      name="last_name"
-                      value={userUpdateProfile.last_name}
-                      onChange={handleChangeProfileInput}
-                    ></TextField>
-                  </Grid>
-                  <Grid
-                    container
-                    item
-                    justify="center"
-                    direction="column"
-                    className={classes.darkRow}
-                  >
-                    <Typography variant="subtitle1">Email</Typography>
-                    <TextField
-                      name="email"
-                      value={userUpdateProfile.email}
-                      onChange={handleChangeProfileInput}
-                    ></TextField>
-                  </Grid>
-                  <Button color="primary" variant="contained" type="submit">
-                    Profil aktualisieren
-                  </Button>
+                    ))}
+                  {isSuccess.isProfileSuccess && (
+                    <Alert variant="filled" severity="success">
+                      {isSuccess.successProfileMsg}
+                    </Alert>
+                  )}
                 </Box>
-              )}
-            </Grid>
-            {isUpdating && (
-              <Grid item xs={12} md={4} className={classes.userProfileBox}>
-                <Box
-                  component="form"
-                  onSubmit={handleSubmitNewPass}
-                  className={classes.updateForm}
+                <Grid
+                  container
+                  item
+                  justify="center"
+                  direction="column"
+                  className={classes.darkRow}
                 >
-                  <Lock className={classes.userIcon} fontSize="large" />
-                  <Box width="100%" py={2}>
-                    {isError.isPassError &&
-                      isError.errorPassMsg.map((err, index) => (
-                        <Alert key={index} variant="filled" severity="error">
-                          {err.param}: {err.msg}
+                  <Typography variant="subtitle1">Vorname</Typography>
+                  <Typography variant="body1">{user.first_name}</Typography>
+                </Grid>
+                <Grid
+                  container
+                  item
+                  justify="center"
+                  direction="column"
+                  className={classes.lightRow}
+                >
+                  <Typography variant="subtitle1">Nachname</Typography>
+                  <Typography variant="body1">{user.last_name}</Typography>
+                </Grid>
+                <Grid
+                  container
+                  item
+                  justify="center"
+                  direction="column"
+                  className={classes.darkRow}
+                >
+                  <Typography variant="subtitle1">Email</Typography>
+                  <Typography variant="body1">{user.email}</Typography>
+                </Grid>
+              </Grid>
+            )}
+            {isUpdating && (
+              <Grid item xs={12} md={4}>
+                <Box className={classes.userProfileBox}>
+                  <Box
+                    width="100%"
+                    component="form"
+                    className={classes.updateForm}
+                    onSubmit={handleSubmitNewProfile}
+                    borderRadius={4}
+                    boxShadow={4}
+                  >
+                    <Person className={classes.userIcon} fontSize="large" />
+                    <Box width="100%" py={2}>
+                      {isError.isProfileError &&
+                        isError.errorProfileMsg.map((err, index) => (
+                          <Alert key={index} variant="filled" severity="error">
+                            {err.param}: {err.msg}
+                          </Alert>
+                        ))}
+                      {isSuccess.isProfileSuccess && (
+                        <Alert variant="filled" severity="success">
+                          {isSuccess.successProfileMsg}
                         </Alert>
-                      ))}
-                    {isSuccess.isPassSuccess && (
-                      <Alert variant="filled" severity="success">
-                        {isSuccess.successPassMsg}
-                      </Alert>
-                    )}
+                      )}
+                    </Box>
+                    <Grid
+                      container
+                      item
+                      justify="center"
+                      direction="column"
+                      className={classes.darkRow}
+                    >
+                      <Typography variant="subtitle1">Vorname</Typography>
+                      <TextField
+                        color="secondary"
+                        name="first_name"
+                        value={userUpdateProfile.first_name}
+                        onChange={handleChangeProfileInput}
+                      ></TextField>
+                    </Grid>
+                    <Grid
+                      container
+                      item
+                      justify="center"
+                      direction="column"
+                      className={classes.lightRow}
+                    >
+                      <Typography variant="subtitle1">Nachname</Typography>
+                      <TextField
+                        name="last_name"
+                        value={userUpdateProfile.last_name}
+                        onChange={handleChangeProfileInput}
+                        color="secondary"
+                      ></TextField>
+                    </Grid>
+                    <Grid
+                      container
+                      item
+                      justify="center"
+                      direction="column"
+                      className={classes.darkRow}
+                    >
+                      <Typography variant="subtitle1">Email</Typography>
+                      <TextField
+                        color="secondary"
+                        name="email"
+                        value={userUpdateProfile.email}
+                        onChange={handleChangeProfileInput}
+                      ></TextField>
+                    </Grid>
+                    <Box display="flex" justifyContent="center" py={2}>
+                      <Button color="primary" variant="contained" type="submit">
+                        Profil aktualisieren
+                      </Button>
+                    </Box>
                   </Box>
-                  <Grid
-                    container
-                    item
-                    justify="center"
-                    direction="column"
-                    className={classes.darkRow}
+                </Box>
+              </Grid>
+            )}
+            {isUpdating && (
+              <Grid item xs={12} md={4}>
+                <Box className={classes.userProfileBox}>
+                  <Box
+                    component="form"
+                    onSubmit={handleSubmitNewPass}
+                    className={classes.updateForm}
+                    borderRadius={4}
+                    boxShadow={4}
                   >
-                    <Typography variant="subtitle1">Alter Passwort</Typography>
-                    <TextField
-                      type="password"
-                      name="old_password"
-                      onChange={handleChangePassInput}
-                    />
-                  </Grid>
-                  <Grid
-                    container
-                    item
-                    justify="center"
-                    direction="column"
-                    className={classes.lightRow}
-                  >
-                    <Typography variant="subtitle1">Neues Passwort</Typography>
-                    <TextField
-                      type="password"
-                      name="password"
-                      onChange={handleChangePassInput}
-                    />
-                  </Grid>
-                  <Button type="submit" color="primary" variant="contained">
-                    Password aktualisieren
-                  </Button>
+                    <Lock className={classes.userIcon} fontSize="large" />
+                    <Box width="100%" py={2}>
+                      {isError.isPassError &&
+                        isError.errorPassMsg.map((err, index) => (
+                          <Alert key={index} variant="filled" severity="error">
+                            {err.param}: {err.msg}
+                          </Alert>
+                        ))}
+                      {isSuccess.isPassSuccess && (
+                        <Alert variant="filled" severity="success">
+                          {isSuccess.successPassMsg}
+                        </Alert>
+                      )}
+                    </Box>
+                    <Grid
+                      container
+                      item
+                      justify="center"
+                      direction="column"
+                      className={classes.darkRow}
+                    >
+                      <Typography variant="subtitle1">
+                        Alter Passwort
+                      </Typography>
+                      <TextField
+                        color="secondary"
+                        type="password"
+                        name="old_password"
+                        onChange={handleChangePassInput}
+                      />
+                    </Grid>
+                    <Grid
+                      container
+                      item
+                      justify="center"
+                      direction="column"
+                      className={classes.lightRow}
+                    >
+                      <Typography variant="subtitle1">
+                        Neues Passwort
+                      </Typography>
+                      <TextField
+                        color="secondary"
+                        type="password"
+                        name="password"
+                        onChange={handleChangePassInput}
+                      />
+                    </Grid>
+                    <Box display="flex" justifyContent="center" py={2}>
+                      <Button type="submit" color="primary" variant="contained">
+                        Password aktualisieren
+                      </Button>
+                    </Box>
+                  </Box>
                 </Box>
               </Grid>
             )}
