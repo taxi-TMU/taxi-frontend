@@ -11,7 +11,9 @@ import {
   Typography,
   Container,
   Divider,
+  Box
 } from "@material-ui/core";
+import { Alert } from '@material-ui/lab';
 
 const useStyles = makeStyles((theme) => ({
   mainContainer: {
@@ -50,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const SignUp = ({ onRegister, onSetUserInput }) => {
+const SignUp = ({ onRegister, onSetUserInput, isError, isSuccess }) => {
   const classes = useStyles();
 
   return (
@@ -62,8 +64,22 @@ const SignUp = ({ onRegister, onSetUserInput }) => {
         <Typography component="h1" variant="h5">
           Registrieren
         </Typography>
+        {isError.error &&
+          isError.errorMsg.map((err, index) => (
+            <Box width="100%" py={2} key={index}>
+              <Alert variant="filled" severity="error">
+                {err.param}: {err.msg}
+              </Alert>
+            </Box>
+          ))}
+        {isSuccess.success && (
+          <Box width="100%" py={2}>
+            <Alert variant="filled" severity="success">
+              {isSuccess.successMsg}
+            </Alert>
+          </Box>
+        )}
         <form className={classes.form} noValidate>
-        {/* TODO TEXTFIELD VALIDATIONS */}
           <TextField
             className={classes.input}
             variant="filled"

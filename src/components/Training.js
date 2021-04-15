@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link as RouterLink, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   Typography,
@@ -11,14 +11,12 @@ import {
   Button,
   FormControlLabel,
   Checkbox,
-  Link,
   CircularProgress,
 } from '@material-ui/core';
 import Countdown from 'react-countdown';
 import { getRequest } from '../utils/api';
 import { updateTrainingOrSimulation } from '../utils/training';
 import { useHistory } from 'react-router-dom';
-
 
 const useStyles = makeStyles((theme) => ({
   mainContainer: {
@@ -47,7 +45,6 @@ export default function Training() {
       setLoading(true);
       try {
         const training = await getRequest(`training/${id}`);
-  
         setTraining(training)
         setLoading(false);
       } catch (err) {
@@ -91,7 +88,7 @@ export default function Training() {
   const saveTrainingAndGetResult = async () => {
     await updateTrainingOrSimulation(training);
     history.push(`/result/${training._id}`);
-  }
+  };
 
   return (
     <>
@@ -162,16 +159,14 @@ export default function Training() {
                   Zurück
                 </Button>
                 {activeStep === training.questions.length - 1 ? (
-   
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={saveTrainingAndGetResult}
-                      className={classes.trainingButton}
-                    >
-                      Beenden
-                    </Button>
-
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={saveTrainingAndGetResult}
+                    className={classes.trainingButton}
+                  >
+                    Beenden
+                  </Button>
                 ) : (
                   <Button
                     variant="contained"
