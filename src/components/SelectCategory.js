@@ -7,6 +7,8 @@ import {
   AccordionDetails,
   Typography,
   Container,
+  CircularProgress,
+  Box,
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { getRequest } from '../utils/api';
@@ -35,56 +37,48 @@ const SelectCategory = () => {
 
   return (
     <Container className={classes.mainContainer} component="main" maxWidth="lg">
-      <div className={classes.paper}>
-        <Typography component="h1" variant="h5">
-          Auswahl Kategorie
-        </Typography>
-
-        <Typography className={classes.padding}>
-          In diesem Abschnitt können Sie Ihr Wissen nach Kategory trainieren.
-          Jede Kategory hat Unterkategorien. Wählen Sie eine aus und trainieren Sie die Fragen.
-          Die Fragen werden nach Zufallsprinzip zusammengesetzt.{' '}
-        </Typography>
-
-        {!categories && (
-          <Typography component="h1" variant="h5">
-            Lädt ...
-          </Typography>
-        )}
-
-        {categories &&
-          categories.map((category) => {
-            return (
-              <Accordion key={category._id} className={classes.accordion}>
-                <AccordionSummary
-                  className={classes.summary}
-                  expandIcon={<ExpandMoreIcon />}
-                  aria-controls="panel1a-content"
-                  id="panel1a-header"
-                >
-                  <Typography>{category.name}</Typography>
-                </AccordionSummary>
-
-                {category.sub_categories &&
-                  category.sub_categories.map((sub, index) => {
-                    return (
-                      <AccordionDetails
-                        key={index}
-                        className={classes.details}
-                        onClick={() => onClickTraining(sub._id)}
-                      >
-                        <Typography>{sub.name}</Typography>
-                      </AccordionDetails>
-                    );
-                  })}
-              </Accordion>
-            );
-          })}
-
-        <br />
-        <br />
-        <br />
-      </div>
+      <Typography component="h2" variant="h4" align="center">
+        Auswahl Kategorie
+      </Typography>
+      <Typography className={classes.padding}>
+        In diesem Abschnitt können Sie Ihr Wissen nach Kategory trainieren. Jede
+        Kategory hat Unterkategorien. Wählen Sie eine aus und trainieren Sie die
+        Fragen. Die Fragen werden nach Zufallsprinzip zusammengesetzt.{' '}
+      </Typography>
+      {!categories && (
+        <Box display="flex" justifyContent="center">
+          <CircularProgress color="primary" />
+        </Box>
+      )}
+      {categories &&
+        categories.map((category) => {
+          return (
+            <Accordion key={category._id} className={classes.accordion}>
+              <AccordionSummary
+                className={classes.summary}
+                expandIcon={
+                  <ExpandMoreIcon className={classes.accordionIcon} />
+                }
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+              >
+                <Typography>{category.name}</Typography>
+              </AccordionSummary>
+              {category.sub_categories &&
+                category.sub_categories.map((sub, index) => {
+                  return (
+                    <AccordionDetails
+                      key={index}
+                      className={classes.details}
+                      onClick={() => onClickTraining(sub._id)}
+                    >
+                      <Typography>{sub.name}</Typography>
+                    </AccordionDetails>
+                  );
+                })}
+            </Accordion>
+          );
+        })}
     </Container>
   );
 };
@@ -93,6 +87,7 @@ export default SelectCategory;
 
 const useStyles = makeStyles((theme) => ({
   mainContainer: {
+    padding: '2rem',
     backgroundColor: 'rgba(255, 255, 255, 0.23)',
     color: '#ffffff',
     borderRadius: 16,
@@ -112,14 +107,20 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'left',
     width: '100%',
   },
+  accordionIcon: {
+    color: '#fff',
+  },
   summary: {
-    background: '#fafafa',
+    background: '#232F37',
     textTransform: 'uppercase',
+    color: '#fff',
   },
   details: {
-    borderBottom: '1px solid #e6e6e6',
+    backgroundColor: 'rgba(35,47,55, 0.9)',
+    color: '#fff',
     '&:hover': {
-      background: '#A3CCC3',
+      backgroundColor: theme.palette.secondary.main,
+      color: '#000',
       cursor: 'pointer',
     },
   },
