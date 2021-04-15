@@ -35,6 +35,16 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.secondary.main,
     backgroundColor: '#232F37',
   },
+  label: {
+    width: '100%',
+  },
+  answerBox: {
+    backgroundColor: '#232F37',
+  },
+  answerBoxChecked: {
+    border: '2px solid #a3ccc3',
+    backgroundColor: 'rgba(35,47,55, 0.5)',
+  },
 }));
 
 export default function Training() {
@@ -148,16 +158,29 @@ export default function Training() {
                   />
                 </Box>
               )}
-              <Box py={4} px={2}>
-                <Typography component="h4" variant="h4">
+              <Box py={4} px={2} width="100%">
+                <Typography component="h4" variant="h4" align="center">
                   {training.questions[activeStep].question_text}
                 </Typography>
               </Box>
-              <Box py={4} px={12} alignSelf="flex-start">
+              <Box py={4} px={12} alignSelf="flex-start" width="100%">
                 {training.questions[activeStep].answers.map((answer) => (
-                  <Box py={2} key={answer._id}>
+                  <Box
+                    py={2}
+                    key={answer._id}
+                    className={
+                      answer.userAnswer
+                        ? classes.answerBoxChecked
+                        : classes.answerBox
+                    }
+                    my={2}
+                    borderRadius={2}
+                    boxShadow={4}
+                    px={2}
+                  >
                     <FormControlLabel
                       key={answer._id}
+                      className={classes.label}
                       control={
                         <Checkbox
                           onChange={(e) => handleCheckAnswer(e, activeStep)}

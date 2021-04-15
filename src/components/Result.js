@@ -142,15 +142,30 @@ const Result = () => {
                 )}
                 <Typography>{res.question_text}</Typography>
               </AccordionSummary>
-              <AccordionDetails key={index}>
+              <AccordionDetails
+                key={index}
+                className={classes.accordionSubTitleBox}
+              >
                 <Grid container>
-                  <Grid container item xs={1} justify="center">
+                  <Grid
+                    container
+                    item
+                    xs={1}
+                    justify="center"
+                    className={classes.accordionSubTitle}
+                  >
                     Your Answer
                   </Grid>
-                  <Grid container item xs={1} justify="center">
+                  <Grid
+                    container
+                    item
+                    xs={1}
+                    justify="center"
+                    className={classes.accordionSubTitle}
+                  >
                     Answer
                   </Grid>
-                  <Grid item xs={10}>
+                  <Grid item xs={10} className={classes.accordionSubTitle}>
                     Question
                   </Grid>
                 </Grid>
@@ -203,6 +218,9 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 16,
     border: '1px solid white',
     borderColor: 'primary',
+    '& a:hover': {
+      textDecoration: 'none',
+    },
   },
   resultTitle: {
     padding: '2rem',
@@ -232,6 +250,13 @@ const useStyles = makeStyles((theme) => ({
     '& span': {
       color: '#fff !important',
     },
+  },
+  accordionSubTitleBox: {
+    borderBottom: '1px solid #a3ccc3',
+  },
+  accordionSubTitle: {
+    color: theme.palette.secondary.main,
+    fontWeight: '700',
   },
   right: {
     margin: '0 1rem',
