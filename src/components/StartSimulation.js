@@ -20,7 +20,7 @@ const SelectCategory = () => {
   return (
     <Container className={classes.mainContainer} component="main" maxWidth="md">
       <div className={classes.paper}>
-        <Typography component="h1" variant="h5">
+        <Typography component="h2" variant="h4">
           Simulation starten
         </Typography>
 

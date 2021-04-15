@@ -109,7 +109,7 @@ export default function Training() {
   return (
     <>
       {loading && (
-        <Box textAlign="center" pb={6}>
+        <Box textAlign="center" pb={6} height="100vh">
           <CircularProgress color="primary" />
         </Box>
       )}
