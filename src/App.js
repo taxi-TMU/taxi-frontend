@@ -31,9 +31,6 @@ import ProtectedRoute from './components/ProtectedRoute';
 const useStyle = makeStyles((theme) => ({
   headerBg: (props) => ({
     background: props.background,
-    backgroundPosition: 'center',
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: 'cover',
     border: '3px solid #a3ccc3',
   }),
   mainSpace: {
@@ -67,7 +64,7 @@ const App = () => {
   const props = {
     background:
       pathname === '/'
-        ? `linear-gradient(rgba(35, 47, 55, 0.61), rgba(35, 47, 55, 0.61)), url(${taxiAppBg})`
+        ? `linear-gradient(rgba(35, 47, 55, 0.61), rgba(35, 47, 55, 0.61)), url(${taxiAppBg}) no-repeat center / cover`
         : '#232f37',
   };
   const classes = useStyle(props);
