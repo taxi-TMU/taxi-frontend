@@ -13,7 +13,8 @@ import {
   Checkbox,
   CircularProgress,
 } from '@material-ui/core';
-import Countdown from 'react-countdown';
+import { AccessTime } from '@material-ui/icons';
+import Countdown, { zeroPad } from 'react-countdown';
 import { getRequest } from '../utils/api';
 import { updateTrainingOrSimulation } from '../utils/training';
 import { useHistory } from 'react-router-dom';
@@ -30,6 +31,10 @@ const useStyles = makeStyles((theme) => ({
     height: '3.5rem',
     margin: '0 2rem',
   },
+  timerBox: {
+    color: theme.palette.secondary.main,
+    backgroundColor: '#232F37',
+  },
 }));
 
 export default function Training() {
@@ -45,7 +50,7 @@ export default function Training() {
       setLoading(true);
       try {
         const training = await getRequest(`training/${id}`);
-        setTraining(training)
+        setTraining(training);
         setLoading(false);
       } catch (err) {
         console.log(err.message);
@@ -53,7 +58,6 @@ export default function Training() {
     };
     getData();
   }, [id]);
-
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -90,6 +94,18 @@ export default function Training() {
     history.push(`/result/${training._id}`);
   };
 
+  const timeDisplay = ({ minutes, seconds, completed }) => {
+    if (completed) {
+      return <p>The time is over!</p>;
+    } else {
+      return (
+        <Typography component="h4" variant="h4">
+          {zeroPad(minutes)}:{zeroPad(seconds)}
+        </Typography>
+      );
+    }
+  };
+
   return (
     <>
       {loading && (
@@ -114,7 +130,24 @@ export default function Training() {
               justifyContent="center"
               py={4}
             >
-              {training.simulation && <Countdown date={training.time_end} />}
+              {training.simulation && (
+                <Box
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  className={classes.timerBox}
+                  boxShadow={4}
+                  p={2}
+                  borderRadius={4}
+                >
+                  <AccessTime fontSize="large" />
+                  <Countdown
+                    date={training.time_end}
+                    renderer={timeDisplay}
+                    zeroPadTime="2"
+                  />
+                </Box>
+              )}
               <Box py={4} px={2}>
                 <Typography component="h4" variant="h4">
                   {training.questions[activeStep].question_text}
