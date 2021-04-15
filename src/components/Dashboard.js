@@ -10,6 +10,7 @@ import {
   Divider,
   Button,
   TextField,
+  IconButton,
 } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
@@ -18,27 +19,21 @@ import theme from '../theme';
 
 const useStyles = makeStyles((theme) => ({
   dashboardBox: {
+    padding: '2rem',
     margin: '2rem auto',
     backgroundColor: 'rgba(255, 255, 255, 0.23)',
     border: '2px solid #fff',
     color: '#fff',
     borderRadius: 10,
-    padding: '0.5rem',
     [theme.breakpoints.up('sm')]: {
       width: '80%',
-      padding: '1.5rem',
     },
   },
   dashboardTitle: {
     fontWeight: '300',
     fontStyle: 'italic',
     padding: '2rem 0',
-  },
-  userBox: {
-    paddingBottom: '2rem',
-    [theme.breakpoints.up('sm')]: {
-      alignItems: 'center',
-    },
+    color: '#fff',
   },
   userAvatar: (props) => ({
     width: '10rem',
@@ -47,7 +42,10 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: props.avatarFallbackBg,
   }),
   userProfileBox: {
-    padding: '2rem 0',
+    padding: '0',
+    [theme.breakpoints.up('sm')]: {
+      padding: '0 1rem',
+    },
   },
   userProfileBoxTitle: {
     padding: '2rem 0',
@@ -69,6 +67,9 @@ const useStyles = makeStyles((theme) => ({
   },
   settingsIcon: {
     cursor: 'pointer',
+    backgroundColor: theme.palette.secondary.main,
+    color: '#fff',
+    margin: '0 2rem',
   },
   updateForm: {
     padding: '2rem 0',
@@ -101,7 +102,10 @@ const props = {
 export default function Dashboard() {
   const { user, setUser } = useContext(UserContext);
   const [userUpdateProfile, setUserUpdateProfile] = useState();
-  const [userUpdatePass, setUserUpdatePass] = useState();
+  const [userUpdatePass, setUserUpdatePass] = useState({
+    old_password: '',
+    password: '',
+  });
   // const [isLoading, setIsLoading] = useState();
   const [isUpdating, setIsUpdating] = useState(false);
   const [isError, setIsError] = useState({
@@ -136,6 +140,7 @@ export default function Dashboard() {
   // update user profile
   //--------------------------------------------
   const handleChangeProfileInput = (e) => {
+    resetAlerts();
     setUserUpdateProfile((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
@@ -144,7 +149,7 @@ export default function Dashboard() {
 
   const handleSubmitNewProfile = (e) => {
     e.preventDefault();
-    resetAlertMessages();
+    resetAlerts();
     // check if data is not empty
     if (
       !validator.isEmpty(userUpdateProfile.first_name) &&
@@ -156,7 +161,9 @@ export default function Dashboard() {
       setIsError((prevState) => ({
         ...prevState,
         isProfileError: true,
-        errorProfileMsg: [{ msg: 'Please fill all fields', param: 'required' }],
+        errorProfileMsg: [
+          { msg: 'Bitte alle Felder ausfüllen', param: 'required' },
+        ],
       }));
     }
   };
@@ -171,7 +178,6 @@ export default function Dashboard() {
       }));
       setUser(res.data.obj);
     } catch (err) {
-      console.log(err.response);
       if (err.response) {
         setIsError((prevState) => ({
           ...prevState,
@@ -192,6 +198,7 @@ export default function Dashboard() {
   // update new password
   //--------------------------------------------
   const handleChangePassInput = (e) => {
+    resetAlerts();
     setUserUpdatePass((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
@@ -200,7 +207,7 @@ export default function Dashboard() {
 
   const handleSubmitNewPass = (e) => {
     e.preventDefault();
-    resetAlertMessages();
+    resetAlerts();
     // check if data is not empty
     if (
       !validator.isEmpty(userUpdatePass.old_password) &&
@@ -211,7 +218,9 @@ export default function Dashboard() {
       setIsError((prevState) => ({
         ...prevState,
         isPassError: true,
-        errorPassMsg: [{ msg: 'Bitte alle Felder ausfüllen', param: 'required' }],
+        errorPassMsg: [
+          { msg: 'Bitte alle Felder ausfüllen', param: 'required' },
+        ],
       }));
     }
   };
@@ -249,14 +258,14 @@ export default function Dashboard() {
   //--------------------------------------------
   const userUpdateStatus = (status) => {
     if (status) {
-      gearIcon.current.style.color = theme.palette.primary.main;
+      gearIcon.current.style.backgroundColor = theme.palette.primary.main;
     } else {
-      resetAlertMessages();
-      gearIcon.current.style.color = '#fff';
+      resetAlerts();
+      gearIcon.current.style.backgroundColor = theme.palette.secondary.main;
     }
   };
 
-  const resetAlertMessages = () => {
+  const resetAlerts = () => {
     setIsSuccess({
       isProfileSuccess: false,
       isPassSuccess: false,
@@ -274,53 +283,43 @@ export default function Dashboard() {
   return (
     <>
       <Box className={classes.dashboardBox}>
-        <Typography
-          variant="h2"
-          align="center"
-          className={classes.dashboardTitle}
-        >
-          Dashboard
-        </Typography>
-        <Typography
-          component="h1"
-          variant="h5"
-          align="center"
-          color="textPrimary"
-          gutterBottom
-        >
-          Welcome{' '}
-          {`${
-            user.first_name.charAt(0).toUpperCase() + user.first_name.slice(1)
-          }`}
-        </Typography>
+        <Box display="flex" justifyContent="center" alignItems="center">
+          <Typography
+            component="h2"
+            variant="h4"
+            align="center"
+            color="textPrimary"
+            className={classes.dashboardTitle}
+          >
+            Welcome{' '}
+            {`${
+              user.first_name.charAt(0).toUpperCase() + user.first_name.slice(1)
+            }`}
+          </Typography>
+          <IconButton
+            fontSize="large"
+            onClick={handleClickUpdateUser}
+            ref={gearIcon}
+            className={classes.settingsIcon}
+          >
+            <SettingsOutlined />
+          </IconButton>
+        </Box>
         {user && (
           <Grid container className={classes.userBox}>
-            <Grid container item xs={12} md={6} justify="center">
-              <Avatar alt="user avatar" src="" className={classes.userAvatar}>
-                {user.first_name.split('')[0].toUpperCase()}
-              </Avatar>
-            </Grid>
             <Grid
               container
               item
               xs={12}
-              md={6}
-              className={classes.userProfileBox}
+              md={4}
+              justify="center"
+              alignItems="center"
             >
-              <Grid container alignItems="center" justify="space-between">
-                <Typography
-                  variant="h3"
-                  className={classes.userProfileBoxTitle}
-                >
-                  Profil
-                </Typography>
-                <SettingsOutlined
-                  fontSize="large"
-                  onClick={handleClickUpdateUser}
-                  ref={gearIcon}
-                  className={classes.settingsIcon}
-                />
-              </Grid>
+              <Avatar alt="user avatar" src="" className={classes.userAvatar}>
+                {user.first_name.split('')[0].toUpperCase()}
+              </Avatar>
+            </Grid>
+            <Grid item xs={12} md={4} className={classes.userProfileBox}>
               {user && !isUpdating && (
                 <>
                   <Person className={classes.userIcon} fontSize="large" />
@@ -370,130 +369,134 @@ export default function Dashboard() {
                 </>
               )}
               {isUpdating && (
-                <>
-                  <Box
-                    width="100%"
-                    component="form"
-                    className={classes.updateForm}
-                    onSubmit={handleSubmitNewProfile}
-                  >
-                    <Person className={classes.userIcon} fontSize="large" />
-                    <Box width="100%" py={2}>
-                      {isError.isProfileError &&
-                        isError.errorProfileMsg.map((err, index) => (
-                          <Alert key={index} variant="filled" severity="error">
-                            {err.param}: {err.msg}
-                          </Alert>
-                        ))}
-                      {isSuccess.isProfileSuccess && (
-                        <Alert variant="filled" severity="success">
-                          {isSuccess.successProfileMsg}
+                <Box
+                  width="100%"
+                  component="form"
+                  className={classes.updateForm}
+                  onSubmit={handleSubmitNewProfile}
+                >
+                  <Person className={classes.userIcon} fontSize="large" />
+                  <Box width="100%" py={2}>
+                    {isError.isProfileError &&
+                      isError.errorProfileMsg.map((err, index) => (
+                        <Alert key={index} variant="filled" severity="error">
+                          {err.param}: {err.msg}
                         </Alert>
-                      )}
-                    </Box>
-                    <Grid
-                      container
-                      item
-                      justify="center"
-                      direction="column"
-                      className={classes.darkRow}
-                    >
-                      <Typography variant="subtitle1">Vorname</Typography>
-                      <TextField
-                        name="first_name"
-                        value={userUpdateProfile.first_name}
-                        onChange={handleChangeProfileInput}
-                      ></TextField>
-                    </Grid>
-                    <Grid
-                      container
-                      item
-                      justify="center"
-                      direction="column"
-                      className={classes.lightRow}
-                    >
-                      <Typography variant="subtitle1">Nachname</Typography>
-                      <TextField
-                        name="last_name"
-                        value={userUpdateProfile.last_name}
-                        onChange={handleChangeProfileInput}
-                      ></TextField>
-                    </Grid>
-                    <Grid
-                      container
-                      item
-                      justify="center"
-                      direction="column"
-                      className={classes.darkRow}
-                    >
-                      <Typography variant="subtitle1">Email</Typography>
-                      <TextField
-                        name="email"
-                        value={userUpdateProfile.email}
-                        onChange={handleChangeProfileInput}
-                      ></TextField>
-                    </Grid>
-                    <Button color="primary" variant="contained" type="submit">
-                      Profil aktualisieren
-                    </Button>
+                      ))}
+                    {isSuccess.isProfileSuccess && (
+                      <Alert variant="filled" severity="success">
+                        {isSuccess.successProfileMsg}
+                      </Alert>
+                    )}
                   </Box>
-                  <Box
-                    component="form"
-                    onSubmit={handleSubmitNewPass}
-                    className={classes.updateForm}
+                  <Grid
+                    container
+                    item
+                    justify="center"
+                    direction="column"
+                    className={classes.darkRow}
                   >
-                    <Lock className={classes.userIcon} fontSize="large" />
-                    <Box width="100%" py={2}>
-                      {isError.isPassError &&
-                        isError.errorPassMsg.map((err, index) => (
-                          <Alert key={index} variant="filled" severity="error">
-                            {err.param}: {err.msg}
-                          </Alert>
-                        ))}
-                      {isSuccess.isPassSuccess && (
-                        <Alert variant="filled" severity="success">
-                          {isSuccess.successPassMsg}
-                        </Alert>
-                      )}
-                    </Box>
-                    <Grid
-                      container
-                      item
-                      justify="center"
-                      direction="column"
-                      className={classes.darkRow}
-                    >
-                      <Typography variant="subtitle1">Alter Passwort</Typography>
-                      <TextField
-                        type="password"
-                        name="old_password"
-                        onChange={handleChangePassInput}
-                      />
-                    </Grid>
-                    <Grid
-                      container
-                      item
-                      justify="center"
-                      direction="column"
-                      className={classes.lightRow}
-                    >
-                      <Typography variant="subtitle1">Neues Passwort</Typography>
-                      <TextField
-                        type="password"
-                        name="password"
-                        onChange={handleChangePassInput}
-                      />
-                    </Grid>
-                    <Button type="submit" color="primary" variant="contained">
-                      Password aktualisieren
-                    </Button>
-                  </Box>
-                </>
+                    <Typography variant="subtitle1">Vorname</Typography>
+                    <TextField
+                      name="first_name"
+                      value={userUpdateProfile.first_name}
+                      onChange={handleChangeProfileInput}
+                    ></TextField>
+                  </Grid>
+                  <Grid
+                    container
+                    item
+                    justify="center"
+                    direction="column"
+                    className={classes.lightRow}
+                  >
+                    <Typography variant="subtitle1">Nachname</Typography>
+                    <TextField
+                      name="last_name"
+                      value={userUpdateProfile.last_name}
+                      onChange={handleChangeProfileInput}
+                    ></TextField>
+                  </Grid>
+                  <Grid
+                    container
+                    item
+                    justify="center"
+                    direction="column"
+                    className={classes.darkRow}
+                  >
+                    <Typography variant="subtitle1">Email</Typography>
+                    <TextField
+                      name="email"
+                      value={userUpdateProfile.email}
+                      onChange={handleChangeProfileInput}
+                    ></TextField>
+                  </Grid>
+                  <Button color="primary" variant="contained" type="submit">
+                    Profil aktualisieren
+                  </Button>
+                </Box>
               )}
             </Grid>
+            {isUpdating && (
+              <Grid item xs={12} md={4} className={classes.userProfileBox}>
+                <Box
+                  component="form"
+                  onSubmit={handleSubmitNewPass}
+                  className={classes.updateForm}
+                >
+                  <Lock className={classes.userIcon} fontSize="large" />
+                  <Box width="100%" py={2}>
+                    {isError.isPassError &&
+                      isError.errorPassMsg.map((err, index) => (
+                        <Alert key={index} variant="filled" severity="error">
+                          {err.param}: {err.msg}
+                        </Alert>
+                      ))}
+                    {isSuccess.isPassSuccess && (
+                      <Alert variant="filled" severity="success">
+                        {isSuccess.successPassMsg}
+                      </Alert>
+                    )}
+                  </Box>
+                  <Grid
+                    container
+                    item
+                    justify="center"
+                    direction="column"
+                    className={classes.darkRow}
+                  >
+                    <Typography variant="subtitle1">Alter Passwort</Typography>
+                    <TextField
+                      type="password"
+                      name="old_password"
+                      onChange={handleChangePassInput}
+                    />
+                  </Grid>
+                  <Grid
+                    container
+                    item
+                    justify="center"
+                    direction="column"
+                    className={classes.lightRow}
+                  >
+                    <Typography variant="subtitle1">Neues Passwort</Typography>
+                    <TextField
+                      type="password"
+                      name="password"
+                      onChange={handleChangePassInput}
+                    />
+                  </Grid>
+                  <Button type="submit" color="primary" variant="contained">
+                    Password aktualisieren
+                  </Button>
+                </Box>
+              </Grid>
+            )}
           </Grid>
         )}
-        <Divider className={classes.divider} />
+        <Box py={6}>
+          <Divider className={classes.divider} />
+        </Box>
       </Box>
     </>
   );
