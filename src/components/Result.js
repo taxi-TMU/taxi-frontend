@@ -59,7 +59,9 @@ const Result = () => {
   const countTime = (result) => {
     const time_end = moment(result.time_end);
     const time_start = moment(result.time_start);
-    setTime(time_end.diff(time_start, 'minutes'));
+    const min = time_end.diff(time_start, 'minutes');
+    const sec = Math.floor(time_end.diff(time_start) / 1000);
+    setTime(moment(`${min}:${sec}`, 'mm:ss').format('mm:ss'));
   };
 
   return (
@@ -119,7 +121,7 @@ const Result = () => {
                 Benötigte Zeit
               </Typography>
               <Typography className={classes.resultSummaryText}>
-                {time}min
+                {time}
               </Typography>
             </Box>
           </Grid>
@@ -236,6 +238,7 @@ const useStyles = makeStyles((theme) => ({
   },
   resultSummaryText: {
     color: '#fff',
+    fontWeight: '700',
   },
   divider: {
     backgroundColor: ' #ffffff',
