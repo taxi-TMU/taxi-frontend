@@ -1,10 +1,10 @@
 import axios from "axios";
-const { REACT_APP_SERVER_URL } = process.env;
+import serverUrl from './serverUrl'
 
 const getRequest = async (path) => {
     try {
         const data = await axios.get(
-          `${REACT_APP_SERVER_URL}/${path}`
+          `${serverUrl}/${path}`
         );
         return data.data;
       } catch (e) {
