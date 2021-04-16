@@ -1,7 +1,6 @@
 import axios from "axios";
 import moment from "moment";
-
-const { REACT_APP_SERVER_URL } = process.env;
+import serverUrl from './serverUrl'
 
 //--------------------------------------------
 // CREATE TRAINING
@@ -12,11 +11,11 @@ const createTraining = async (userId, sub_category_id) => {
     const time_end = moment(time_start).add(20, "m").toDate();
 
     let questions = await axios.get(
-      `${REACT_APP_SERVER_URL}/question/set/${sub_category_id}/5`
+      `${serverUrl}/question/set/${sub_category_id}/3`
     );
 
     const data = await axios.post(
-      `${REACT_APP_SERVER_URL}/training`,
+      `${serverUrl}/training`,
       {
         userId,
         time_start,
@@ -43,7 +42,7 @@ const createSimulation = async (userId) => {
 
     let questions = [];
 
-    const result = await axios.get(`${REACT_APP_SERVER_URL}/subcategory`);
+    const result = await axios.get(`${serverUrl}/subcategory`);
     const subCategories = result.data;
 
     await subCategories.forEach((sub) => {
@@ -52,7 +51,7 @@ const createSimulation = async (userId) => {
     });
 
     const data = await axios.post(
-      `${REACT_APP_SERVER_URL}/training`,
+      `${serverUrl}/training`,
       {
         userId,
         questions,
@@ -84,7 +83,7 @@ const updateTrainingOrSimulation = async (training) => {
   });
 
   try {
-    await axios.put(`${REACT_APP_SERVER_URL}/training/${training._id}`, {
+    await axios.put(`${serverUrl}/training/${training._id}`, {
       ...training,
     });
 
