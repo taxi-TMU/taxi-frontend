@@ -18,35 +18,8 @@ import Countdown, { zeroPad } from 'react-countdown';
 import { getRequest } from '../utils/api';
 import { updateTrainingOrSimulation } from '../utils/training';
 import { useHistory } from 'react-router-dom';
-import decode from 'decode-html';
 
-const useStyles = makeStyles((theme) => ({
-  mainContainer: {
-    backgroundColor: 'rgba(255, 255, 255, 0.23)',
-    color: '#ffffff',
-    borderRadius: 16,
-    border: '2px solid white',
-  },
-  trainingButton: {
-    width: '14rem',
-    height: '3.5rem',
-    margin: '0 2rem',
-  },
-  timerBox: {
-    color: theme.palette.secondary.main,
-    backgroundColor: '#232F37',
-  },
-  label: {
-    width: '100%',
-  },
-  answerBox: {
-    backgroundColor: '#232F37',
-  },
-  answerBoxChecked: {
-    border: '2px solid #a3ccc3',
-    backgroundColor: 'rgba(35,47,55, 0.5)',
-  },
-}));
+
 
 const TestRun = () => {
   const [training, setTraining] = useState();
@@ -60,7 +33,7 @@ const TestRun = () => {
     const getData = async () => {
       setLoading(true);
       try {
-        const training = await getRequest(`training/${id}`);
+        const training = await getRequest(`testrun`);
         setTraining(training);
         setLoading(false);
       } catch (err) {
@@ -119,7 +92,7 @@ const TestRun = () => {
 
   return (
     <>
-      {loading && (
+      {/* {loading && (
         <Box textAlign="center" pb={6} height="100vh">
           <CircularProgress color="primary" />
         </Box>
@@ -161,8 +134,7 @@ const TestRun = () => {
               )}
               <Box py={4} px={2} width="100%">
                 <Typography component="h4" variant="h4" align="center">
-                  {/* here */}
-                  {decode(training.questions[activeStep].question_text)}
+                  {training.questions[activeStep].question_text}
                 </Typography>
               </Box>
               <Box py={4} px={12} alignSelf="flex-start" width="100%">
@@ -190,7 +162,7 @@ const TestRun = () => {
                           checked={answer.userAnswer}
                         />
                       }
-                      label={decode(answer.text)}
+                      label={answer.text}
                     />
                   </Box>
                 ))}
@@ -239,9 +211,38 @@ const TestRun = () => {
             )}
           </Box>
         </>
-      )}
+      )} */}
     </>
   );
 }
 
 export default TestRun;
+
+
+const useStyles = makeStyles((theme) => ({
+  mainContainer: {
+    backgroundColor: 'rgba(255, 255, 255, 0.23)',
+    color: '#ffffff',
+    borderRadius: 16,
+    border: '2px solid white',
+  },
+  trainingButton: {
+    width: '14rem',
+    height: '3.5rem',
+    margin: '0 2rem',
+  },
+  timerBox: {
+    color: theme.palette.secondary.main,
+    backgroundColor: '#232F37',
+  },
+  label: {
+    width: '100%',
+  },
+  answerBox: {
+    backgroundColor: '#232F37',
+  },
+  answerBoxChecked: {
+    border: '2px solid #a3ccc3',
+    backgroundColor: 'rgba(35,47,55, 0.5)',
+  },
+}));
