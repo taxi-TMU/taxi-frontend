@@ -1,6 +1,6 @@
 import axios from "axios";
 import moment from "moment";
-import serverUrl from './serverUrl'
+import serverUrl from "./serverUrl";
 
 //--------------------------------------------
 // CREATE TRAINING
@@ -86,7 +86,6 @@ const updateTrainingOrSimulation = async (training) => {
     await axios.put(`${serverUrl}/training/${training._id}`, {
       ...training,
     });
-
     return true;
   } catch (e) {
     console.log(e.message);
@@ -94,4 +93,32 @@ const updateTrainingOrSimulation = async (training) => {
   }
 };
 
-export { createTraining, createSimulation, updateTrainingOrSimulation };
+//--------------------------------------------
+// UPDATE TEST TRAINING
+//--------------------------------------------
+const testTrainingResults = async (training) => {
+  training.time_end = Date.now()
+  await training.questions.forEach((question) => {
+    let rightAnswer = true;
+    question.answers.forEach((answer) => {
+      if (!answer.checked === answer.userAnswer) {
+        return (rightAnswer = false);
+      }
+    });
+    question["answeresRight"] = rightAnswer;
+  });
+
+  try {
+    return training;
+  } catch (e) {
+    console.log(e.message);
+    return false;
+  }
+};;
+
+export {
+  createTraining,
+  createSimulation,
+  updateTrainingOrSimulation,
+  testTrainingResults,
+};
