@@ -24,6 +24,7 @@ import {
   FiberManualRecord,
 } from '@material-ui/icons';
 import { getRequest } from '../utils/api';
+import decode from 'decode-html';
 
 const Result = () => {
   const classes = useStyles();
@@ -99,7 +100,7 @@ const Result = () => {
             >
               <CheckCircleOutlineOutlined fontSize="large" />
               <Typography component="h4" variant="h6">
-                Fehler
+                Korrekt
               </Typography>
               <Typography className={classes.resultSummaryText}>
                 {rightAnswers}/{result.questions.length}
@@ -142,7 +143,7 @@ const Result = () => {
                 ) : (
                   <Error className={classes.wrong} />
                 )}
-                <Typography>{res.question_text}</Typography>
+                <Typography>{decode(res.question_text)}</Typography>
               </AccordionSummary>
               <AccordionDetails
                 key={index}
@@ -156,7 +157,7 @@ const Result = () => {
                     justify="center"
                     className={classes.accordionSubTitle}
                   >
-                    Your Answer
+                    Ihre Antwort
                   </Grid>
                   <Grid
                     container
@@ -165,10 +166,10 @@ const Result = () => {
                     justify="center"
                     className={classes.accordionSubTitle}
                   >
-                    Answer
+                    Antwort
                   </Grid>
                   <Grid item xs={10} className={classes.accordionSubTitle}>
-                    Question
+                    Frage
                   </Grid>
                 </Grid>
               </AccordionDetails>
@@ -191,7 +192,7 @@ const Result = () => {
                         )}
                       </Grid>
                       <Grid item xs={10}>
-                        <Typography>{ans.text}</Typography>
+                        <Typography>{decode(ans.text)}</Typography>
                       </Grid>
                     </Grid>
                   </AccordionDetails>
