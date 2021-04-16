@@ -82,7 +82,7 @@ const Training = ({ testrunmode }) => {
     if (testrunmode) {
       const finalRes = await testTrainingResults(training)
       history.push({
-        pathname: '/testrunresults',
+        pathname: '/result',
         state: { results: finalRes }
       })
       console.log(finalRes) 

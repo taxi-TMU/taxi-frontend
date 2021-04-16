@@ -199,10 +199,10 @@ const App = () => {
                   />
                 </Route>
 
-                <Route exact path="/testrun">
+                <Route exact path="/training">
                   <Training testrunmode={true} />
                 </Route>
-                <Route exact path="/testrunresults">
+                <Route exact path="/result">
                   <Result testrunmode={true} />
                 </Route>
 

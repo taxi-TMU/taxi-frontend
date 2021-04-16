@@ -64,7 +64,7 @@ export default function HeroText() {
         justifyContent="space-between"
         mt={5}
       >
-        <Link component={RouterLink} to="/testrun">
+        <Link component={RouterLink} to="/training">
           <Button
             className={classes.heroButton}
             color="primary"
