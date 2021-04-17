@@ -16,10 +16,12 @@ import {
 import { AccessTime } from '@material-ui/icons';
 import Countdown, { zeroPad } from 'react-countdown';
 import { getRequest } from '../utils/api';
-import { updateTrainingOrSimulation, testTrainingResults } from '../utils/training';
+import {
+  updateTrainingOrSimulation,
+  testTrainingResults,
+} from '../utils/training';
 import { useHistory } from 'react-router-dom';
 import decode from 'decode-html';
-
 
 const Training = ({ testrunmode }) => {
   const [training, setTraining] = useState();
@@ -56,10 +58,6 @@ const Training = ({ testrunmode }) => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleReset = () => {
-    setActiveStep(0);
-  };
-
   const handleCheckAnswer = (e, i) => {
     setTraining((prevState) => ({
       ...prevState,
@@ -80,12 +78,12 @@ const Training = ({ testrunmode }) => {
 
   const saveTrainingAndGetResult = async () => {
     if (testrunmode) {
-      const finalRes = await testTrainingResults(training)
+      const finalRes = await testTrainingResults(training);
       history.push({
         pathname: '/result',
-        state: { results: finalRes }
-      })
-      console.log(finalRes) 
+        state: { results: finalRes },
+      });
+      console.log(finalRes);
     } else {
       await updateTrainingOrSimulation(training);
       history.push(`/result/${training._id}`);
@@ -191,45 +189,47 @@ const Training = ({ testrunmode }) => {
             py={4}
             width="100%"
           >
-            {activeStep === training.questions.length ? (
-              <Button onClick={handleReset}>Zurücksetzen</Button>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={saveTrainingAndGetResult}
+              className={classes.trainingExitButton}
+            >
+              Exit
+            </Button>
+            <Button
+              variant="outlined"
+              disabled={activeStep === 0}
+              onClick={handleBack}
+              className={classes.trainingButton}
+            >
+              Zurück
+            </Button>
+            {activeStep === training.questions.length - 1 ? (
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={saveTrainingAndGetResult}
+                className={classes.trainingButton}
+              >
+                Beenden
+              </Button>
             ) : (
-              <>
-                <Button
-                  variant="outlined"
-                  disabled={activeStep === 0}
-                  onClick={handleBack}
-                  className={classes.trainingButton}
-                >
-                  Zurück
-                </Button>
-                {activeStep === training.questions.length - 1 ? (
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={saveTrainingAndGetResult}
-                    className={classes.trainingButton}
-                  >
-                    Beenden
-                  </Button>
-                ) : (
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={handleNext}
-                    className={classes.trainingButton}
-                  >
-                    Weiter
-                  </Button>
-                )}
-              </>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleNext}
+                className={classes.trainingButton}
+              >
+                Weiter
+              </Button>
             )}
           </Box>
         </>
       )}
     </>
   );
-}
+};
 
 export default Training;
 
@@ -244,6 +244,12 @@ const useStyles = makeStyles((theme) => ({
     width: '14rem',
     height: '3.5rem',
     margin: '0 2rem',
+  },
+  trainingExitButton: {
+    width: '14rem',
+    height: '3.5rem',
+    margin: '0 2rem',
+    borderColor: theme.palette.secondary.main,
   },
   timerBox: {
     color: theme.palette.secondary.main,
