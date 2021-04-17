@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import moment from "moment";
-import { makeStyles } from "@material-ui/core/styles";
-import { Link as RouterLink, useParams, useLocation } from "react-router-dom";
+import { useEffect, useState } from 'react';
+import moment from 'moment';
+import { makeStyles } from '@material-ui/core/styles';
+import { Link as RouterLink, useParams, useLocation } from 'react-router-dom';
 import {
   Link,
   Typography,
@@ -14,17 +14,17 @@ import {
   AccordionDetails,
   Box,
   CircularProgress,
-} from "@material-ui/core";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+} from '@material-ui/core';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import {
   AccessTime,
   CheckCircle,
   CheckCircleOutlineOutlined,
   Error,
   FiberManualRecord,
-} from "@material-ui/icons";
-import { getRequest } from "../utils/api";
-import decode from "decode-html";
+} from '@material-ui/icons';
+import { getRequest } from '../utils/api';
+import decode from 'decode-html';
 
 const Result = ({ testrunmode }) => {
   const classes = useStyles();
@@ -42,7 +42,7 @@ const Result = ({ testrunmode }) => {
         let res;
         if (testrunmode) {
           res = location.state.results;
-          console.log(res)
+          console.log(res);
         } else {
           res = await getRequest(`training/${id}`);
         }
@@ -58,7 +58,6 @@ const Result = ({ testrunmode }) => {
   }, [id, testrunmode, location]);
 
   const countAnswers = (result) => {
-    console.log(result);
     result.questions.forEach((res) => {
       if (res.answeresRight) setRightAnswers((prevState) => prevState + 1);
     });
@@ -67,9 +66,9 @@ const Result = ({ testrunmode }) => {
   const countTime = (result) => {
     const time_end = moment(result.time_end);
     const time_start = moment(result.time_start);
-    const min = time_end.diff(time_start, "minutes");
+    const min = time_end.diff(time_start, 'minutes');
     const sec = Math.floor(time_end.diff(time_start) / 1000);
-    setTime(moment(`${min}:${sec}`, "mm:ss").format("mm:ss"));
+    setTime(moment(`${min}:${sec}`, 'mm:ss').format('mm:ss'));
   };
 
   return (
@@ -231,58 +230,58 @@ export default Result;
 
 const useStyles = makeStyles((theme) => ({
   mainContainer: {
-    backgroundColor: "rgba(255, 255, 255, 0.23)",
-    color: "#ffffff",
+    backgroundColor: 'rgba(255, 255, 255, 0.23)',
+    color: '#ffffff',
     borderRadius: 16,
-    border: "1px solid white",
-    borderColor: "primary",
-    "& a:hover": {
-      textDecoration: "none",
+    border: '1px solid white',
+    borderColor: 'primary',
+    '& a:hover': {
+      textDecoration: 'none',
     },
   },
   resultTitle: {
-    padding: "2rem",
+    padding: '2rem',
   },
   padding: {
     padding: 50,
   },
   resultBox: {
-    backgroundColor: "#232F37",
+    backgroundColor: '#232F37',
     color: theme.palette.secondary.main,
-    width: "10rem",
-    height: "10rem",
+    width: '10rem',
+    height: '10rem',
   },
   resultSummaryText: {
-    color: "#fff",
-    fontWeight: "700",
+    color: '#fff',
+    fontWeight: '700',
   },
   divider: {
-    backgroundColor: " #ffffff",
+    backgroundColor: ' #ffffff',
   },
   accordion: {
-    textAlign: "left",
-    width: "100%",
-    backgroundColor: "#232F37",
-    color: "#fff",
+    textAlign: 'left',
+    width: '100%',
+    backgroundColor: '#232F37',
+    color: '#fff',
   },
   accordionIcon: {
-    "& span": {
-      color: "#fff !important",
+    '& span': {
+      color: '#fff !important',
     },
   },
   accordionSubTitleBox: {
-    borderBottom: "1px solid #a3ccc3",
+    borderBottom: '1px solid #a3ccc3',
   },
   accordionSubTitle: {
     color: theme.palette.secondary.main,
-    fontWeight: "700",
+    fontWeight: '700',
   },
   right: {
-    margin: "0 1rem",
-    color: "green",
+    margin: '0 1rem',
+    color: 'green',
   },
   wrong: {
-    margin: "0 1rem",
-    color: "red",
+    margin: '0 1rem',
+    color: 'red',
   },
 }));
