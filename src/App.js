@@ -199,9 +199,12 @@ const App = () => {
                   />
                 </Route>
 
-                {/* <Route exact path="/testrun">
-                  <TestRun />
-                </Route> */}
+                <Route exact path="/training">
+                  <Training testrunmode={true} />
+                </Route>
+                <Route exact path="/result">
+                  <Result testrunmode={true} />
+                </Route>
 
                 <ProtectedRoute path="/dashboard" component={Dashboard} />
                 <ProtectedRoute
@@ -215,7 +218,6 @@ const App = () => {
                   path="/simulation"
                   component={StartSimulation}
                 />
-
                 <Redirect to="/" exact />
               </Switch>
             </Box>

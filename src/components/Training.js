@@ -16,39 +16,12 @@ import {
 import { AccessTime } from '@material-ui/icons';
 import Countdown, { zeroPad } from 'react-countdown';
 import { getRequest } from '../utils/api';
-import { updateTrainingOrSimulation } from '../utils/training';
+import { updateTrainingOrSimulation, testTrainingResults } from '../utils/training';
 import { useHistory } from 'react-router-dom';
 import decode from 'decode-html';
 
-const useStyles = makeStyles((theme) => ({
-  mainContainer: {
-    backgroundColor: 'rgba(255, 255, 255, 0.23)',
-    color: '#ffffff',
-    borderRadius: 16,
-    border: '2px solid white',
-  },
-  trainingButton: {
-    width: '14rem',
-    height: '3.5rem',
-    margin: '0 2rem',
-  },
-  timerBox: {
-    color: theme.palette.secondary.main,
-    backgroundColor: '#232F37',
-  },
-  label: {
-    width: '100%',
-  },
-  answerBox: {
-    backgroundColor: '#232F37',
-  },
-  answerBoxChecked: {
-    border: '2px solid #a3ccc3',
-    backgroundColor: 'rgba(35,47,55, 0.5)',
-  },
-}));
 
-const TestRun = () => {
+const Training = ({ testrunmode }) => {
   const [training, setTraining] = useState();
   const [activeStep, setActiveStep] = useState(0);
   const [loading, setLoading] = useState();
@@ -60,7 +33,12 @@ const TestRun = () => {
     const getData = async () => {
       setLoading(true);
       try {
-        const training = await getRequest(`training/${id}`);
+        let training;
+        if (testrunmode) {
+          training = await getRequest(`testrun/`);
+        } else {
+          training = await getRequest(`training/${id}`);
+        }
         setTraining(training);
         setLoading(false);
       } catch (err) {
@@ -68,7 +46,7 @@ const TestRun = () => {
       }
     };
     getData();
-  }, [id]);
+  }, [id, testrunmode]);
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -101,8 +79,17 @@ const TestRun = () => {
   };
 
   const saveTrainingAndGetResult = async () => {
-    await updateTrainingOrSimulation(training);
-    history.push(`/result/${training._id}`);
+    if (testrunmode) {
+      const finalRes = await testTrainingResults(training)
+      history.push({
+        pathname: '/result',
+        state: { results: finalRes }
+      })
+      console.log(finalRes) 
+    } else {
+      await updateTrainingOrSimulation(training);
+      history.push(`/result/${training._id}`);
+    }
   };
 
   const timeDisplay = ({ minutes, seconds, completed }) => {
@@ -244,4 +231,32 @@ const TestRun = () => {
   );
 }
 
-export default TestRun;
+export default Training;
+
+const useStyles = makeStyles((theme) => ({
+  mainContainer: {
+    backgroundColor: 'rgba(255, 255, 255, 0.23)',
+    color: '#ffffff',
+    borderRadius: 16,
+    border: '2px solid white',
+  },
+  trainingButton: {
+    width: '14rem',
+    height: '3.5rem',
+    margin: '0 2rem',
+  },
+  timerBox: {
+    color: theme.palette.secondary.main,
+    backgroundColor: '#232F37',
+  },
+  label: {
+    width: '100%',
+  },
+  answerBox: {
+    backgroundColor: '#232F37',
+  },
+  answerBoxChecked: {
+    border: '2px solid #a3ccc3',
+    backgroundColor: 'rgba(35,47,55, 0.5)',
+  },
+}));
