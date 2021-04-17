@@ -1,6 +1,6 @@
-import axios from "axios";
-import moment from "moment";
-import serverUrl from "./serverUrl";
+import axios from 'axios';
+import moment from 'moment';
+import serverUrl from './serverUrl';
 
 //--------------------------------------------
 // CREATE TRAINING
@@ -8,7 +8,7 @@ import serverUrl from "./serverUrl";
 const createTraining = async (userId, sub_category_id) => {
   try {
     const time_start = Date.now();
-    const time_end = moment(time_start).add(20, "m").toDate();
+    const time_end = moment(time_start).add(20, 'm').toDate();
 
     let questions = await axios.get(
       `${serverUrl}/question/set/${sub_category_id}/3`
@@ -23,11 +23,10 @@ const createTraining = async (userId, sub_category_id) => {
         questions: questions.data,
         simulation: false,
       },
-      { headers: { "Content-Type": "application/json" } }
+      { headers: { 'Content-Type': 'application/json' } }
     );
     return data.data._id;
   } catch (e) {
-    console.log(e.message);
     return false;
   }
 };
@@ -38,7 +37,7 @@ const createTraining = async (userId, sub_category_id) => {
 const createSimulation = async (userId) => {
   try {
     const time_start = Date.now();
-    const time_end = moment(time_start).add(20, "m").toDate();
+    const time_end = moment(time_start).add(20, 'm').toDate();
 
     let questions = [];
 
@@ -59,7 +58,7 @@ const createSimulation = async (userId) => {
         time_end,
         simulation: true,
       },
-      { headers: { "Content-Type": "application/json" } }
+      { headers: { 'Content-Type': 'application/json' } }
     );
     return data.data._id;
   } catch (e) {
@@ -79,7 +78,7 @@ const updateTrainingOrSimulation = async (training) => {
         return (rightAnswer = false);
       }
     });
-    question["answeresRight"] = rightAnswer;
+    question['answeresRight'] = rightAnswer;
   });
 
   try {
@@ -97,7 +96,7 @@ const updateTrainingOrSimulation = async (training) => {
 // UPDATE TEST TRAINING
 //--------------------------------------------
 const testTrainingResults = async (training) => {
-  training.time_end = Date.now()
+  training.time_end = Date.now();
   await training.questions.forEach((question) => {
     let rightAnswer = true;
     question.answers.forEach((answer) => {
@@ -105,7 +104,7 @@ const testTrainingResults = async (training) => {
         return (rightAnswer = false);
       }
     });
-    question["answeresRight"] = rightAnswer;
+    question['answeresRight'] = rightAnswer;
   });
 
   try {
@@ -114,7 +113,7 @@ const testTrainingResults = async (training) => {
     console.log(e.message);
     return false;
   }
-};;
+};
 
 export {
   createTraining,

@@ -153,7 +153,6 @@ const Training = ({ testrunmode }) => {
               <Box py={4} px={12} alignSelf="flex-start" width="100%">
                 {training.questions[activeStep].answers.map((answer) => (
                   <Box
-                    py={2}
                     key={answer._id}
                     className={
                       answer.userAnswer
@@ -257,9 +256,14 @@ const useStyles = makeStyles((theme) => ({
   },
   label: {
     width: '100%',
+    padding: '1rem 0',
   },
   answerBox: {
     backgroundColor: '#232F37',
+    '&:hover': {
+      backgroundColor: theme.palette.secondary.main,
+      color: '#000',
+    },
   },
   answerBoxChecked: {
     border: '2px solid #a3ccc3',
