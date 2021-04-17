@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react';
 import moment from 'moment';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link as RouterLink, useParams, useLocation } from 'react-router-dom';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { getRequest } from '../utils/api';
+import decode from 'decode-html';
 import {
   Link,
   Typography,
@@ -15,7 +18,6 @@ import {
   Box,
   CircularProgress,
 } from '@material-ui/core';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import {
   AccessTime,
   CheckCircle,
@@ -23,8 +25,6 @@ import {
   Error,
   FiberManualRecord,
 } from '@material-ui/icons';
-import { getRequest } from '../utils/api';
-import decode from 'decode-html';
 
 const Result = ({ testrunmode }) => {
   const classes = useStyles();

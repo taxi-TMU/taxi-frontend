@@ -1,7 +1,12 @@
-import { useState, useRef, useContext } from 'react';
-import UserContext from '../context/UserContext';
-import api from '../services/api';
-import validator from 'validator';
+import { useState, useEffect, useRef, useContext } from "react";
+import UserContext from "../context/UserContext";
+import api from "../services/api";
+import validator from "validator";
+import { Alert } from "@material-ui/lab";
+import { makeStyles } from "@material-ui/core/styles";
+import { SettingsOutlined, Person, Lock } from "@material-ui/icons";
+import theme from "../theme";
+import { getRequest } from '../utils/api';
 import {
   Box,
   Typography,
@@ -11,77 +16,7 @@ import {
   Button,
   TextField,
   IconButton,
-} from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
-import { makeStyles } from '@material-ui/core/styles';
-import { SettingsOutlined, Person, Lock } from '@material-ui/icons';
-import theme from '../theme';
-
-const useStyles = makeStyles((theme) => ({
-  dashboardBox: {
-    padding: '2rem',
-    margin: '2rem auto',
-    backgroundColor: 'rgba(255, 255, 255, 0.23)',
-    border: '2px solid #fff',
-    color: '#fff',
-    borderRadius: 10,
-    [theme.breakpoints.up('sm')]: {
-      width: '80%',
-    },
-  },
-  dashboardTitle: {
-    fontWeight: '300',
-    fontStyle: 'italic',
-    padding: '2rem 0',
-    color: '#fff',
-  },
-  userAvatar: (props) => ({
-    width: '10rem',
-    height: '10rem',
-    fontSize: '4rem',
-    backgroundColor: props.avatarFallbackBg,
-  }),
-  userProfileBox: {
-    padding: '1rem 0',
-    [theme.breakpoints.up('sm')]: {
-      padding: '2rem 1rem',
-    },
-  },
-  userProfileBoxTitle: {
-    padding: '2rem 0',
-  },
-  userIcon: {
-    width: '100%',
-    textAlign: 'center',
-    color: theme.palette.secondary.main,
-  },
-  divider: {
-    backgroundColor: '#fff',
-  },
-  darkRow: {
-    backgroundColor: 'rgba(35, 47, 55, 0.6)',
-    padding: '0.5rem',
-  },
-  lightRow: {
-    backgroundColor: 'rgba(35, 47, 55, 0.2)',
-    padding: '0.5rem',
-  },
-  settingsIcon: {
-    cursor: 'pointer',
-    backgroundColor: theme.palette.primary.main,
-    color: '#fff',
-    margin: '0 2rem',
-    boxShadow: '2px 2px 8px 0 rgba(0, 0, 0, 0.3)',
-  },
-  updateForm: {
-    backgroundColor: '#232F37',
-    padding: '1rem',
-    width: '100%',
-    '& input': {
-      color: '#fff',
-    },
-  },
-}));
+} from "@material-ui/core";
 
 //--------------------------------------------
 // dynamic bg when avatar image fallback
@@ -106,8 +41,8 @@ export default function Dashboard() {
   const { user, setUser } = useContext(UserContext);
   const [userUpdateProfile, setUserUpdateProfile] = useState();
   const [userUpdatePass, setUserUpdatePass] = useState({
-    old_password: '',
-    password: '',
+    old_password: "",
+    password: "",
   });
   // const [isLoading, setIsLoading] = useState();
   const [isUpdating, setIsUpdating] = useState(false);
@@ -125,6 +60,18 @@ export default function Dashboard() {
   });
   const gearIcon = useRef();
   const classes = useStyles(props);
+
+  const [statistics, seStatistics] = useState();
+
+  useEffect(() => {
+    const getData = async() => {
+      const res = await getRequest(`training/stats/${user.id}`);
+        seStatistics(res)
+        console.log(res)
+    }
+    getData()
+  }, [user])
+
 
   //--------------------------------------------
   // activate user update
@@ -165,7 +112,7 @@ export default function Dashboard() {
         ...prevState,
         isProfileError: true,
         errorProfileMsg: [
-          { msg: 'Bitte alle Felder ausfüllen', param: 'required' },
+          { msg: "Bitte alle Felder ausfüllen", param: "required" },
         ],
       }));
     }
@@ -222,7 +169,7 @@ export default function Dashboard() {
         ...prevState,
         isPassError: true,
         errorPassMsg: [
-          { msg: 'Bitte alle Felder ausfüllen', param: 'required' },
+          { msg: "Bitte alle Felder ausfüllen", param: "required" },
         ],
       }));
     }
@@ -237,7 +184,7 @@ export default function Dashboard() {
         successPassMsg: res.data,
       }));
     } catch (err) {
-      const checkTypeOfError = err.response.data.hasOwnProperty('msg')
+      const checkTypeOfError = err.response.data.hasOwnProperty("msg")
         ? [err.response.data]
         : err.response.data.errors.errors;
       if (err.response) {
@@ -294,7 +241,7 @@ export default function Dashboard() {
             color="textPrimary"
             className={classes.dashboardTitle}
           >
-            Welcome{' '}
+            Welcome{" "}
             {`${
               user.first_name.charAt(0).toUpperCase() + user.first_name.slice(1)
             }`}
@@ -319,7 +266,7 @@ export default function Dashboard() {
               alignItems="center"
             >
               <Avatar alt="user avatar" src="" className={classes.userAvatar}>
-                {user.first_name.split('')[0].toUpperCase()}
+                {user.first_name.split("")[0].toUpperCase()}
               </Avatar>
             </Grid>
             {user && !isUpdating && (
@@ -520,7 +467,151 @@ export default function Dashboard() {
         <Box py={6}>
           <Divider className={classes.divider} />
         </Box>
+
+        <Grid
+          container
+          spacing={3}
+          alignItems="center"
+          className={classes.padding}
+        >
+          <Grid container item lg={4} alignItems="center" justify="center">
+            <Box
+              className={classes.resultBox}
+              display="flex"
+              flexDirection="column"
+              alignItems="center"
+              justifyContent="center"
+              boxShadow={4}
+              borderRadius={4}
+            >
+              <Typography component="h4" variant="h6">
+                Gesamtzahl Tests
+              </Typography>
+              <Typography className={classes.resultSummaryText}>
+                {statistics.total}
+              </Typography>
+            </Box>
+          </Grid>
+          <Grid container item lg={4} alignItems="center" justify="center">
+            <Box
+              className={classes.resultBox}
+              display="flex"
+              flexDirection="column"
+              alignItems="center"
+              justifyContent="center"
+              boxShadow={4}
+              borderRadius={4}
+            >
+              <Typography component="h4" variant="h6">
+                Bestandene Simulationen
+              </Typography>
+              <Typography className={classes.resultSummaryText}>
+                {statistics.simulations.passed} / {statistics.simulations.total_simulations}
+              </Typography>
+            </Box>
+          </Grid>
+          <Grid container item lg={4} alignItems="center" justify="center">
+            <Box
+              className={classes.resultBox}
+              display="flex"
+              flexDirection="column"
+              alignItems="center"
+              justifyContent="center"
+              boxShadow={4}
+              borderRadius={4}
+            >
+              <Typography component="h4" variant="h6">
+                Bestandene Übungen
+              </Typography>
+              <Typography className={classes.resultSummaryText}>
+                {statistics.trainings.passed} / {statistics.trainings.total_trainings}
+              </Typography>
+            </Box>
+          </Grid>
+        </Grid>
       </Box>
     </>
   );
 }
+
+const useStyles = makeStyles((theme) => ({
+  dashboardBox: {
+    padding: "2rem",
+    margin: "2rem auto",
+    backgroundColor: "rgba(255, 255, 255, 0.23)",
+    border: "2px solid #fff",
+    color: "#fff",
+    borderRadius: 10,
+    [theme.breakpoints.up("sm")]: {
+      width: "80%",
+    },
+  },
+  dashboardTitle: {
+    fontWeight: "300",
+    fontStyle: "italic",
+    padding: "2rem 0",
+    color: "#fff",
+  },
+  userAvatar: (props) => ({
+    width: "10rem",
+    height: "10rem",
+    fontSize: "4rem",
+    backgroundColor: props.avatarFallbackBg,
+  }),
+  userProfileBox: {
+    padding: "1rem 0",
+    [theme.breakpoints.up("sm")]: {
+      padding: "2rem 1rem",
+    },
+  },
+  userProfileBoxTitle: {
+    padding: "2rem 0",
+  },
+  userIcon: {
+    width: "100%",
+    textAlign: "center",
+    color: theme.palette.secondary.main,
+  },
+  divider: {
+    backgroundColor: "#fff",
+  },
+  darkRow: {
+    backgroundColor: "rgba(35, 47, 55, 0.6)",
+    padding: "0.5rem",
+  },
+  lightRow: {
+    backgroundColor: "rgba(35, 47, 55, 0.2)",
+    padding: "0.5rem",
+  },
+  settingsIcon: {
+    cursor: "pointer",
+    backgroundColor: theme.palette.primary.main,
+    color: "#fff",
+    margin: "0 2rem",
+    boxShadow: "2px 2px 8px 0 rgba(0, 0, 0, 0.3)",
+  },
+  updateForm: {
+    backgroundColor: "#232F37",
+    padding: "1rem",
+    width: "100%",
+    "& input": {
+      color: "#fff",
+    },
+  },
+  resultTitle: {
+    padding: '2rem',
+  },
+  padding: {
+    padding: 50,
+  },
+  resultBox: {
+    backgroundColor: '#232F37',
+    color: theme.palette.secondary.main,
+    width: '20rem',
+    height: '10rem',
+  },
+  resultSummaryText: {
+    color: '#fff',
+    fontWeight: '700',
+  },
+}));
