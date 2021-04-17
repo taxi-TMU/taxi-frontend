@@ -83,7 +83,6 @@ const Training = ({ testrunmode }) => {
         pathname: '/result',
         state: { results: finalRes },
       });
-      console.log(finalRes);
     } else {
       await updateTrainingOrSimulation(training);
       history.push(`/result/${training._id}`);
@@ -92,7 +91,18 @@ const Training = ({ testrunmode }) => {
 
   const timeDisplay = ({ minutes, seconds, completed }) => {
     if (completed) {
-      return <p>The time is over!</p>;
+      saveTrainingAndGetResult();
+      return (
+        <Typography component="h4" variant="h4" color="primary">
+          Time is up
+        </Typography>
+      );
+    } else if (minutes < 10) {
+      return (
+        <Typography component="h4" variant="h4" className={classes.timerEnding}>
+          {zeroPad(minutes)}:{zeroPad(seconds)}
+        </Typography>
+      );
     } else {
       return (
         <Typography component="h4" variant="h4">
@@ -253,6 +263,9 @@ const useStyles = makeStyles((theme) => ({
   timerBox: {
     color: theme.palette.secondary.main,
     backgroundColor: '#232F37',
+  },
+  timerEnding: {
+    color: theme.palette.error.main,
   },
   label: {
     width: '100%',
