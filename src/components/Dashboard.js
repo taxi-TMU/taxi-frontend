@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useContext } from "react";
+import { useState, useRef, useContext } from "react";
 import UserContext from "../context/UserContext";
 import api from "../services/api";
 import validator from "validator";
@@ -6,7 +6,7 @@ import { Alert } from "@material-ui/lab";
 import { makeStyles } from "@material-ui/core/styles";
 import { SettingsOutlined, Person, Lock } from "@material-ui/icons";
 import theme from "../theme";
-import { getRequest } from '../utils/api';
+import Statistics from './Statistics';
 import {
   Box,
   Typography,
@@ -60,18 +60,6 @@ export default function Dashboard() {
   });
   const gearIcon = useRef();
   const classes = useStyles(props);
-
-  const [statistics, seStatistics] = useState();
-
-  useEffect(() => {
-    const getData = async() => {
-      const res = await getRequest(`training/stats/${user.id}`);
-        seStatistics(res)
-        console.log(res)
-    }
-    getData()
-  }, [user])
-
 
   //--------------------------------------------
   // activate user update
@@ -233,18 +221,35 @@ export default function Dashboard() {
   return (
     <>
       <Box className={classes.dashboardBox}>
-        <Box display="flex" justifyContent="center" alignItems="center">
-          <Typography
+      <Typography
             component="h2"
             variant="h4"
             align="center"
             color="textPrimary"
             className={classes.dashboardTitle}
           >
-            Welcome{" "}
+            Willkommen{" "}
             {`${
               user.first_name.charAt(0).toUpperCase() + user.first_name.slice(1)
             }`}
+          </Typography>
+
+      <Statistics user={user}/>
+
+        
+        <Box py={6}>
+          <Divider className={classes.divider} />
+        </Box>
+
+        <Box display="flex" justifyContent="center" alignItems="center">
+          <Typography
+            component="h2"
+            variant="h5"
+            align="center"
+            color="textPrimary"
+            className={classes.dashboardTitle}
+          >
+            Einstellungen
           </Typography>
           <IconButton
             fontSize="large"
@@ -464,71 +469,8 @@ export default function Dashboard() {
             )}
           </Grid>
         )}
-        <Box py={6}>
-          <Divider className={classes.divider} />
-        </Box>
 
-        <Grid
-          container
-          spacing={3}
-          alignItems="center"
-          className={classes.padding}
-        >
-          <Grid container item lg={4} alignItems="center" justify="center">
-            <Box
-              className={classes.resultBox}
-              display="flex"
-              flexDirection="column"
-              alignItems="center"
-              justifyContent="center"
-              boxShadow={4}
-              borderRadius={4}
-            >
-              <Typography component="h4" variant="h6">
-                Gesamtzahl Tests
-              </Typography>
-              <Typography className={classes.resultSummaryText}>
-                {statistics.total}
-              </Typography>
-            </Box>
-          </Grid>
-          <Grid container item lg={4} alignItems="center" justify="center">
-            <Box
-              className={classes.resultBox}
-              display="flex"
-              flexDirection="column"
-              alignItems="center"
-              justifyContent="center"
-              boxShadow={4}
-              borderRadius={4}
-            >
-              <Typography component="h4" variant="h6">
-                Bestandene Simulationen
-              </Typography>
-              <Typography className={classes.resultSummaryText}>
-                {statistics.simulations.passed} / {statistics.simulations.total_simulations}
-              </Typography>
-            </Box>
-          </Grid>
-          <Grid container item lg={4} alignItems="center" justify="center">
-            <Box
-              className={classes.resultBox}
-              display="flex"
-              flexDirection="column"
-              alignItems="center"
-              justifyContent="center"
-              boxShadow={4}
-              borderRadius={4}
-            >
-              <Typography component="h4" variant="h6">
-                Bestandene Übungen
-              </Typography>
-              <Typography className={classes.resultSummaryText}>
-                {statistics.trainings.passed} / {statistics.trainings.total_trainings}
-              </Typography>
-            </Box>
-          </Grid>
-        </Grid>
+
       </Box>
     </>
   );
@@ -549,7 +491,7 @@ const useStyles = makeStyles((theme) => ({
   dashboardTitle: {
     fontWeight: "300",
     fontStyle: "italic",
-    padding: "2rem 0",
+    // padding: "0.5rem 0",
     color: "#fff",
   },
   userAvatar: (props) => ({
@@ -598,20 +540,5 @@ const useStyles = makeStyles((theme) => ({
       color: "#fff",
     },
   },
-  resultTitle: {
-    padding: '2rem',
-  },
-  padding: {
-    padding: 50,
-  },
-  resultBox: {
-    backgroundColor: '#232F37',
-    color: theme.palette.secondary.main,
-    width: '20rem',
-    height: '10rem',
-  },
-  resultSummaryText: {
-    color: '#fff',
-    fontWeight: '700',
-  },
+  
 }));
