@@ -154,13 +154,12 @@ const Training = ({ testrunmode }) => {
                   />
                 </Box>
               )}
-              <Box py={4} px={2} width="100%">
-                <Typography component="h4" variant="h4" align="center">
-                  {/* here */}
+              <Box px={2} width="100%">
+                <Typography component="h4" variant="h5" align="center">
                   {decode(training.questions[activeStep].question_text)}
                 </Typography>
               </Box>
-              <Box py={4} px={12} alignSelf="flex-start" width="100%">
+              <Box py={2} px={12} alignSelf="flex-start" width="100%">
                 {training.questions[activeStep].answers.map((answer) => (
                   <Box
                     key={answer._id}
@@ -263,6 +262,7 @@ const useStyles = makeStyles((theme) => ({
   timerBox: {
     color: theme.palette.secondary.main,
     backgroundColor: '#232F37',
+    marginBottom: 15,
   },
   timerEnding: {
     color: theme.palette.error.main,
