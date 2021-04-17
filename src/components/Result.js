@@ -42,7 +42,6 @@ const Result = ({ testrunmode }) => {
         let res;
         if (testrunmode) {
           res = location.state.results;
-          console.log(res);
         } else {
           res = await getRequest(`training/${id}`);
         }
@@ -79,7 +78,7 @@ const Result = ({ testrunmode }) => {
         align="center"
         className={classes.resultTitle}
       >
-        Testergebnisse
+        Ergebnis: {result && result.passed ? "Bestanden!" : "Leider nicht bestanden"}
       </Typography>
       <Divider className={classes.divider} />
       {loading && (

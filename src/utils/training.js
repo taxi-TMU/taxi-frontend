@@ -45,7 +45,7 @@ const createSimulation = async (userId) => {
     const subCategories = result.data;
 
     await subCategories.forEach((sub) => {
-      let shuffled = sub.questions.sort(() => 0.5 - Math.random()).slice(0, 3);
+      let shuffled = sub.questions.sort(() => 0.5 - Math.random()).slice(0, 1);
       questions.push(...shuffled);
     });
 
@@ -97,6 +97,8 @@ const updateTrainingOrSimulation = async (training) => {
 //--------------------------------------------
 const testTrainingResults = async (training) => {
   training.time_end = Date.now();
+
+  let rightones = 0;
   await training.questions.forEach((question) => {
     let rightAnswer = true;
     question.answers.forEach((answer) => {
@@ -105,7 +107,10 @@ const testTrainingResults = async (training) => {
       }
     });
     question['answeresRight'] = rightAnswer;
+    if (rightAnswer) rightones += 1;
   });
+  training.passed = false;
+  if (rightones >= training.questions.length / 2) training.passed = true;
 
   try {
     return training;

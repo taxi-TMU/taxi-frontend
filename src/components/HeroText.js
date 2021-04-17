@@ -70,7 +70,7 @@ export default function HeroText() {
             color="primary"
             variant="contained"
           >
-            Testlauf
+            Jetzt testen
           </Button>
         </Link>
         <Link component={RouterLink} to="/signup">
