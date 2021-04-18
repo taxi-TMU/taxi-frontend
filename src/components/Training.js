@@ -12,8 +12,9 @@ import {
   FormControlLabel,
   Checkbox,
   CircularProgress,
+  Hidden,
 } from '@material-ui/core';
-import { AccessTime } from '@material-ui/icons';
+import { AccessTime, FiberManualRecord } from '@material-ui/icons';
 import Countdown, { zeroPad } from 'react-countdown';
 import { getRequest } from '../utils/api';
 import {
@@ -154,7 +155,7 @@ const Training = ({ testrunmode }) => {
                   />
                 </Box>
               )}
-              <Box px={2} width="100%">
+              <Box px={2} width="100%" py={1}>
                 <Typography component="h4" variant="h5" align="center">
                   {decode(training.questions[activeStep].question_text)}
                 </Typography>
@@ -181,6 +182,16 @@ const Training = ({ testrunmode }) => {
                           onChange={(e) => handleCheckAnswer(e, activeStep)}
                           name={answer._id}
                           checked={answer.userAnswer}
+                          icon={
+                            <Hidden xsUp>
+                              <FiberManualRecord />
+                            </Hidden>
+                          }
+                          checkedIcon={
+                            <Hidden xsUp>
+                              <FiberManualRecord />
+                            </Hidden>
+                          }
                         />
                       }
                       label={decode(answer.text)}
@@ -269,7 +280,7 @@ const useStyles = makeStyles((theme) => ({
   },
   label: {
     width: '100%',
-    padding: '1rem 0',
+    padding: '1.5rem 0',
   },
   answerBox: {
     backgroundColor: '#232F37',
