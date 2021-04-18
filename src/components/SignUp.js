@@ -11,16 +11,17 @@ import {
   Typography,
   Container,
   Divider,
-  Box
+  Box,
+  CircularProgress,
 } from "@material-ui/core";
-import { Alert } from '@material-ui/lab';
+import { Alert } from "@material-ui/lab";
 
 const useStyles = makeStyles((theme) => ({
   mainContainer: {
     backgroundColor: "rgba(255, 255, 255, 0.23)",
     color: "#ffffff",
     borderRadius: 16,
-    border: '2px solid white',
+    border: "2px solid white",
   },
   paper: {
     marginTop: theme.spacing(8),
@@ -51,8 +52,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
-const SignUp = ({ onRegister, onSetUserInput, isError, isSuccess }) => {
+const SignUp = ({
+  onRegister,
+  onSetUserInput,
+  isError,
+  isSuccess,
+  isLoading,
+}) => {
   const classes = useStyles();
 
   return (
@@ -139,22 +145,35 @@ const SignUp = ({ onRegister, onSetUserInput, isError, isSuccess }) => {
             fullWidth
             onChange={onSetUserInput}
           />
-
-          <Button
-            onClick={onRegister}
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-          >
-            Registrieren
-          </Button>
+          {isLoading ? (
+            <Button
+              onClick={onRegister}
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              disabled
+            >
+              <CircularProgress size={30} thickness={4} />
+              &nbsp; &nbsp;Registrieren
+            </Button>
+          ) : (
+            <Button
+              onClick={onRegister}
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+            >
+              Registrieren
+            </Button>
+          )}
           <br />
           <br />
 
           <Grid item xs>
             <Typography component="p" color="textSecondary">
-            Sie haben bereits ein Konto?
+              Sie haben bereits ein Konto?
             </Typography>
           </Grid>
           <br />

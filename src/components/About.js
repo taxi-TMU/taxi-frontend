@@ -1,24 +1,30 @@
 import { makeStyles } from "@material-ui/core/styles";
-import {
-  Button,
-  Link,
-  Grid,
-  Typography,
-  Container,
-  Avatar,
-  Box,
-} from "@material-ui/core";
+import { Grid, Typography, Container, Avatar } from "@material-ui/core";
+import massimiliano from "../images/massimiliano.png";
+import alicia from "../images/alicia.jpg";
+import reza from "../images/rezaHajipour.png";
 
 const About = () => {
   const classes = useStyles();
 
   return (
-    <Container className={classes.mainContainer} maxWidth="lg">
+    <Container className={classes.aboutMain} maxWidth="lg">
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
           Über uns
         </Typography>
-        <Typography className={classes.padding}>BLABLABLABLA</Typography>
+        <Typography className={classes.padding}>
+          Taxi/Mietwagen Unternehme Lern App (TMU)
+          <br />
+          <br /> Die TMU selbst ist eine App, mit der Benutzer Quizfragen zu
+          verschiedenen Themen durchführen können, zwischen denen sie wählen
+          können. Es simuliert eine Prüfung, die in IHK abgelegt wird. Mit der
+          TMU können Sie sich spielerisch auf die Fachkundeprüfung im
+          Taxi-/Mietwagenverkehr bei der IHK vorbereiten. Die App funktioniert
+          webbasiert und läuft somit auf allen gängigen Plattformen bzw.
+          Geräten. In Bezug auf das Ziel und den Zweck der Anwendung soll es ein
+          Mittel für Bildungszwecke sein.
+        </Typography>
         <Typography component="h1" variant="h5">
           Team
         </Typography>
@@ -32,24 +38,63 @@ const About = () => {
             <Typography component="h1" variant="h5">
               Reza Hijapour
             </Typography>
-               
-            <Typography>Frontend Developer & Founder</Typography>
-            <Avatar alt="Reza" src="/img/reza.png" className={classes.avatar} variant="rounded"/>
 
+            <Typography>Frontend Developer & Founder</Typography>
+            <Avatar
+              alt="Reza"
+              src={reza}
+              className={classes.avatar}
+              variant="rounded"
+            />
+            <Typography>
+              Frontend Web Developer able to build web applications from the
+              ground up, planning, design and development. Moderate knowledge
+              and experience with JavaScript, CSS, React.js. Good knowledge of
+              Html5 and CSS framework like Bootstrap and Material UI. With 20+
+              years of visual storytelling experience producing, directing,
+              filming and editing.
+            </Typography>
           </Grid>
           <Grid item xs={4} className={classes.gridItem}>
             <Typography component="h1" variant="h5">
-              Massimiliao Rizzuto{" "}
+              Alicia Schonefeld{" "}
             </Typography>
             <Typography>Fullstack Developer</Typography>
-            <Avatar alt="Reza" src="/img/massimiliano.jpg" className={classes.avatar} variant="rounded"/>
+            <Avatar
+              alt="alicia"
+              src={alicia}
+              className={classes.avatar}
+              variant="rounded"
+            />
+            <Typography>
+              Skilled Alicia on Rails full stack web developer eager to join a
+              creative, problem solving team. Ability to learn and implement new
+              technologies quickly. My skills include Ruby on Rails, Sinatra,
+              HTML5, CSS3, Javascript, jQuery, Node.js, Django. These skills
+              were learned at the WBS Coding School Fullstack Development
+              Intensive program.
+            </Typography>
           </Grid>
           <Grid item xs={4} className={classes.gridItem}>
             <Typography component="h1" variant="h5">
-              Alicia Schonefeld
+              Massimiliao Rizzuto
             </Typography>
             <Typography>Fullstack Developer</Typography>
-            <Avatar alt="Reza" src="/img/alicia.jpg" className={classes.avatar} variant="rounded"/>
+            <Avatar
+              alt="massimiliano"
+              src={massimiliano}
+              className={classes.avatar}
+              variant="rounded"
+            />
+            <Typography>
+              A detail-oriented Web Developer with three years of hands-on
+              experience efficiently coding websites. Constantly seeking
+              learning opportunities, following industry’s trends and
+              advancements. I’ve recently upskilled my knowledge in JavaScript,
+              React, Node.js and Express.js. Focus on elegant solutions and
+              user’s needs and endless curiosity - these are three things I can
+              promise to my future team.
+            </Typography>
           </Grid>
         </Grid>
 
@@ -63,7 +108,7 @@ const About = () => {
 export default About;
 
 const useStyles = makeStyles((theme) => ({
-  mainContainer: {
+  aboutMain: {
     backgroundColor: "rgba(255, 255, 255, 0.23)",
     color: "#ffffff",
     borderRadius: 16,
@@ -77,9 +122,14 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+    justifyContent: "center",
   },
   padding: {
     padding: 50,
+    display: "flex",
+    // flexDirection: "column",
+    alignItems: "flex-start",
+    justifyContent: "center",
   },
   gridItem: {
     display: "flex",
@@ -90,9 +140,9 @@ const useStyles = makeStyles((theme) => ({
     alignContent: "center",
   },
   avatar: {
-    width: '15rem',
-    height: '15rem',
+    width: "15rem",
+    height: "15rem",
     // backgroundColor: 'white',
-    margin: 20
-  }
+    margin: 20,
+  },
 }));

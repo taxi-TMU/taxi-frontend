@@ -5,45 +5,45 @@ import {
   Link,
   MenuList,
   Typography,
-} from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import { Link as RouterLink } from 'react-router-dom';
+} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import { Link as RouterLink } from "react-router-dom";
 
 const useStyle = makeStyles((theme) => ({
   root: {
-    backgroundColor: '#232F37',
-    color: '#ffffff',
-    padding: '2rem 0',
-    '& a': {
-      color: '#ffffff',
+    backgroundColor: "#232F37",
+    color: "#ffffff",
+    padding: "2rem 0",
+    "& a": {
+      color: "#ffffff",
     },
   },
   footerCopyright: {
-    textAlign: 'center',
-    '&::before': {
+    textAlign: "center",
+    "&::before": {
       content: '" "',
-      width: '90%',
-      height: '1px',
-      margin: '2rem auto 1rem auto',
-      backgroundColor: '#ffffff',
-      display: 'block',
+      width: "90%",
+      height: "1px",
+      margin: "2rem auto 1rem auto",
+      backgroundColor: "#ffffff",
+      display: "block",
     },
   },
-  [theme.breakpoints.up('sm')]: {
+  [theme.breakpoints.up("sm")]: {
     menuListBox: {
-      width: '30%',
+      width: "30%",
     },
     footerCopyright: {
-      '&::before': {
-        width: '80%',
+      "&::before": {
+        width: "80%",
       },
     },
   },
-  [theme.breakpoints.up('md')]: {
+  [theme.breakpoints.up("md")]: {
     footerCopyright: {
-      textAlign: 'right',
-      '&::before': {
-        width: '100%',
+      textAlign: "right",
+      "&::before": {
+        width: "100%",
       },
     },
   },
@@ -69,10 +69,14 @@ export default function Footer() {
         >
           <MenuList>
             <MenuItem>
-              <Link to="!#">Simulation</Link>
+              <Link to="/simulation" component={RouterLink}>
+                Simulation
+              </Link>
             </MenuItem>
             <MenuItem>
-              <Link to="!#">Training</Link>
+              <Link to="/categories" component={RouterLink}>
+                Training
+              </Link>
             </MenuItem>
           </MenuList>
           <MenuList>
