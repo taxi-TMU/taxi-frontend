@@ -100,9 +100,6 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     padding: 10,
   },
-  loginBtn: {
-    color: 'secondry',
-  },
   accordion: {
     textAlign: 'left',
     width: '100%',
@@ -114,6 +111,7 @@ const useStyles = makeStyles((theme) => ({
     background: '#232F37',
     textTransform: 'uppercase',
     color: '#fff',
+    borderBottom: '1px solid #a3ccc3',
   },
   details: {
     backgroundColor: 'rgba(35,47,55, 0.9)',
