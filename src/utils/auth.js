@@ -1,8 +1,9 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import jwt from 'jsonwebtoken';
+import serverUrl from './serverUrl'
 
-const { REACT_APP_SERVER_URL, REACT_APP_NAME } = process.env;
+const { REACT_APP_NAME } = process.env;
 
 //--------------------------------------------
 // REGISTER
@@ -10,7 +11,7 @@ const { REACT_APP_SERVER_URL, REACT_APP_NAME } = process.env;
 const register = async (credentials) => {
   try {
     const data = await axios.post(
-      `${REACT_APP_SERVER_URL}/signup`,
+      `${serverUrl}/signup`,
       {
         ...credentials,
       },
@@ -36,7 +37,7 @@ const register = async (credentials) => {
 //--------------------------------------------
 const login = async (credentials) => {
   try {
-    const data = await axios.post(`${REACT_APP_SERVER_URL}/login`, {
+    const data = await axios.post(`${serverUrl}/login`, {
       ...credentials,
     });
 
@@ -62,7 +63,7 @@ const logout = () => {
 //--------------------------------------------
 const requestPasswordReset = async (email) => {
   try {
-    await axios.post(`${REACT_APP_SERVER_URL}/resetPasswordRequest`, {
+    await axios.post(`${serverUrl}/resetPasswordRequest`, {
       ...email,
     });
     return true;
@@ -77,7 +78,7 @@ const requestPasswordReset = async (email) => {
 //--------------------------------------------
 const resetPassword = async (password, userId, token) => {
   try {
-    await axios.post(`${REACT_APP_SERVER_URL}/resetPassword`, {
+    await axios.post(`${serverUrl}/resetPassword`, {
       password: password.password,
       userId,
       token,
@@ -95,7 +96,7 @@ const resetPassword = async (password, userId, token) => {
 const getUser = async (userId) => {
   // TODO refactor to get user by if from token
   try {
-    const user = await axios.get(`${REACT_APP_SERVER_URL}/user/${userId}`);
+    const user = await axios.get(`${serverUrl}/user/${userId}`);
     const userInfos = {
       id: user.data._id,
       first_name: user.data.first_name,
@@ -129,7 +130,7 @@ const decodeToken = () => {
 //--------------------------------------------
 // VERIFY TOKEN FOR PROTECTED ROUTE
 //--------------------------------------------
-axios.defaults.baseURL = REACT_APP_SERVER_URL;
+axios.defaults.baseURL = serverUrl;
 const setAuthHeaders = () => {
   const token = Cookies.get(`${REACT_APP_NAME}-auth-token`);
   if (token) {

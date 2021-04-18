@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react';
 import moment from 'moment';
 import { makeStyles } from '@material-ui/core/styles';
-import { Link as RouterLink, useParams } from 'react-router-dom';
+import { Link as RouterLink, useParams, useLocation } from 'react-router-dom';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { getRequest } from '../utils/api';
+import decode from 'decode-html';
 import {
   Link,
   Typography,
@@ -15,7 +18,6 @@ import {
   Box,
   CircularProgress,
 } from '@material-ui/core';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import {
   AccessTime,
   CheckCircle,
@@ -23,21 +25,26 @@ import {
   Error,
   FiberManualRecord,
 } from '@material-ui/icons';
-import { getRequest } from '../utils/api';
 
-const Result = () => {
+const Result = ({ testrunmode }) => {
   const classes = useStyles();
   const { id } = useParams();
   const [loading, setLoading] = useState();
   const [result, setResults] = useState();
   const [rightAnswers, setRightAnswers] = useState(0);
   const [time, setTime] = useState(0);
+  const location = useLocation();
 
   useEffect(() => {
     setLoading(true);
     const getData = async () => {
       try {
-        const res = await getRequest(`training/${id}`);
+        let res;
+        if (testrunmode) {
+          res = location.state.results;
+        } else {
+          res = await getRequest(`training/${id}`);
+        }
         countAnswers(res);
         countTime(res);
         setResults(res);
@@ -47,10 +54,9 @@ const Result = () => {
       }
     };
     getData();
-  }, [id]);
+  }, [id, testrunmode, location]);
 
   const countAnswers = (result) => {
-    console.log(result);
     result.questions.forEach((res) => {
       if (res.answeresRight) setRightAnswers((prevState) => prevState + 1);
     });
@@ -59,7 +65,9 @@ const Result = () => {
   const countTime = (result) => {
     const time_end = moment(result.time_end);
     const time_start = moment(result.time_start);
-    setTime(time_end.diff(time_start, 'minutes'));
+    const min = time_end.diff(time_start, 'minutes');
+    const sec = Math.floor(time_end.diff(time_start) / 1000);
+    setTime(moment(`${min}:${sec}`, 'mm:ss').format('mm:ss'));
   };
 
   return (
@@ -70,7 +78,7 @@ const Result = () => {
         align="center"
         className={classes.resultTitle}
       >
-        Testergebnisse
+        Ergebnis: {result && result.passed ? "Bestanden!" : "Leider nicht bestanden"}
       </Typography>
       <Divider className={classes.divider} />
       {loading && (
@@ -97,7 +105,7 @@ const Result = () => {
             >
               <CheckCircleOutlineOutlined fontSize="large" />
               <Typography component="h4" variant="h6">
-                Fehler
+                Korrekt
               </Typography>
               <Typography className={classes.resultSummaryText}>
                 {rightAnswers}/{result.questions.length}
@@ -119,7 +127,7 @@ const Result = () => {
                 Benötigte Zeit
               </Typography>
               <Typography className={classes.resultSummaryText}>
-                {time}min
+                {time}
               </Typography>
             </Box>
           </Grid>
@@ -140,7 +148,7 @@ const Result = () => {
                 ) : (
                   <Error className={classes.wrong} />
                 )}
-                <Typography>{res.question_text}</Typography>
+                <Typography>{decode(res.question_text)}</Typography>
               </AccordionSummary>
               <AccordionDetails
                 key={index}
@@ -154,7 +162,7 @@ const Result = () => {
                     justify="center"
                     className={classes.accordionSubTitle}
                   >
-                    Your Answer
+                    Ihre Antwort
                   </Grid>
                   <Grid
                     container
@@ -163,10 +171,10 @@ const Result = () => {
                     justify="center"
                     className={classes.accordionSubTitle}
                   >
-                    Answer
+                    Antwort
                   </Grid>
                   <Grid item xs={10} className={classes.accordionSubTitle}>
-                    Question
+                    Frage
                   </Grid>
                 </Grid>
               </AccordionDetails>
@@ -189,7 +197,7 @@ const Result = () => {
                         )}
                       </Grid>
                       <Grid item xs={10}>
-                        <Typography>{ans.text}</Typography>
+                        <Typography>{decode(ans.text)}</Typography>
                       </Grid>
                     </Grid>
                   </AccordionDetails>
@@ -199,11 +207,19 @@ const Result = () => {
           );
         })}
       <Box py={6} display="flex" justifyContent="center">
-        <Link component={RouterLink} to="/dashboard">
-          <Button variant="contained" color="primary">
-            Zurück zum Dashboard
-          </Button>
-        </Link>
+        {testrunmode ? (
+          <Link component={RouterLink} to="/signup">
+            <Button variant="contained" color="primary">
+              Jetzt registrieren
+            </Button>
+          </Link>
+        ) : (
+          <Link component={RouterLink} to="/dashboard">
+            <Button variant="contained" color="primary">
+              Zurück zum Dashboard
+            </Button>
+          </Link>
+        )}
       </Box>
     </Container>
   );
@@ -236,6 +252,7 @@ const useStyles = makeStyles((theme) => ({
   },
   resultSummaryText: {
     color: '#fff',
+    fontWeight: '700',
   },
   divider: {
     backgroundColor: ' #ffffff',

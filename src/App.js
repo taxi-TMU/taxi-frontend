@@ -163,6 +163,15 @@ const App = () => {
                     />
                   )}
                 </Route>
+
+                <Route
+                  exact
+                  path="/training/:id"
+                  component={Training}
+                />
+
+                <Route exact path="/result/:id" component={Result} />
+
                 <Route path="/reset/request">
                   <PasswordRequest
                     onRequestPassword={handlePasswordRequest}
@@ -177,6 +186,14 @@ const App = () => {
                     onSetUserInput={handleSetUserInput}
                   />
                 </Route>
+
+                <Route exact path="/training">
+                  <Training testrunmode={true} />
+                </Route>
+                <Route exact path="/result">
+                  <Result testrunmode={true} />
+                </Route>
+
                 <ProtectedRoute path="/dashboard" component={Dashboard} />
                 <ProtectedRoute
                   exact
@@ -186,18 +203,9 @@ const App = () => {
 
                 <ProtectedRoute
                   exact
-                  path="/training/:id"
-                  component={Training}
-                />
-
-                <ProtectedRoute
-                  exact
                   path="/simulation"
                   component={StartSimulation}
                 />
-
-                <ProtectedRoute exact path="/result/:id" component={Result} />
-
                 <Redirect to="/" exact />
               </Switch>
             </Box>

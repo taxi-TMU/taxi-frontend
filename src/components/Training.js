@@ -16,38 +16,14 @@ import {
 import { AccessTime } from '@material-ui/icons';
 import Countdown, { zeroPad } from 'react-countdown';
 import { getRequest } from '../utils/api';
-import { updateTrainingOrSimulation } from '../utils/training';
+import {
+  updateTrainingOrSimulation,
+  testTrainingResults,
+} from '../utils/training';
 import { useHistory } from 'react-router-dom';
+import decode from 'decode-html';
 
-const useStyles = makeStyles((theme) => ({
-  mainContainer: {
-    backgroundColor: 'rgba(255, 255, 255, 0.23)',
-    color: '#ffffff',
-    borderRadius: 16,
-    border: '2px solid white',
-  },
-  trainingButton: {
-    width: '14rem',
-    height: '3.5rem',
-    margin: '0 2rem',
-  },
-  timerBox: {
-    color: theme.palette.secondary.main,
-    backgroundColor: '#232F37',
-  },
-  label: {
-    width: '100%',
-  },
-  answerBox: {
-    backgroundColor: '#232F37',
-  },
-  answerBoxChecked: {
-    border: '2px solid #a3ccc3',
-    backgroundColor: 'rgba(35,47,55, 0.5)',
-  },
-}));
-
-export default function Training() {
+const Training = ({ testrunmode }) => {
   const [training, setTraining] = useState();
   const [activeStep, setActiveStep] = useState(0);
   const [loading, setLoading] = useState();
@@ -59,7 +35,12 @@ export default function Training() {
     const getData = async () => {
       setLoading(true);
       try {
-        const training = await getRequest(`training/${id}`);
+        let training;
+        if (testrunmode) {
+          training = await getRequest(`testrun/`);
+        } else {
+          training = await getRequest(`training/${id}`);
+        }
         setTraining(training);
         setLoading(false);
       } catch (err) {
@@ -67,7 +48,7 @@ export default function Training() {
       }
     };
     getData();
-  }, [id]);
+  }, [id, testrunmode]);
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -75,10 +56,6 @@ export default function Training() {
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
-
-  const handleReset = () => {
-    setActiveStep(0);
   };
 
   const handleCheckAnswer = (e, i) => {
@@ -100,13 +77,32 @@ export default function Training() {
   };
 
   const saveTrainingAndGetResult = async () => {
-    await updateTrainingOrSimulation(training);
-    history.push(`/result/${training._id}`);
+    if (testrunmode) {
+      const finalRes = await testTrainingResults(training);
+      history.push({
+        pathname: '/result',
+        state: { results: finalRes },
+      });
+    } else {
+      await updateTrainingOrSimulation(training);
+      history.push(`/result/${training._id}`);
+    }
   };
 
   const timeDisplay = ({ minutes, seconds, completed }) => {
     if (completed) {
-      return <p>The time is over!</p>;
+      saveTrainingAndGetResult();
+      return (
+        <Typography component="h4" variant="h4" color="primary">
+          Time is up
+        </Typography>
+      );
+    } else if (minutes < 10) {
+      return (
+        <Typography component="h4" variant="h4" className={classes.timerEnding}>
+          {zeroPad(minutes)}:{zeroPad(seconds)}
+        </Typography>
+      );
     } else {
       return (
         <Typography component="h4" variant="h4">
@@ -158,15 +154,14 @@ export default function Training() {
                   />
                 </Box>
               )}
-              <Box py={4} px={2} width="100%">
-                <Typography component="h4" variant="h4" align="center">
-                  {training.questions[activeStep].question_text}
+              <Box px={2} width="100%">
+                <Typography component="h4" variant="h5" align="center">
+                  {decode(training.questions[activeStep].question_text)}
                 </Typography>
               </Box>
-              <Box py={4} px={12} alignSelf="flex-start" width="100%">
+              <Box py={2} px={12} alignSelf="flex-start" width="100%">
                 {training.questions[activeStep].answers.map((answer) => (
                   <Box
-                    py={2}
                     key={answer._id}
                     className={
                       answer.userAnswer
@@ -188,7 +183,7 @@ export default function Training() {
                           checked={answer.userAnswer}
                         />
                       }
-                      label={answer.text}
+                      label={decode(answer.text)}
                     />
                   </Box>
                 ))}
@@ -202,42 +197,89 @@ export default function Training() {
             py={4}
             width="100%"
           >
-            {activeStep === training.questions.length ? (
-              <Button onClick={handleReset}>Zurücksetzen</Button>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={saveTrainingAndGetResult}
+              className={classes.trainingExitButton}
+            >
+              Exit
+            </Button>
+            <Button
+              variant="outlined"
+              disabled={activeStep === 0}
+              onClick={handleBack}
+              className={classes.trainingButton}
+            >
+              Zurück
+            </Button>
+            {activeStep === training.questions.length - 1 ? (
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={saveTrainingAndGetResult}
+                className={classes.trainingButton}
+              >
+                Beenden
+              </Button>
             ) : (
-              <>
-                <Button
-                  variant="outlined"
-                  disabled={activeStep === 0}
-                  onClick={handleBack}
-                  className={classes.trainingButton}
-                >
-                  Zurück
-                </Button>
-                {activeStep === training.questions.length - 1 ? (
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={saveTrainingAndGetResult}
-                    className={classes.trainingButton}
-                  >
-                    Beenden
-                  </Button>
-                ) : (
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={handleNext}
-                    className={classes.trainingButton}
-                  >
-                    Weiter
-                  </Button>
-                )}
-              </>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleNext}
+                className={classes.trainingButton}
+              >
+                Weiter
+              </Button>
             )}
           </Box>
         </>
       )}
     </>
   );
-}
+};
+
+export default Training;
+
+const useStyles = makeStyles((theme) => ({
+  mainContainer: {
+    backgroundColor: 'rgba(255, 255, 255, 0.23)',
+    color: '#ffffff',
+    borderRadius: 16,
+    border: '2px solid white',
+  },
+  trainingButton: {
+    width: '14rem',
+    height: '3.5rem',
+    margin: '0 2rem',
+  },
+  trainingExitButton: {
+    width: '14rem',
+    height: '3.5rem',
+    margin: '0 2rem',
+    borderColor: theme.palette.secondary.main,
+  },
+  timerBox: {
+    color: theme.palette.secondary.main,
+    backgroundColor: '#232F37',
+    marginBottom: 15,
+  },
+  timerEnding: {
+    color: theme.palette.error.main,
+  },
+  label: {
+    width: '100%',
+    padding: '1rem 0',
+  },
+  answerBox: {
+    backgroundColor: '#232F37',
+    '&:hover': {
+      backgroundColor: theme.palette.secondary.main,
+      color: '#000',
+    },
+  },
+  answerBoxChecked: {
+    border: '2px solid #a3ccc3',
+    backgroundColor: 'rgba(35,47,55, 0.5)',
+  },
+}));
