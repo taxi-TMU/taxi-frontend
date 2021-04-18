@@ -1,6 +1,6 @@
-import { Link as RouterLink } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import { Link as RouterLink } from "react-router-dom";
+import { makeStyles } from "@material-ui/core/styles";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import {
   Avatar,
   Button,
@@ -13,52 +13,11 @@ import {
   Container,
   Divider,
   Box,
-} from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
+  CircularProgress,
+} from "@material-ui/core";
+import { Alert } from "@material-ui/lab";
 
-const useStyles = makeStyles((theme) => ({
-  mainContainer: {
-    backgroundColor: 'rgba(255, 255, 255, 0.23)',
-    color: '#ffffff',
-    borderRadius: 16,
-    border: '2px solid white',
-    '& a:hover': {
-      textDecoration: 'none',
-    },
-  },
-  paper: {
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: '#d75f5f',
-  },
-  form: {
-    width: '100%',
-    marginTop: theme.spacing(1),
-    '& label': {
-      color: '#333',
-    },
-  },
-  input: {
-    backgroundColor: '#ffffff',
-    borderRadius: 6,
-  },
-  divider: {
-    backgroundColor: ' #ffffff',
-  },
-  checkbox: {
-    color: '#fff',
-    '& span': {
-      color: '#fff',
-    },
-  },
-}));
-
-const Login = ({ onLogin, onSetUserInput, isError, isSuccess }) => {
+const Login = ({ onLogin, onSetUserInput, isError, isSuccess, isLoading }) => {
   const classes = useStyles();
 
   return (
@@ -117,15 +76,28 @@ const Login = ({ onLogin, onSetUserInput, isError, isSuccess }) => {
             label="Angemeldet belieben"
             className={classes.checkbox}
           />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            onClick={onLogin}
-          >
-            Einloggen
-          </Button>
+          {isLoading ? (
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              disabled
+            >
+              <CircularProgress size={30} thickness={4} />
+              &nbsp; &nbsp; Einloggen
+            </Button>
+          ) : (
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              onClick={onLogin}
+            >
+              Einloggen
+            </Button>
+          )}
           <br />
           <br />
 
@@ -156,3 +128,45 @@ const Login = ({ onLogin, onSetUserInput, isError, isSuccess }) => {
 };
 
 export default Login;
+
+const useStyles = makeStyles((theme) => ({
+  mainContainer: {
+    backgroundColor: "rgba(255, 255, 255, 0.23)",
+    color: "#ffffff",
+    borderRadius: 16,
+    border: "2px solid white",
+    "& a:hover": {
+      textDecoration: "none",
+    },
+  },
+  paper: {
+    marginTop: theme.spacing(8),
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: "#d75f5f",
+  },
+  form: {
+    width: "100%",
+    marginTop: theme.spacing(1),
+    "& label": {
+      color: "#333",
+    },
+  },
+  input: {
+    backgroundColor: "#ffffff",
+    borderRadius: 6,
+  },
+  divider: {
+    backgroundColor: " #ffffff",
+  },
+  checkbox: {
+    color: "#fff",
+    "& span": {
+      color: "#fff",
+    },
+  },
+}));
