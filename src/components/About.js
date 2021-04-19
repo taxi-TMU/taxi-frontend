@@ -67,12 +67,11 @@ const About = () => {
               variant="rounded"
             />
             <Typography>
-              Skilled Alicia on Rails full stack web developer eager to join a
-              creative, problem solving team. Ability to learn and implement new
-              technologies quickly. My skills include Ruby on Rails, Sinatra,
-              HTML5, CSS3, Javascript, jQuery, Node.js, Django. These skills
-              were learned at the WBS Coding School Fullstack Development
-              Intensive program.
+              Entusiastic full stack web developer with a passion for the backend. <br/>
+              Driven by curiosity, proactive, self-motivated and a team player.
+              Gaining a little knowledge each day, always looking for a chance 
+              of self-improvement and keeping an eye on what's next.
+              Good knowledge of Django, Python, React, JavaScript, Express, Linux.
             </Typography>
           </Grid>
           <Grid item xs={4} className={classes.gridItem}>
