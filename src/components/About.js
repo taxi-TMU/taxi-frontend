@@ -14,7 +14,7 @@ const About = () => {
           About us
         </Typography>
         <Typography className={classes.padding}>
-          Taxi/Mietwagen Unternehme Lern App (TMU)
+          Taxi/Mietwagen Unternehmer Lern App (TMU)
           <br />
           <br /> The TMU itself is an app that allows users to take quizzes on
           various topics that they can choose between. It simulates an exam that
