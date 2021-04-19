@@ -234,7 +234,7 @@ export default function Dashboard() {
           }`}
         </Typography>
 
-        {user && <Statistics user={user} />}
+        {user && <Statistics />}
 
         <Box py={3}>
           <Divider className={classes.divider} />
