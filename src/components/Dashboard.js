@@ -37,7 +37,7 @@ const props = {
 //--------------------------------------------
 // dashboard component
 //--------------------------------------------
-export default function Dashboard() {
+const Dashboard = () => {
   const { user, setUser } = useContext(UserContext);
   const [userUpdateProfile, setUserUpdateProfile] = useState();
   const [userUpdatePass, setUserUpdatePass] = useState({
@@ -472,6 +472,8 @@ export default function Dashboard() {
     </>
   );
 }
+
+export default Dashboard;
 
 const useStyles = makeStyles((theme) => ({
   dashboardBox: {
