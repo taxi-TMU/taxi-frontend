@@ -9,7 +9,6 @@ const Statistics = ({ user }) => {
   const [statistics, seStatistics] = useState();
 
   useEffect(() => {
-    console.log(user);
     const getData = async () => {
       const res = await getRequest(`training/stats/${user.id}`);
       seStatistics(res);

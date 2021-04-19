@@ -96,7 +96,7 @@ const updateTrainingOrSimulation = async (training) => {
 // UPDATE TEST TRAINING
 //--------------------------------------------
 const testTrainingResults = async (training) => {
-  training.time_end = Date.now();
+  // training.time_end = Date.now();
 
   let rightones = 0;
   await training.questions.forEach((question) => {

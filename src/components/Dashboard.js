@@ -1,12 +1,12 @@
-import { useState, useRef, useContext } from "react";
-import UserContext from "../context/UserContext";
-import api from "../services/api";
-import validator from "validator";
-import { Alert } from "@material-ui/lab";
-import { makeStyles } from "@material-ui/core/styles";
-import { SettingsOutlined, Person, Lock } from "@material-ui/icons";
-import theme from "../theme";
-import Statistics from "./Statistics";
+import { useState, useRef, useContext } from 'react';
+import UserContext from '../context/UserContext';
+import api from '../services/api';
+import validator from 'validator';
+import { Alert } from '@material-ui/lab';
+import { makeStyles } from '@material-ui/core/styles';
+import { SettingsOutlined, Person, Lock } from '@material-ui/icons';
+import theme from '../theme';
+import Statistics from './Statistics';
 import {
   Box,
   Typography,
@@ -16,7 +16,7 @@ import {
   Button,
   TextField,
   IconButton,
-} from "@material-ui/core";
+} from '@material-ui/core';
 
 //--------------------------------------------
 // dynamic bg when avatar image fallback
@@ -41,8 +41,8 @@ export default function Dashboard() {
   const { user, setUser } = useContext(UserContext);
   const [userUpdateProfile, setUserUpdateProfile] = useState();
   const [userUpdatePass, setUserUpdatePass] = useState({
-    old_password: "",
-    password: "",
+    old_password: '',
+    password: '',
   });
   // const [isLoading, setIsLoading] = useState();
   const [isUpdating, setIsUpdating] = useState(false);
@@ -100,7 +100,7 @@ export default function Dashboard() {
         ...prevState,
         isProfileError: true,
         errorProfileMsg: [
-          { msg: "Bitte alle Felder ausfüllen", param: "required" },
+          { msg: 'Bitte alle Felder ausfüllen', param: 'required' },
         ],
       }));
     }
@@ -157,7 +157,7 @@ export default function Dashboard() {
         ...prevState,
         isPassError: true,
         errorPassMsg: [
-          { msg: "Bitte alle Felder ausfüllen", param: "required" },
+          { msg: 'Bitte alle Felder ausfüllen', param: 'required' },
         ],
       }));
     }
@@ -172,7 +172,7 @@ export default function Dashboard() {
         successPassMsg: res.data,
       }));
     } catch (err) {
-      const checkTypeOfError = err.response.data.hasOwnProperty("msg")
+      const checkTypeOfError = err.response.data.hasOwnProperty('msg')
         ? [err.response.data]
         : err.response.data.errors.errors;
       if (err.response) {
@@ -228,13 +228,13 @@ export default function Dashboard() {
           color="textPrimary"
           className={classes.dashboardTitle}
         >
-          Willkommen{" "}
+          Willkommen{' '}
           {`${
             user.first_name.charAt(0).toUpperCase() + user.first_name.slice(1)
           }`}
         </Typography>
 
-        <Statistics user={user} />
+        {user && <Statistics user={user} />}
 
         <Box py={3}>
           <Divider className={classes.divider} />
@@ -270,7 +270,7 @@ export default function Dashboard() {
               alignItems="center"
             >
               <Avatar alt="user avatar" src="" className={classes.userAvatar}>
-                {user.first_name.split("")[0].toUpperCase()}
+                {user.first_name.split('')[0].toUpperCase()}
               </Avatar>
             </Grid>
             {user && !isUpdating && (
@@ -475,66 +475,66 @@ export default function Dashboard() {
 
 const useStyles = makeStyles((theme) => ({
   dashboardBox: {
-    padding: "2rem",
-    margin: "2rem auto",
-    backgroundColor: "rgba(255, 255, 255, 0.23)",
-    border: "2px solid #fff",
-    color: "#fff",
+    padding: '2rem',
+    margin: '2rem auto',
+    backgroundColor: 'rgba(255, 255, 255, 0.23)',
+    border: '2px solid #fff',
+    color: '#fff',
     borderRadius: 10,
-    [theme.breakpoints.up("sm")]: {
-      width: "80%",
+    [theme.breakpoints.up('sm')]: {
+      width: '80%',
     },
   },
   dashboardTitle: {
-    fontWeight: "300",
-    fontStyle: "italic",
+    fontWeight: '300',
+    fontStyle: 'italic',
     // padding: "0.5rem 0",
-    color: "#fff",
+    color: '#fff',
   },
   userAvatar: (props) => ({
-    width: "10rem",
-    height: "10rem",
-    fontSize: "4rem",
+    width: '10rem',
+    height: '10rem',
+    fontSize: '4rem',
     backgroundColor: props.avatarFallbackBg,
   }),
   userProfileBox: {
-    padding: "1rem 0",
-    [theme.breakpoints.up("sm")]: {
-      padding: "2rem 1rem",
+    padding: '1rem 0',
+    [theme.breakpoints.up('sm')]: {
+      padding: '2rem 1rem',
     },
   },
   userProfileBoxTitle: {
-    padding: "2rem 0",
+    padding: '2rem 0',
   },
   userIcon: {
-    width: "100%",
-    textAlign: "center",
+    width: '100%',
+    textAlign: 'center',
     color: theme.palette.secondary.main,
   },
   divider: {
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
   },
   darkRow: {
-    backgroundColor: "rgba(35, 47, 55, 0.6)",
-    padding: "0.5rem",
+    backgroundColor: 'rgba(35, 47, 55, 0.6)',
+    padding: '0.5rem',
   },
   lightRow: {
-    backgroundColor: "rgba(35, 47, 55, 0.2)",
-    padding: "0.5rem",
+    backgroundColor: 'rgba(35, 47, 55, 0.2)',
+    padding: '0.5rem',
   },
   settingsIcon: {
-    cursor: "pointer",
+    cursor: 'pointer',
     backgroundColor: theme.palette.primary.main,
-    color: "#fff",
-    margin: "0 2rem",
-    boxShadow: "2px 2px 8px 0 rgba(0, 0, 0, 0.3)",
+    color: '#fff',
+    margin: '0 2rem',
+    boxShadow: '2px 2px 8px 0 rgba(0, 0, 0, 0.3)',
   },
   updateForm: {
-    backgroundColor: "#232F37",
-    padding: "1rem",
-    width: "100%",
-    "& input": {
-      color: "#fff",
+    backgroundColor: '#232F37',
+    padding: '1rem',
+    width: '100%',
+    '& input': {
+      color: '#fff',
     },
   },
 }));
