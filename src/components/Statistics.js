@@ -12,7 +12,6 @@ const Statistics = ({ user }) => {
     const getData = async () => {
       const res = await getRequest(`training/stats/${user.id}`);
       seStatistics(res);
-      console.log(res);
     };
     getData();
   }, [user]);
