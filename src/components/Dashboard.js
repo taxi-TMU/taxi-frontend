@@ -6,7 +6,7 @@ import { Alert } from "@material-ui/lab";
 import { makeStyles } from "@material-ui/core/styles";
 import { SettingsOutlined, Person, Lock } from "@material-ui/icons";
 import theme from "../theme";
-import Statistics from './Statistics';
+import Statistics from "./Statistics";
 import {
   Box,
   Typography,
@@ -221,23 +221,22 @@ export default function Dashboard() {
   return (
     <>
       <Box className={classes.dashboardBox}>
-      <Typography
-            component="h2"
-            variant="h4"
-            align="center"
-            color="textPrimary"
-            className={classes.dashboardTitle}
-          >
-            Willkommen{" "}
-            {`${
-              user.first_name.charAt(0).toUpperCase() + user.first_name.slice(1)
-            }`}
-          </Typography>
+        <Typography
+          component="h2"
+          variant="h4"
+          align="center"
+          color="textPrimary"
+          className={classes.dashboardTitle}
+        >
+          Willkommen{" "}
+          {`${
+            user.first_name.charAt(0).toUpperCase() + user.first_name.slice(1)
+          }`}
+        </Typography>
 
-      <Statistics user={user}/>
+        <Statistics user={user} />
 
-        
-        <Box py={6}>
+        <Box py={3}>
           <Divider className={classes.divider} />
         </Box>
 
@@ -469,8 +468,6 @@ export default function Dashboard() {
             )}
           </Grid>
         )}
-
-
       </Box>
     </>
   );
@@ -540,5 +537,4 @@ const useStyles = makeStyles((theme) => ({
       color: "#fff",
     },
   },
-  
 }));

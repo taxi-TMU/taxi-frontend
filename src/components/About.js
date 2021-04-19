@@ -118,14 +118,14 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   paper: {
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(4),
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
   },
   padding: {
-    padding: 50,
+    padding: 20,
     display: "flex",
     // flexDirection: "column",
     alignItems: "flex-start",

@@ -122,7 +122,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "300",
     fontStyle: "italic",
     color: "#fff",
-    padding: 20,
+    padding: 5,
   },
 
   resultTitle: {
@@ -135,7 +135,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#232F37",
     color: theme.palette.secondary.main,
     width: "20rem",
-    height: "10rem",
+    height: "7rem",
   },
   resultSummaryText: {
     color: "#fff",

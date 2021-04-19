@@ -13,7 +13,7 @@ const useStyle = makeStyles((theme) => ({
   root: {
     backgroundColor: "#232F37",
     color: "#ffffff",
-    padding: "2rem 0",
+    padding: "0 0",
     "& a": {
       color: "#ffffff",
     },
@@ -24,7 +24,7 @@ const useStyle = makeStyles((theme) => ({
       content: '" "',
       width: "90%",
       height: "1px",
-      margin: "2rem auto 1rem auto",
+      margin: "0,5rem auto 1rem auto",
       backgroundColor: "#ffffff",
       display: "block",
     },
@@ -41,7 +41,7 @@ const useStyle = makeStyles((theme) => ({
   },
   [theme.breakpoints.up("md")]: {
     footerCopyright: {
-      textAlign: "right",
+      textAlign: "center",
       "&::before": {
         width: "100%",
       },
@@ -96,9 +96,10 @@ export default function Footer() {
         </Box>
         <Box className={classes.footerCopyright}>
           <Typography component="span" gutterBottom>
-            Copyright &copy; Taxi App {new Date().getFullYear()}
+            Copyright &copy; TMU {new Date().getFullYear()}
           </Typography>
         </Box>
+        <br />
       </Grid>
     </Grid>
   );

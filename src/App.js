@@ -164,11 +164,7 @@ const App = () => {
                   )}
                 </Route>
 
-                <Route
-                  exact
-                  path="/training/:id"
-                  component={Training}
-                />
+                <Route exact path="/training/:id" component={Training} />
 
                 <Route exact path="/result/:id" component={Result} />
 
@@ -225,16 +221,6 @@ const useStyle = makeStyles((theme) => ({
     border: "3px solid #a3ccc3",
   }),
   mainSpace: {
-    padding: "0 1rem 6rem 1rem",
-  },
-  [theme.breakpoints.up("sm")]: {
-    mainSpace: {
-      padding: "0 2rem 8rem 2rem",
-    },
-  },
-  [theme.breakpoints.up("lg")]: {
-    mainSpace: {
-      padding: "0 2rem 10rem 2rem",
-    },
+    padding: "0 1rem 3rem 1rem",
   },
 }));
