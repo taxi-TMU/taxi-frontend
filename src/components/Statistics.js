@@ -29,7 +29,7 @@ const Statistics = () => {
           color="textPrimary"
           className={classes.dashboardTitle}
         >
-          Statistiken{' '}
+          Statistics{" "}
         </Typography>
         <Grid
           container
@@ -48,7 +48,7 @@ const Statistics = () => {
               borderRadius={4}
             >
               <Typography component="h4" variant="h6">
-                Gesamtzahl Tests
+              Total number of tests
               </Typography>
               <Typography className={classes.resultSummaryText}>
                 {statistics.total}
@@ -66,7 +66,7 @@ const Statistics = () => {
               borderRadius={4}
             >
               <Typography component="h4" variant="h6">
-                Bestandene Simulationen
+                Passed simulations
               </Typography>
               <Typography className={classes.resultSummaryText}>
                 {statistics.simulations.passed} /{' '}
@@ -85,7 +85,7 @@ const Statistics = () => {
               borderRadius={4}
             >
               <Typography component="h4" variant="h6">
-                Bestandene Übungen
+                Passed trainings
               </Typography>
               <Typography className={classes.resultSummaryText}>
                 {statistics.trainings.passed} /{' '}

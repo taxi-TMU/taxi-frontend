@@ -73,7 +73,7 @@ const Login = ({ onLogin, onSetUserInput, isError, isSuccess, isLoading }) => {
           />
           <FormControlLabel
             control={<Checkbox value="remember" />}
-            label="Angemeldet belieben"
+            label="Remember me"
             className={classes.checkbox}
           />
           {isLoading ? (
@@ -85,7 +85,7 @@ const Login = ({ onLogin, onSetUserInput, isError, isSuccess, isLoading }) => {
               disabled
             >
               <CircularProgress size={30} thickness={4} />
-              &nbsp; &nbsp; Einloggen
+              &nbsp; &nbsp; Login
             </Button>
           ) : (
             <Button
@@ -95,7 +95,7 @@ const Login = ({ onLogin, onSetUserInput, isError, isSuccess, isLoading }) => {
               color="primary"
               onClick={onLogin}
             >
-              Einloggen
+              Login
             </Button>
           )}
           <br />
@@ -107,7 +107,7 @@ const Login = ({ onLogin, onSetUserInput, isError, isSuccess, isLoading }) => {
               to="/reset/request"
               color="textSecondary"
             >
-              Passwort vergessen?
+              Forgot password?
             </Link>
           </Grid>
           <br />
@@ -115,7 +115,7 @@ const Login = ({ onLogin, onSetUserInput, isError, isSuccess, isLoading }) => {
           <br />
           <Link component={RouterLink} to="/signup">
             <Button type="submit" fullWidth variant="outlined">
-              Registrieren
+              Register
             </Button>
           </Link>
           <br />

@@ -23,7 +23,7 @@ const PasswordReset = ({ onSetUserInput, onResetPassword }) => {
         </Avatar>
         <br />
         <Typography component="h1" variant="h5">
-          Passwort zurück setzen
+          Reset password
         </Typography>
         <br />
         <br />
@@ -36,7 +36,7 @@ const PasswordReset = ({ onSetUserInput, onResetPassword }) => {
             required
             fullWidth
             id="password"
-            label="Neues Passwort (Mind. 8 Zeichen)"
+            label="New Password (Mind. 8 Zeichen)"
             name="password"
             autoFocus
             onChange={(e) => onSetUserInput(e)}
@@ -48,7 +48,7 @@ const PasswordReset = ({ onSetUserInput, onResetPassword }) => {
             required
             fullWidth
             id="password_repeat"
-            label="Passwort bestätigen"
+            label="Confirm new password"
             name="password_repeat"
             onChange={(e) => onSetUserInput(e)}
           />
@@ -63,7 +63,7 @@ const PasswordReset = ({ onSetUserInput, onResetPassword }) => {
             variant="contained"
             color="primary"
           >
-            Passwort zurück setzen
+            Reset password
           </Button>
           <br />
           <br />

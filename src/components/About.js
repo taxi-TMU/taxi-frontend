@@ -11,19 +11,19 @@ const About = () => {
     <Container className={classes.aboutMain} maxWidth="lg">
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
-          Über uns
+          About us
         </Typography>
         <Typography className={classes.padding}>
           Taxi/Mietwagen Unternehme Lern App (TMU)
           <br />
-          <br /> Die TMU selbst ist eine App, mit der Benutzer Quizfragen zu
-          verschiedenen Themen durchführen können, zwischen denen sie wählen
-          können. Es simuliert eine Prüfung, die in IHK abgelegt wird. Mit der
-          TMU können Sie sich spielerisch auf die Fachkundeprüfung im
-          Taxi-/Mietwagenverkehr bei der IHK vorbereiten. Die App funktioniert
-          webbasiert und läuft somit auf allen gängigen Plattformen bzw.
-          Geräten. In Bezug auf das Ziel und den Zweck der Anwendung soll es ein
-          Mittel für Bildungszwecke sein.
+          <br /> The TMU itself is an app that allows users to take quizzes on
+          various topics that they can choose between. It simulates an exam that
+          is taken at the german chamber of industry and commerce(IHK). With the
+          TMU, you can playfully prepare for the specialist examination in taxi
+          / rental car traffic at the IHK. The app is web-based and therefore
+          runs on all common platforms and devices. Regarding the aim and
+          purpose of application, it is meant to be a means for educational
+          purposes.
         </Typography>
         <Typography component="h1" variant="h5">
           Team
@@ -67,11 +67,12 @@ const About = () => {
               variant="rounded"
             />
             <Typography>
-              Entusiastic full stack web developer with a passion for the backend. <br/>
+              Entusiastic full stack web developer with a passion for the
+              backend. <br />
               Driven by curiosity, proactive, self-motivated and a team player.
-              Gaining a little knowledge each day, always looking for a chance 
-              of self-improvement and keeping an eye on what's next.
-              Good knowledge of Django, Python, React, JavaScript, Express, Linux.
+              Gaining a little knowledge each day, always looking for a chance
+              of self-improvement and keeping an eye on what's next. Good
+              knowledge of Django, Python, React, JavaScript, Express, Linux.
             </Typography>
           </Grid>
           <Grid item xs={4} className={classes.gridItem}>

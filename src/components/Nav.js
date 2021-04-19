@@ -58,7 +58,7 @@ const Nav = () => {
                   activeClassName={classes.navLink}
                   className={classes.title}
                 >
-                  Trainieren
+                  Train by category
                 </RouterLink>
               </MenuItem>
               <MenuItem>
@@ -90,7 +90,7 @@ const Nav = () => {
                       setUser();
                     }}
                   >
-                    Ausloggen
+                    Logout
                   </RouterLink>
                 ) : (
                   <RouterLink
@@ -98,7 +98,7 @@ const Nav = () => {
                     activeClassName={classes.navLink}
                     className={classes.title}
                   >
-                    Einloggen
+                    Login
                   </RouterLink>
                 )}
               </MenuItem>
@@ -131,7 +131,7 @@ const Nav = () => {
                     activeClassName={classes.navLink}
                     className={classes.title}
                   >
-                    Trainieren
+                    Train by category
                   </RouterLink>
                 </MenuItem>
               </MenuList>
@@ -157,7 +157,7 @@ const Nav = () => {
                       activeClassName={classes.navLink}
                       className={classes.title}
                     >
-                      Über uns
+                      About us
                     </RouterLink>
                   )}
                 </MenuItem>
@@ -171,7 +171,7 @@ const Nav = () => {
                         setUser();
                       }}
                     >
-                      Ausloggen
+                      Logout
                     </RouterLink>
                   ) : (
                     <RouterLink
@@ -179,7 +179,7 @@ const Nav = () => {
                       activeClassName={classes.navLink}
                       className={classes.title}
                     >
-                      Einloggen
+                      Login
                     </RouterLink>
                   )}
                 </MenuItem>
