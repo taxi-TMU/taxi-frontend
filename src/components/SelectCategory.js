@@ -38,12 +38,13 @@ const SelectCategory = () => {
   return (
     <Container className={classes.mainContainer} component="main" maxWidth="lg">
       <Typography component="h2" variant="h4" align="center">
-        Auswahl Kategorie
+        Select category
       </Typography>
       <Typography className={classes.padding}>
-        In diesem Abschnitt können Sie Ihr Wissen nach Kategory trainieren. Jede
-        Kategory hat Unterkategorien. Wählen Sie eine aus und trainieren Sie die
-        Fragen. Die Fragen werden nach Zufallsprinzip zusammengesetzt.{' '}
+        In this section your can train your knowledge by category.
+        Each category has multiple sub categories.
+        Choose one subcategory and start training.
+        The set of questions is put together at random.{' '}
       </Typography>
       {!categories && (
         <Box display="flex" justifyContent="center">

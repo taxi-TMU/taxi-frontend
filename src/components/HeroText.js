@@ -49,14 +49,15 @@ export default function HeroText() {
         color="textSecondary"
         fontWeight={700}
       >
-        TMU
+        Taxi/Mietwagen Unternehmer Lern App (TMU)
       </Typography>
       <Typography component="p" color="textSecondary">
-        Die Taxi/Mietwagen Unternehme Lern App (TMU) ist eine App, mit der
-        können Sie sich spielerisch auf die Fachkundeprüfung im
-        Taxi/Mietwagenverkehr bei der IHK vorbereiten. Es simuliert eine
-        Prüfung, die in IHK abgelegt wird.In Bezug auf das Ziel und den Zweck
-        der Anwendung soll es ein Mittel für Bildungszwecke sein.
+        The taxi/rental car enterprise learning App (TMU) is an App with which
+        you can playfully prepare for the specialist examination in taxi/rental
+        cars at the german chamber of industry and commerce(IHK). You have the
+        option to train in specific categories /sub-categories or to simulate an
+        IHK exam including all categories. The aim of TMU App is to educate and
+        prepare you for the real exam.
       </Typography>
       <Box
         className={classes.heroButtonBox}
@@ -76,7 +77,7 @@ export default function HeroText() {
         </Link>
         <Link component={RouterLink} to="/signup">
           <Button className={classes.heroButton} variant="outlined">
-            Registrieren
+            Register
           </Button>
         </Link>
       </Box>

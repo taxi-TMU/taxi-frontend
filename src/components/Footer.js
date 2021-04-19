@@ -86,11 +86,11 @@ export default function Footer() {
                 component={RouterLink}
                 className={classes.title}
               >
-                Über uns
+                About us
               </Link>
             </MenuItem>
             <MenuItem>
-              <Link>Datenschutz</Link>
+              <Link>Privacy</Link>
             </MenuItem>
           </MenuList>
         </Box>

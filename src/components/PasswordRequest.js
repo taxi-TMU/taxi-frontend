@@ -22,12 +22,11 @@ const PasswordRequest = ({ onSetUserInput, onRequestPassword }) => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Passwort vergessen
+          Forgot your password
         </Typography>
         <br/>
         <Typography>
-          Bitte geben Sie Ihre E-Mail-Adresse ein und wir senden Ihnen
-          Anweisungen zum Zurücksetzen Ihres Passworts.
+          Please enter your email. We will send you an email with the instructions to reset your password.
         </Typography>
         <form className={classes.form} noValidate>
           <TextField
@@ -52,19 +51,19 @@ const PasswordRequest = ({ onSetUserInput, onRequestPassword }) => {
             color="primary"
             onClick={onRequestPassword}
           >
-            Passwort zurück setzen
+            Reset password
           </Button>
           <br />
           <br />
           <Typography component="p" variant="subtitle1">
-            Haben Sie bereits Login und Passwort?
+            Already have login and password?
           </Typography>
           <br />
           <Divider className={classes.divider} />
           <br />
           <Link component={RouterLink} to="/login">
             <Button type="submit" fullWidth variant="outlined">
-              Zurück um Login
+              Back to login
             </Button>
           </Link>
           <br />

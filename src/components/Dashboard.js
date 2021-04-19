@@ -100,7 +100,7 @@ export default function Dashboard() {
         ...prevState,
         isProfileError: true,
         errorProfileMsg: [
-          { msg: 'Bitte alle Felder ausfüllen', param: 'required' },
+          { msg: "Please fill all fields", param: "required" },
         ],
       }));
     }
@@ -157,7 +157,7 @@ export default function Dashboard() {
         ...prevState,
         isPassError: true,
         errorPassMsg: [
-          { msg: 'Bitte alle Felder ausfüllen', param: 'required' },
+          { msg: "Please fill all fields", param: "required" },
         ],
       }));
     }
@@ -228,7 +228,7 @@ export default function Dashboard() {
           color="textPrimary"
           className={classes.dashboardTitle}
         >
-          Willkommen{' '}
+          Welcome{" "}
           {`${
             user.first_name.charAt(0).toUpperCase() + user.first_name.slice(1)
           }`}
@@ -248,7 +248,7 @@ export default function Dashboard() {
             color="textPrimary"
             className={classes.dashboardTitle}
           >
-            Einstellungen
+            Settings
           </Typography>
           <IconButton
             fontSize="large"
@@ -295,7 +295,7 @@ export default function Dashboard() {
                   direction="column"
                   className={classes.darkRow}
                 >
-                  <Typography variant="subtitle1">Vorname</Typography>
+                  <Typography variant="subtitle1">First Name</Typography>
                   <Typography variant="body1">{user.first_name}</Typography>
                 </Grid>
                 <Grid
@@ -305,7 +305,7 @@ export default function Dashboard() {
                   direction="column"
                   className={classes.lightRow}
                 >
-                  <Typography variant="subtitle1">Nachname</Typography>
+                  <Typography variant="subtitle1">Last Name</Typography>
                   <Typography variant="body1">{user.last_name}</Typography>
                 </Grid>
                 <Grid
@@ -352,7 +352,7 @@ export default function Dashboard() {
                       direction="column"
                       className={classes.darkRow}
                     >
-                      <Typography variant="subtitle1">Vorname</Typography>
+                      <Typography variant="subtitle1">First Name</Typography>
                       <TextField
                         color="secondary"
                         name="first_name"
@@ -367,7 +367,7 @@ export default function Dashboard() {
                       direction="column"
                       className={classes.lightRow}
                     >
-                      <Typography variant="subtitle1">Nachname</Typography>
+                      <Typography variant="subtitle1">Last Name</Typography>
                       <TextField
                         name="last_name"
                         value={userUpdateProfile.last_name}
@@ -392,7 +392,7 @@ export default function Dashboard() {
                     </Grid>
                     <Box display="flex" justifyContent="center" py={2}>
                       <Button color="primary" variant="contained" type="submit">
-                        Profil aktualisieren
+                        Update profile
                       </Button>
                     </Box>
                   </Box>
@@ -431,7 +431,7 @@ export default function Dashboard() {
                       className={classes.darkRow}
                     >
                       <Typography variant="subtitle1">
-                        Alter Passwort
+                        Old Password
                       </Typography>
                       <TextField
                         color="secondary"
@@ -448,7 +448,7 @@ export default function Dashboard() {
                       className={classes.lightRow}
                     >
                       <Typography variant="subtitle1">
-                        Neues Passwort
+                        New Password
                       </Typography>
                       <TextField
                         color="secondary"
@@ -459,7 +459,7 @@ export default function Dashboard() {
                     </Grid>
                     <Box display="flex" justifyContent="center" py={2}>
                       <Button type="submit" color="primary" variant="contained">
-                        Password aktualisieren
+                        Update Password
                       </Button>
                     </Box>
                   </Box>

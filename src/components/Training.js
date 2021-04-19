@@ -222,7 +222,7 @@ const Training = ({ testrunmode }) => {
               onClick={handleBack}
               className={classes.trainingButton}
             >
-              Zurück
+              Previous
             </Button>
             {activeStep === training.questions.length - 1 ? (
               <Button
@@ -231,7 +231,7 @@ const Training = ({ testrunmode }) => {
                 onClick={saveTrainingAndGetResult}
                 className={classes.trainingButton}
               >
-                Beenden
+                Finish
               </Button>
             ) : (
               <Button
@@ -240,7 +240,7 @@ const Training = ({ testrunmode }) => {
                 onClick={handleNext}
                 className={classes.trainingButton}
               >
-                Weiter
+                Next question
               </Button>
             )}
           </Box>

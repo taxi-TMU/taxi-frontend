@@ -78,7 +78,7 @@ const Result = ({ testrunmode }) => {
         align="center"
         className={classes.resultTitle}
       >
-        Ergebnis: {result && result.passed ? "Bestanden!" : "Leider nicht bestanden"}
+        Result: {result && result.passed ? "Passed!" : "Unfortunately not passed"}
       </Typography>
       <Divider className={classes.divider} />
       {loading && (
@@ -105,7 +105,7 @@ const Result = ({ testrunmode }) => {
             >
               <CheckCircleOutlineOutlined fontSize="large" />
               <Typography component="h4" variant="h6">
-                Korrekt
+                Correct
               </Typography>
               <Typography className={classes.resultSummaryText}>
                 {rightAnswers}/{result.questions.length}
@@ -124,7 +124,7 @@ const Result = ({ testrunmode }) => {
             >
               <AccessTime fontSize="large" />
               <Typography component="h4" variant="h6">
-                Benötigte Zeit
+                Time needed
               </Typography>
               <Typography className={classes.resultSummaryText}>
                 {time}
@@ -162,7 +162,7 @@ const Result = ({ testrunmode }) => {
                     justify="center"
                     className={classes.accordionSubTitle}
                   >
-                    Ihre Antwort
+                    Your answer
                   </Grid>
                   <Grid
                     container
@@ -171,10 +171,10 @@ const Result = ({ testrunmode }) => {
                     justify="center"
                     className={classes.accordionSubTitle}
                   >
-                    Antwort
+                    Answer
                   </Grid>
                   <Grid item xs={10} className={classes.accordionSubTitle}>
-                    Frage
+                    Question
                   </Grid>
                 </Grid>
               </AccordionDetails>
@@ -210,13 +210,13 @@ const Result = ({ testrunmode }) => {
         {testrunmode ? (
           <Link component={RouterLink} to="/signup">
             <Button variant="contained" color="primary">
-              Jetzt registrieren
+              Register now
             </Button>
           </Link>
         ) : (
           <Link component={RouterLink} to="/dashboard">
             <Button variant="contained" color="primary">
-              Zurück zum Dashboard
+              Back to Dashboard
             </Button>
           </Link>
         )}

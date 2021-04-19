@@ -68,7 +68,7 @@ const SignUp = ({
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Registrieren
+          Register
         </Typography>
         {isError.error &&
           isError.errorMsg.map((err, index) => (
@@ -93,7 +93,7 @@ const SignUp = ({
             required
             fullWidth
             id="first_name"
-            label="Vorname"
+            label="First Name"
             name="first_name"
             autoFocus
             onChange={onSetUserInput}
@@ -105,7 +105,7 @@ const SignUp = ({
             required
             fullWidth
             id="last_name"
-            label="Nachname"
+            label="Last Name"
             name="last_name"
             onChange={onSetUserInput}
           />
@@ -126,7 +126,7 @@ const SignUp = ({
             variant="filled"
             margin="normal"
             id="password"
-            label="Passwort"
+            label="Password"
             name="password"
             type="password"
             required
@@ -138,7 +138,7 @@ const SignUp = ({
             variant="filled"
             margin="normal"
             id="Repeat password"
-            label="Passwort wiederholen"
+            label="Repeat password"
             name="repeat password"
             type="password"
             required
@@ -155,7 +155,7 @@ const SignUp = ({
               disabled
             >
               <CircularProgress size={30} thickness={4} />
-              &nbsp; &nbsp;Registrieren
+              &nbsp; &nbsp;Register
             </Button>
           ) : (
             <Button
@@ -165,7 +165,7 @@ const SignUp = ({
               variant="contained"
               color="primary"
             >
-              Registrieren
+              Register
             </Button>
           )}
           <br />
@@ -173,7 +173,7 @@ const SignUp = ({
 
           <Grid item xs>
             <Typography component="p" color="textSecondary">
-              Sie haben bereits ein Konto?
+              Already have an account?
             </Typography>
           </Grid>
           <br />
@@ -186,7 +186,7 @@ const SignUp = ({
               fullWidth
               variant="outlined"
             >
-              Zum Login
+              Login
             </Button>
           </Link>
           <br />
