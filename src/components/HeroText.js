@@ -49,7 +49,7 @@ export default function HeroText() {
         color="textSecondary"
         fontWeight={700}
       >
-        Taxi/Mietwagen Unternehmer Lern App (TMU)
+        TMU App
       </Typography>
       <Typography component="p" color="textSecondary">
         The taxi/rental car enterprise learning App (TMU) is an App with which
@@ -72,7 +72,7 @@ export default function HeroText() {
             color="primary"
             variant="contained"
           >
-            Jetzt testen
+            Try it now
           </Button>
         </Link>
         <Link component={RouterLink} to="/signup">
