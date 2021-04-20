@@ -16,41 +16,6 @@ import {
 } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 
-const useStyles = makeStyles((theme) => ({
-  mainContainer: {
-    backgroundColor: "rgba(255, 255, 255, 0.23)",
-    color: "#ffffff",
-    borderRadius: 16,
-    border: "2px solid white",
-  },
-  paper: {
-    marginTop: theme.spacing(8),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: "#d75f5f",
-  },
-  form: {
-    width: "100%",
-    marginTop: theme.spacing(1),
-    "& label": {
-      color: "#333",
-    },
-  },
-  divider: {
-    backgroundColor: " #ffffff",
-  },
-  loginBtn: {
-    color: "secondry",
-  },
-  input: {
-    backgroundColor: "#ffffff",
-    borderRadius: 6,
-  },
-}));
 
 const SignUp = ({
   onRegister,
@@ -199,3 +164,39 @@ const SignUp = ({
 };
 
 export default SignUp;
+
+const useStyles = makeStyles((theme) => ({
+  mainContainer: {
+    backgroundColor: "rgba(255, 255, 255, 0.23)",
+    color: "#ffffff",
+    borderRadius: 16,
+    border: "2px solid white",
+  },
+  paper: {
+    marginTop: theme.spacing(8),
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: "#d75f5f",
+  },
+  form: {
+    width: "100%",
+    marginTop: theme.spacing(1),
+    "& label": {
+      color: "#333",
+    },
+  },
+  divider: {
+    backgroundColor: " #ffffff",
+  },
+  loginBtn: {
+    color: "secondry",
+  },
+  input: {
+    backgroundColor: "#ffffff",
+    borderRadius: 6,
+  },
+}));
