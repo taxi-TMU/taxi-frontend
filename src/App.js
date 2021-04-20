@@ -221,6 +221,6 @@ const useStyle = makeStyles((theme) => ({
     border: '3px solid #a3ccc3',
   }),
   mainSpace: {
-    padding: '8rem 1rem',
+    padding: '0 1rem 3rem 1rem',
   },
 }));
