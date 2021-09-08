@@ -109,8 +109,8 @@ const testTrainingResults = async (training) => {
     question['answeresRight'] = rightAnswer;
     if (rightAnswer) rightones += 1;
   });
-  training.passed = false;
-  if (rightones >= training.questions.length / 2) training.passed = true;
+
+  training.passed = rightones >= training.questions.length / 2;
 
   try {
     return training;

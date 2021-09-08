@@ -97,14 +97,13 @@ const getUser = async (userId) => {
   // TODO refactor to get user by if from token
   try {
     const user = await axios.get(`${serverUrl}/user/${userId}`);
-    const userInfos = {
+    return userInfos = {
       id: user.data._id,
       first_name: user.data.first_name,
       last_name: user.data.last_name,
       email: user.data.email,
       createdAt: user.data.createdAt,
     };
-    return userInfos;
   } catch (e) {
     console.log(e.message);
   }
